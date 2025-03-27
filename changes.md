@@ -83,4 +83,24 @@
 - Fixed previous issues with the checkout process
 - Updated price IDs for Stripe integration
 - Improved error handling in the checkout form
-- Fixed card element validation in the two-step checkout process 
+- Fixed card element validation in the two-step checkout process
+
+# Updated Hero Background Image
+
+- Changed the hero background image from `Dionne.JPG` to `Graham.jpg`
+- Updated both the main page and ambassador page hero sections
+- Updated alt text to reflect the new image content
+
+# Fixed Logo Path Capitalization
+
+- Updated all logo image paths to use the correct capitalization: `/Blacklogo.png` instead of `/blacklogo.png`
+- Fixed logo display issues in the navigation bars across all pages (main page, ambassador page, success page)
+- Ensures consistent branding and prevents missing logo images due to case-sensitivity in file paths
+
+# Fixed Logo Path in Success Page
+
+- Updated the logo image path in the success page from `/logo.png` to `/blacklogo.png`
+- Ensured consistency with the main page logo
+- Improves brand consistency across pages
+
+# Fixed Vercel Build Error with useSearchParams 
