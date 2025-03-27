@@ -1,0 +1,89 @@
+/* Color Palette */
+:root {
+  /* Brand Colors */
+  --color-bone: #F8F4F1;
+  --color-sand: #E3DDC9;
+  --color-ochre: #DD8D00;
+  --color-moss: #3E5E17;
+  --color-celadon: #74A78E;
+  --color-charcoal: #222222;
+  
+  /* Functional Colors */
+  --color-primary: var(--color-ochre);
+  --color-secondary: var(--color-moss);
+  --color-accent: var(--color-celadon);
+  --color-background: var(--color-bone);
+  --color-text: var(--color-charcoal);
+  --color-text-light: var(--color-bone);
+  --color-border: var(--color-sand);
+}
+
+/* Background Colors */
+.bg-bone { background-color: var(--color-bone); }
+.bg-sand { background-color: var(--color-sand); }
+.bg-ochre { background-color: var(--color-ochre); }
+.bg-moss { background-color: var(--color-moss); }
+.bg-celadon { background-color: var(--color-celadon); }
+.bg-charcoal { background-color: var(--color-charcoal); }
+
+/* Text Colors */
+.text-bone { color: var(--color-bone); }
+.text-sand { color: var(--color-sand); }
+.text-ochre { color: var(--color-ochre); }
+.text-moss { color: var(--color-moss); }
+.text-celadon { color: var(--color-celadon); }
+.text-charcoal { color: var(--color-charcoal); }
+
+/* Border Colors */
+.border-bone { border-color: var(--color-bone); }
+.border-sand { border-color: var(--color-sand); }
+.border-ochre { border-color: var(--color-ochre); }
+.border-moss { border-color: var(--color-moss); }
+.border-celadon { border-color: var(--color-celadon); }
+.border-charcoal { border-color: var(--color-charcoal); }
+
+/* Button Styles */
+.btn-primary {
+  background-color: var(--color-ochre);
+  color: var(--color-bone);
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #c47e00; /* Slightly darker ochre */
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background-color: var(--color-moss);
+  color: var(--color-bone);
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #345214; /* Slightly darker moss */
+  transform: translateY(-1px);
+}
+
+.btn-accent {
+  background-color: var(--color-celadon);
+  color: var(--color-charcoal);
+  transition: all 0.3s ease;
+}
+
+.btn-accent:hover {
+  background-color: #659980; /* Slightly darker celadon */
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 2px solid var(--color-ochre);
+  color: var(--color-ochre);
+  transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+  background-color: var(--color-ochre);
+  color: var(--color-bone);
+} 
