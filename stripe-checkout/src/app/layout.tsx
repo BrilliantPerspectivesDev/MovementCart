@@ -1,9 +1,12 @@
-import type { Metadata } from "next";
+'use client';
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "./colors.css";
 import { CartProvider } from './context/CartContext'
 import Script from "next/script";
+import Navigation from './components/Navigation';
+import { usePathname } from 'next/navigation';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,16 +18,14 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Stripe Checkout Demo",
-  description: "A Next.js app with Stripe checkout integration",
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname();
+  const showNavigation = !pathname?.includes('/checkout');
+
   return (
     <html lang="en">
       <head>
@@ -37,6 +38,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <CartProvider>
+          {showNavigation && <Navigation />}
           {children}
         </CartProvider>
       </body>

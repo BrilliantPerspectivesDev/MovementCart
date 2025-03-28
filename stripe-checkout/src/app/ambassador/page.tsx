@@ -1,108 +1,15 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
+import React, { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 // Ambassador landing page
 export default function AmbassadorPage() {
-  const pathname = usePathname();
-  const [email, setEmail] = useState('');
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  
-  useEffect(() => {
-    // Add scroll event listener
-    const handleScroll = () => {
-      const offset = window.scrollY;
-      if (offset > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    
-    // Clean up the event listener
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [pathname]);
-
   return (
-    <main className="min-h-screen bg-[#f9f5f0] pt-12">
-      {/* Navigation Bar - Now with scroll effect */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md py-2' : 'bg-transparent pt-4 pb-2'}`}>
-        <div className="w-[80%] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className={`flex justify-between items-center transition-all duration-300 ${scrolled ? 'h-20' : 'h-16'}`}>
-            {/* Logo */}
-            <div className="flex-shrink-0 flex items-center">
-              <Image
-                src="/Blacklogo.png" 
-                alt="Brilliant Logo"
-                width={120}
-                height={30}
-                className={`transition-opacity duration-300 ${scrolled ? 'opacity-100' : 'opacity-90'}`}
-                priority
-              />
-            </div>
-            
-            {/* Right side buttons */}
-            <div className="hidden md:flex items-center">
-              <a href="/" className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${scrolled ? 'text-gray-700 hover:text-[#2A9D8F]' : 'text-gray-500 hover:text-gray-900'}`}>
-                Home
-              </a>
-              <a href="#" className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${scrolled ? 'text-gray-700 hover:text-[#2A9D8F]' : 'text-gray-500 hover:text-gray-900'}`}>
-                Sign In
-              </a>
-              <a 
-                href="/checkout" 
-                className="ml-4 px-4 py-2 rounded-md bg-[#E9C46A] text-gray-800 text-sm font-medium hover:bg-[#e6bd58] transition-colors"
-                onClick={() => localStorage.setItem('fromAmbassadorPage', 'true')}
-              >
-                Join the Movement
-              </a>
-            </div>
-            
-            {/* Mobile menu button */}
-            <div className="flex md:hidden">
-              <button 
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100"
-              >
-                <span className="sr-only">Open main menu</span>
-                {/* Hamburger icon */}
-                <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-        
-        {/* Mobile menu, show/hide based on menu state */}
-        <div className={`md:hidden w-[80%] mx-auto bg-white shadow-lg rounded-b-lg ${mobileMenuOpen ? 'block' : 'hidden'}`}>
-          <div className="pt-2 pb-3 space-y-1">
-            <a href="/" className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700">
-              Home
-            </a>
-            <a href="#" className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700">
-              Sign In
-            </a>
-            <a 
-              href="/checkout" 
-              className="block pl-3 pr-4 py-2 bg-[#E9C46A] text-gray-800 text-base font-medium"
-              onClick={() => localStorage.setItem('fromAmbassadorPage', 'true')}
-            >
-              Join the Movement
-            </a>
-          </div>
-        </div>
-      </nav>
-      
+    <main className="min-h-screen bg-[#f9f5f0]">
       {/* Hero Header Container - With rounded corners on all sides */}
-      <div className="w-[80%] mx-auto rounded-[2rem] overflow-hidden relative mt-16 mb-16" style={{ height: 'calc(75vh)' }}>
+      <div className="w-[80%] mx-auto rounded-[2rem] overflow-hidden relative mt-32 mb-16" style={{ height: 'calc(75vh)' }}>
         {/* Background Image - Covers the entire container */}
         <div className="absolute inset-0 z-0">
           {/* Added left-to-right black gradient overlay */}
@@ -138,7 +45,7 @@ export default function AmbassadorPage() {
               
               {/* CTA Button - Replacing email signup */}
               <div className="mt-8">
-                <a 
+                <Link 
                   href="/checkout" 
                   className="inline-flex items-center px-8 py-4 border border-transparent rounded-full text-base font-medium bg-[#E9C46A] text-[#264653] hover:bg-[#e6bd58] transition-all shadow-lg hover:shadow-xl hover:translate-y-[-2px] active:translate-y-0"
                   onClick={() => localStorage.setItem('fromAmbassadorPage', 'true')}
@@ -147,7 +54,7 @@ export default function AmbassadorPage() {
                   <svg className="ml-2 -mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
                   </svg>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -164,7 +71,7 @@ export default function AmbassadorPage() {
                 Grow your impact while sharing what you love
               </h2>
               <div className="mt-8">
-                <a 
+                <Link 
                   href="/checkout" 
                   className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-[#264653] bg-[#E9C46A] hover:bg-[#e6bd58] transition-colors"
                   onClick={() => localStorage.setItem('fromAmbassadorPage', 'true')}
@@ -173,7 +80,7 @@ export default function AmbassadorPage() {
                   <svg className="ml-2 -mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
                   </svg>
-                </a>
+                </Link>
               </div>
             </div>
 

@@ -1,5 +1,26 @@
 # Changes Log
 
+## Updated Navigation Visibility (Current Date)
+- Modified root layout to conditionally render the Navigation component
+- Excluded navigation bar from the checkout page
+- Added pathname-based logic to control navigation visibility
+- Converted root layout to client component for pathname access
+
+## Added Global Navigation Bar (Current Date)
+- Created a new Navigation component with responsive design
+- Added transparent to solid background transition on scroll
+- Implemented mobile-friendly hamburger menu
+- Added main navigation links: Sign In, Ambassador Program, and Join the Movement
+- Integrated the Navigation component into the root layout for consistent display across all pages
+- Ensured the Brilliant logo is clickable and links to the home page
+- Added smooth transitions and hover effects for better user experience
+
+## Removed Global Navigation Bar (Current Date)
+- Removed the Navigation component from the root layout
+- Eliminated the navigation bar from all pages in the application
+- Created a cleaner, more focused interface without the top navigation
+- Improved vertical space usage across all pages
+
 ## Hero Content Vertical Positioning Improvement (Current Date)
 - Implemented perfect vertical centering for hero content:
   - Replaced previous positioning with true flexbox centering approach
@@ -1901,3 +1922,26 @@ The new section creates a more premium feel with a clearer articulation of Brill
 # Updated Hero Background Image
 
 // ... existing code ...
+
+## Added Layout Files for All Routes
+
+- Added proper layout files for all routes to fix Vercel build error
+- Created layout.tsx files for:
+  - /ambassador
+  - /ambassador-details
+  - /checkout
+  - /success
+  - /cart
+- Updated metadata in the root layout with proper app title and description
+
+## Added Global Navigation Component
+
+- Created a new shared Navigation component in `components/Navigation.tsx`
+- Added the Navigation component to the root layout to ensure it appears on all pages
+- Removed navigation code from the main page to prevent duplication
+- Made the Brilliant logo clickable and linked to home page across all pages
+- Maintained all existing styling and functionality including:
+  - Scroll effects
+  - Mobile responsiveness
+  - Menu transitions
+  - Logo opacity changes
