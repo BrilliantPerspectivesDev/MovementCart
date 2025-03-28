@@ -943,7 +943,7 @@ export default function Home() {
           {/* Logo */}
           <div className="mb-6 md:mb-8">
             <Image
-              src="/Brilliant_Full-Color_Dark.png" 
+              src="/Blacklogo.png" 
               alt="Brilliant Logo" 
               width={180}
               height={60} 
