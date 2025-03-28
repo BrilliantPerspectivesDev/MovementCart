@@ -1,68 +1,79 @@
 'use client';
 
-import { useEffect } from 'react';
+import React, { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
+import Image from 'next/image';
 import Link from 'next/link';
 
-export default function SuccessPage() {
+// SuccessContent component that uses useSearchParams
+function SuccessContent() {
   const searchParams = useSearchParams();
   const subscriptionId = searchParams.get('subscriptionId');
-  const isAmbassador = searchParams.get('isAmbassador') === 'true';
-
-  useEffect(() => {
-    // Store the subscription ID in localStorage
-    if (subscriptionId) {
-      localStorage.setItem('subscriptionId', subscriptionId);
-    }
-  }, [subscriptionId]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-blue-50 to-white">
+    <div className="min-h-screen bg-[#f9f5f0] flex flex-col">
+      {/* Header */}
+      <header className="bg-white shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex items-center justify-between">
+            <Link href="/" className="flex items-center">
+              <Image
+                src="/brilliant-logo.png"
+                alt="Brilliant Movement logo"
+                width={40}
+                height={40}
+                className="h-10 w-auto"
+              />
+            </Link>
+          </div>
+        </div>
+      </header>
+
       {/* Main Content */}
-      <main className="flex-grow container mx-auto max-w-lg px-4 py-12">
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
-          <div className="h-2 bg-green-500"></div>
-          
-          <div className="p-6 md:p-8">
-            {/* Success Icon */}
-            <div className="mb-6 text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
+      <main className="flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
+        <div className="max-w-md w-full space-y-8 text-center">
+          <div className="flex justify-center">
+            <div className="rounded-full bg-green-100 p-3">
+              <svg className="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
             </div>
-
-            {/* Success Message */}
-            <div className="text-center mb-8">
-              <h1 className="text-2xl font-bold text-gray-900 mb-2">
-                Payment Successful!
-              </h1>
-              <p className="text-gray-600">
-                Thank you for joining Brilliant Movement.
-              </p>
-            </div>
-
-            {/* Subscription ID */}
-            <div className="bg-gray-50 rounded-lg p-4 mb-8">
-              <p className="text-sm text-gray-600 mb-1">Your subscription ID:</p>
-              <code className="font-mono text-sm text-gray-800">
-                {subscriptionId}
-              </code>
-            </div>
-
-            {/* Action Button */}
-            <div className="text-center">
-              <Link 
-                href="/dashboard" 
-                className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md transition-colors"
-              >
-                Go to Dashboard
-              </Link>
-            </div>
+          </div>
+          <h1 className="text-3xl font-bold text-gray-900">Payment Successful!</h1>
+          <p className="text-lg text-gray-600">
+            Thank you for joining Brilliant Movement.
+          </p>
+          {subscriptionId && (
+            <p className="text-sm text-gray-500">
+              Subscription ID: {subscriptionId}
+            </p>
+          )}
+          <div className="mt-8">
+            <Link
+              href="/dashboard"
+              className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#E9C46A] hover:bg-[#e6bd58] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#E9C46A]"
+            >
+              Go to Dashboard
+            </Link>
           </div>
         </div>
       </main>
     </div>
+  );
+}
+
+// Main Success page component with Suspense
+export default function SuccessPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-[#f9f5f0] flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#E9C46A] mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading...</p>
+        </div>
+      </div>
+    }>
+      <SuccessContent />
+    </Suspense>
   );
 } 

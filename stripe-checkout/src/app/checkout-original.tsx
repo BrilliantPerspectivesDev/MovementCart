@@ -11,6 +11,7 @@ import { loadStripe, StripeCardElementChangeEvent, StripeCardElement } from '@st
 import { CustomerInfo } from './types';
 import { useGooglePlacesAutocomplete } from './hooks/useGooglePlacesAutocomplete';
 import { parseAddressComponents } from './utils/addressParser';
+import { Switch } from '@headlessui/react';
 
 // Load Stripe outside of component to avoid recreating it on renders
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
@@ -869,35 +870,46 @@ function CheckoutForm({
           <h3 className="text-base font-medium text-blue-800 mb-2">Brilliant Ambassador Program</h3>
           
           {/* Toggle and Learn More Row */}
-          <div className="flex items-center justify-between">
-            <label className="flex items-center cursor-pointer">
-              <div className="relative">
-                <input
-                  type="checkbox"
-                  className="sr-only"
-                  checked={isAmbassador}
-                  onChange={() => setIsAmbassador(!isAmbassador)}
+          <div className="flex items-center justify-between p-4 bg-white rounded-lg border border-gray-200">
+            <div className="flex items-center space-x-3">
+              <Switch
+                checked={isAmbassador}
+                onChange={setIsAmbassador}
+                className={`${
+                  isAmbassador ? 'bg-[#2A9D8F]' : 'bg-gray-200'
+                } relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#2A9D8F] focus:ring-offset-2`}
+              >
+                <span
+                  className={`${
+                    isAmbassador ? 'translate-x-6' : 'translate-x-1'
+                  } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
                 />
-                <div className={`block w-10 h-6 rounded-full transition ${isAmbassador ? 'bg-blue-600' : 'bg-gray-300'}`}></div>
-                <div className={`absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition transform ${isAmbassador ? 'translate-x-4' : ''}`}></div>
+              </Switch>
+              <div>
+                <label className="text-sm font-medium text-gray-900">Become an Ambassador</label>
+                <p className="text-xs text-gray-500">Earn commissions and get exclusive benefits</p>
               </div>
-              <span className="ml-3 font-medium text-gray-700">Become an Ambassador</span>
-            </label>
-            <button 
-              onClick={(e) => {
-                e.preventDefault();
-                setShowAmbassadorModal(true);
-              }}
-              className="px-3 py-1.5 bg-white text-blue-600 hover:bg-blue-50 text-sm font-medium rounded-md border border-blue-200 shadow-sm transition focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+            </div>
+            <button
+              type="button"
+              onClick={() => setShowAmbassadorModal(true)}
+              className="text-sm text-[#2A9D8F] hover:text-[#238277] font-medium"
             >
               Learn More
             </button>
           </div>
           
-          {/* Description - Shown regardless of toggle state */}
-          <p className="mt-2 text-sm text-blue-700">
-            Join our ambassador program to help spread the word about our Christian prayer app.
-          </p>
+          {/* Add the new link */}
+          <div className="mt-2 text-center">
+            <a 
+              href="https://go.brilliantplus.app" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-sm text-[#2A9D8F] hover:text-[#238277] font-medium"
+            >
+              Just want to be an ambassador? Click here →
+            </a>
+          </div>
           
           {/* Price info - Only shown when toggle is on */}
           {isAmbassador && (
