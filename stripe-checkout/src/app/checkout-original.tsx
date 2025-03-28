@@ -865,121 +865,55 @@ function CheckoutForm({
           </div>
         </div>
 
-        {/* Ambassador Program Section - Styled with rounded corners and background */}
-        <div className="mt-6 bg-blue-50 rounded-lg p-4 border border-blue-100 shadow-sm">
-          <h3 className="text-base font-medium text-blue-800 mb-2">Brilliant Ambassador Program</h3>
-          
-          {/* Toggle and Learn More Row */}
-          <div className="flex items-center justify-between p-4 bg-white rounded-lg border border-gray-200">
-            <div className="flex items-center space-x-3">
-              <Switch
-                checked={isAmbassador}
-                onChange={setIsAmbassador}
-                className={`${
-                  isAmbassador ? 'bg-[#2A9D8F]' : 'bg-gray-200'
-                } relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#2A9D8F] focus:ring-offset-2`}
-              >
-                <span
-                  className={`${
-                    isAmbassador ? 'translate-x-6' : 'translate-x-1'
-                  } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
-                />
-              </Switch>
-              <div>
-                <label className="text-sm font-medium text-gray-900">Become an Ambassador</label>
-                <p className="text-xs text-gray-500">Earn commissions and get exclusive benefits</p>
-              </div>
-            </div>
-            <button
-              type="button"
-              onClick={() => setShowAmbassadorModal(true)}
-              className="text-sm text-[#2A9D8F] hover:text-[#238277] font-medium"
-            >
-              Learn More
-            </button>
+        {/* Ambassador Add-on */}
+        <div className="flex flex-col items-start gap-x-8 gap-y-6 rounded-3xl p-8 ring-1 ring-gray-900/10 sm:gap-y-10 sm:p-10 lg:col-span-2 lg:flex-row lg:items-center bg-[#2A9D8F]/10">
+          <div className="lg:min-w-0 lg:flex-1">
+            <h3 className="text-base/7 font-semibold text-[#2A9D8F]">Ambassador Program</h3>
+            <p className="mt-1 text-lg text-gray-600">
+              Only $10 per year for additional benefits:
+            </p>
+            <ul className="mt-6 space-y-3 text-sm/6 text-gray-600">
+              <li className="flex gap-x-3">
+                <svg className="h-6 w-5 flex-none text-[#2A9D8F]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+                Provide people a link to access the BrilliantPlus app with a 5-day free trial
+              </li>
+              <li className="flex gap-x-3">
+                <svg className="h-6 w-5 flex-none text-[#2A9D8F]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+                Share in a portion of the membership fee when people join
+              </li>
+              <li className="flex gap-x-3">
+                <svg className="h-6 w-5 flex-none text-[#2A9D8F]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+                Receive Ambassador-only monthly training on growing impact and income
+              </li>
+              <li className="flex gap-x-3">
+                <svg className="h-6 w-5 flex-none text-[#2A9D8F]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+                Receive a Brilliant Debit Card to access your funds
+              </li>
+              <li className="flex gap-x-3 items-start">
+                <svg className="h-6 w-5 flex-none text-[#2A9D8F] mt-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+                <span className="text-gray-500 text-xs italic">Currently only available in the U.S.A with plans to expand internationally</span>
+              </li>
+            </ul>
           </div>
-          
-          {/* Add the new link */}
-          <div className="mt-2 text-center">
-            <a 
-              href="https://go.brilliantplus.app" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-sm text-[#2A9D8F] hover:text-[#238277] font-medium"
-            >
-              Just want to be an ambassador? Click here →
-            </a>
-          </div>
-          
-          {/* Price info - Only shown when toggle is on */}
-          {isAmbassador && (
-            <div className="mt-3 py-2 px-3 bg-white rounded-md flex items-center justify-between">
-              <span className="text-sm text-gray-600">Ambassador program fee:</span>
-              <span className="text-sm font-semibold text-blue-700">$10/year (no trial period)</span>
-            </div>
-          )}
-          
-          {/* Ambassador Modal */}
-          {showAmbassadorModal && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-              <div className="bg-white rounded-lg max-w-lg w-full max-h-[90vh] overflow-y-auto p-6">
-                <div className="flex justify-between items-start mb-4">
-                  <h3 className="text-xl font-semibold text-gray-900">Brilliant Ambassador Program</h3>
-                  <button 
-                    onClick={() => setShowAmbassadorModal(false)}
-                    className="text-gray-400 hover:text-gray-500 focus:outline-none"
-                  >
-                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
-                
-                <div className="mb-6">
-                  <p className="mb-4">Join our Brilliant Ambassador program and help spread the word about our Christian prayer app while earning rewards.</p>
-                  
-                  <h4 className="font-semibold mb-2">Benefits:</h4>
-                  <ul className="list-disc pl-5 mb-4 space-y-1">
-                    <li>Earn commission on every referral</li>
-                    <li>Get exclusive content and resources</li>
-                    <li>Connect with other ambassadors</li>
-                    <li>Receive promotional materials</li>
-                  </ul>
-                  
-                  <div className="p-3 bg-blue-50 rounded-md mb-4">
-                    <p className="font-medium text-blue-800 mb-1">Important Information:</p>
-                    <ul className="text-sm text-blue-700 space-y-1">
-                      <li>The annual fee for the Ambassador program is $10.</li>
-                      <li>This fee is legally required to distinguish ambassadors.</li>
-                      <li>Becoming an ambassador bypasses the 5-day free trial period.</li>
-                      <li>You'll be charged immediately when signing up as an ambassador.</li>
-                      <li>The Ambassador program is currently only available to US residents.</li>
-                    </ul>
-                  </div>
-                </div>
-                
-                <div className="flex justify-between">
-                  <button
-                    onClick={() => {
-                      setShowAmbassadorModal(false);
-                    }}
-                    className="px-4 py-2 bg-gray-100 text-gray-800 rounded hover:bg-gray-200"
-                  >
-                    Close
-                  </button>
-                  <button
-                    onClick={() => {
-                      setIsAmbassador(true);
-                      setShowAmbassadorModal(false);
-                    }}
-                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                  >
-                    Sign me up ($10/year)
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
+          <button
+            onClick={() => {
+              setIsAmbassador(true);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className="rounded-md px-3.5 py-2 text-sm/6 font-semibold text-[#2A9D8F] ring-1 ring-[#2A9D8F] ring-inset hover:bg-[#2A9D8F]/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2A9D8F]"
+          >
+            Add Ambassador Program <span aria-hidden="true">&rarr;</span>
+          </button>
         </div>
       </div>
     );
