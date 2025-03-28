@@ -1,51 +1,25 @@
 'use client';
 
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import "./colors.css";
-import { CartProvider } from './context/CartContext'
-import Script from "next/script";
+import { Inter } from 'next/font/google';
+import './globals.css';
+import './colors.css';
 import Navigation from './components/Navigation';
+import { CartProvider } from './context/CartContext';
 import { usePathname } from 'next/navigation';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-// Metadata must be exported from a server component
-export const metadata = {
-  title: "Brilliant Movement - Making Kingdom Normal",
-  description: "Join Brilliant Movement and cultivate an extraordinary relationship with God through community, resources, and direct learning.",
-  icons: {
-    icon: '/favicon.ico',
-  },
-};
+const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   const pathname = usePathname();
   const showNavigation = !pathname?.includes('/checkout');
 
   return (
     <html lang="en">
-      <head>
-        <Script
-          src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places`}
-          strategy="beforeInteractive"
-        />
-      </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={inter.className}>
         <CartProvider>
           {showNavigation && <Navigation />}
           {children}
