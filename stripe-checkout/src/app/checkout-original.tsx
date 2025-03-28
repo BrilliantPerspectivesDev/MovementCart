@@ -17,21 +17,261 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY 
 
 // Country code mapping for common countries
 const COUNTRY_OPTIONS = [
-  { code: 'US', name: 'United States' },
-  { code: 'CA', name: 'Canada' },
-  { code: 'GB', name: 'United Kingdom' },
+  { code: 'AF', name: 'Afghanistan' },
+  { code: 'AL', name: 'Albania' },
+  { code: 'DZ', name: 'Algeria' },
+  { code: 'AD', name: 'Andorra' },
+  { code: 'AO', name: 'Angola' },
+  { code: 'AG', name: 'Antigua and Barbuda' },
+  { code: 'AR', name: 'Argentina' },
+  { code: 'AM', name: 'Armenia' },
   { code: 'AU', name: 'Australia' },
-  { code: 'DE', name: 'Germany' },
-  { code: 'FR', name: 'France' },
-  { code: 'JP', name: 'Japan' },
-  { code: 'CN', name: 'China' },
-  { code: 'IN', name: 'India' },
+  { code: 'AT', name: 'Austria' },
+  { code: 'AZ', name: 'Azerbaijan' },
+  { code: 'BS', name: 'Bahamas' },
+  { code: 'BH', name: 'Bahrain' },
+  { code: 'BD', name: 'Bangladesh' },
+  { code: 'BB', name: 'Barbados' },
+  { code: 'BY', name: 'Belarus' },
+  { code: 'BE', name: 'Belgium' },
+  { code: 'BZ', name: 'Belize' },
+  { code: 'BJ', name: 'Benin' },
+  { code: 'BT', name: 'Bhutan' },
+  { code: 'BO', name: 'Bolivia' },
+  { code: 'BA', name: 'Bosnia and Herzegovina' },
+  { code: 'BW', name: 'Botswana' },
   { code: 'BR', name: 'Brazil' },
-  { code: 'MX', name: 'Mexico' },
-  { code: 'ES', name: 'Spain' },
+  { code: 'BN', name: 'Brunei' },
+  { code: 'BG', name: 'Bulgaria' },
+  { code: 'BF', name: 'Burkina Faso' },
+  { code: 'BI', name: 'Burundi' },
+  { code: 'KH', name: 'Cambodia' },
+  { code: 'CM', name: 'Cameroon' },
+  { code: 'CA', name: 'Canada' },
+  { code: 'CV', name: 'Cape Verde' },
+  { code: 'CF', name: 'Central African Republic' },
+  { code: 'TD', name: 'Chad' },
+  { code: 'CL', name: 'Chile' },
+  { code: 'CN', name: 'China' },
+  { code: 'CO', name: 'Colombia' },
+  { code: 'KM', name: 'Comoros' },
+  { code: 'CG', name: 'Congo' },
+  { code: 'CR', name: 'Costa Rica' },
+  { code: 'HR', name: 'Croatia' },
+  { code: 'CU', name: 'Cuba' },
+  { code: 'CY', name: 'Cyprus' },
+  { code: 'CZ', name: 'Czech Republic' },
+  { code: 'DK', name: 'Denmark' },
+  { code: 'DJ', name: 'Djibouti' },
+  { code: 'DM', name: 'Dominica' },
+  { code: 'DO', name: 'Dominican Republic' },
+  { code: 'EC', name: 'Ecuador' },
+  { code: 'EG', name: 'Egypt' },
+  { code: 'SV', name: 'El Salvador' },
+  { code: 'GQ', name: 'Equatorial Guinea' },
+  { code: 'ER', name: 'Eritrea' },
+  { code: 'EE', name: 'Estonia' },
+  { code: 'ET', name: 'Ethiopia' },
+  { code: 'FJ', name: 'Fiji' },
+  { code: 'FI', name: 'Finland' },
+  { code: 'FR', name: 'France' },
+  { code: 'GA', name: 'Gabon' },
+  { code: 'GM', name: 'Gambia' },
+  { code: 'GE', name: 'Georgia' },
+  { code: 'DE', name: 'Germany' },
+  { code: 'GH', name: 'Ghana' },
+  { code: 'GR', name: 'Greece' },
+  { code: 'GD', name: 'Grenada' },
+  { code: 'GT', name: 'Guatemala' },
+  { code: 'GN', name: 'Guinea' },
+  { code: 'GW', name: 'Guinea-Bissau' },
+  { code: 'GY', name: 'Guyana' },
+  { code: 'HT', name: 'Haiti' },
+  { code: 'HN', name: 'Honduras' },
+  { code: 'HU', name: 'Hungary' },
+  { code: 'IS', name: 'Iceland' },
+  { code: 'IN', name: 'India' },
+  { code: 'ID', name: 'Indonesia' },
+  { code: 'IR', name: 'Iran' },
+  { code: 'IQ', name: 'Iraq' },
+  { code: 'IE', name: 'Ireland' },
+  { code: 'IL', name: 'Israel' },
   { code: 'IT', name: 'Italy' },
+  { code: 'JM', name: 'Jamaica' },
+  { code: 'JP', name: 'Japan' },
+  { code: 'JO', name: 'Jordan' },
+  { code: 'KZ', name: 'Kazakhstan' },
+  { code: 'KE', name: 'Kenya' },
+  { code: 'KI', name: 'Kiribati' },
+  { code: 'KP', name: 'North Korea' },
+  { code: 'KR', name: 'South Korea' },
+  { code: 'KW', name: 'Kuwait' },
+  { code: 'KG', name: 'Kyrgyzstan' },
+  { code: 'LA', name: 'Laos' },
+  { code: 'LV', name: 'Latvia' },
+  { code: 'LB', name: 'Lebanon' },
+  { code: 'LS', name: 'Lesotho' },
+  { code: 'LR', name: 'Liberia' },
+  { code: 'LY', name: 'Libya' },
+  { code: 'LI', name: 'Liechtenstein' },
+  { code: 'LT', name: 'Lithuania' },
+  { code: 'LU', name: 'Luxembourg' },
+  { code: 'MK', name: 'North Macedonia' },
+  { code: 'MG', name: 'Madagascar' },
+  { code: 'MW', name: 'Malawi' },
+  { code: 'MY', name: 'Malaysia' },
+  { code: 'MV', name: 'Maldives' },
+  { code: 'ML', name: 'Mali' },
+  { code: 'MT', name: 'Malta' },
+  { code: 'MH', name: 'Marshall Islands' },
+  { code: 'MR', name: 'Mauritania' },
+  { code: 'MU', name: 'Mauritius' },
+  { code: 'MX', name: 'Mexico' },
+  { code: 'FM', name: 'Micronesia' },
+  { code: 'MD', name: 'Moldova' },
+  { code: 'MC', name: 'Monaco' },
+  { code: 'MN', name: 'Mongolia' },
+  { code: 'ME', name: 'Montenegro' },
+  { code: 'MA', name: 'Morocco' },
+  { code: 'MZ', name: 'Mozambique' },
+  { code: 'MM', name: 'Myanmar' },
+  { code: 'NA', name: 'Namibia' },
+  { code: 'NR', name: 'Nauru' },
+  { code: 'NP', name: 'Nepal' },
   { code: 'NL', name: 'Netherlands' },
+  { code: 'NZ', name: 'New Zealand' },
+  { code: 'NI', name: 'Nicaragua' },
+  { code: 'NE', name: 'Niger' },
+  { code: 'NG', name: 'Nigeria' },
+  { code: 'NO', name: 'Norway' },
+  { code: 'OM', name: 'Oman' },
+  { code: 'PK', name: 'Pakistan' },
+  { code: 'PW', name: 'Palau' },
+  { code: 'PS', name: 'Palestine' },
+  { code: 'PA', name: 'Panama' },
+  { code: 'PG', name: 'Papua New Guinea' },
+  { code: 'PY', name: 'Paraguay' },
+  { code: 'PE', name: 'Peru' },
+  { code: 'PH', name: 'Philippines' },
+  { code: 'PL', name: 'Poland' },
+  { code: 'PT', name: 'Portugal' },
+  { code: 'QA', name: 'Qatar' },
+  { code: 'RO', name: 'Romania' },
+  { code: 'RU', name: 'Russia' },
+  { code: 'RW', name: 'Rwanda' },
+  { code: 'KN', name: 'Saint Kitts and Nevis' },
+  { code: 'LC', name: 'Saint Lucia' },
+  { code: 'VC', name: 'Saint Vincent and the Grenadines' },
+  { code: 'WS', name: 'Samoa' },
+  { code: 'SM', name: 'San Marino' },
+  { code: 'ST', name: 'Sao Tome and Principe' },
+  { code: 'SA', name: 'Saudi Arabia' },
+  { code: 'SN', name: 'Senegal' },
+  { code: 'RS', name: 'Serbia' },
+  { code: 'SC', name: 'Seychelles' },
+  { code: 'SL', name: 'Sierra Leone' },
+  { code: 'SG', name: 'Singapore' },
+  { code: 'SK', name: 'Slovakia' },
+  { code: 'SI', name: 'Slovenia' },
+  { code: 'SB', name: 'Solomon Islands' },
+  { code: 'SO', name: 'Somalia' },
+  { code: 'ZA', name: 'South Africa' },
+  { code: 'SS', name: 'South Sudan' },
+  { code: 'ES', name: 'Spain' },
+  { code: 'LK', name: 'Sri Lanka' },
+  { code: 'SD', name: 'Sudan' },
+  { code: 'SR', name: 'Suriname' },
+  { code: 'SE', name: 'Sweden' },
   { code: 'CH', name: 'Switzerland' },
+  { code: 'SY', name: 'Syria' },
+  { code: 'TW', name: 'Taiwan' },
+  { code: 'TJ', name: 'Tajikistan' },
+  { code: 'TZ', name: 'Tanzania' },
+  { code: 'TH', name: 'Thailand' },
+  { code: 'TL', name: 'Timor-Leste' },
+  { code: 'TG', name: 'Togo' },
+  { code: 'TO', name: 'Tonga' },
+  { code: 'TT', name: 'Trinidad and Tobago' },
+  { code: 'TN', name: 'Tunisia' },
+  { code: 'TR', name: 'Turkey' },
+  { code: 'TM', name: 'Turkmenistan' },
+  { code: 'TV', name: 'Tuvalu' },
+  { code: 'UG', name: 'Uganda' },
+  { code: 'UA', name: 'Ukraine' },
+  { code: 'AE', name: 'United Arab Emirates' },
+  { code: 'GB', name: 'United Kingdom' },
+  { code: 'US', name: 'United States' },
+  { code: 'UY', name: 'Uruguay' },
+  { code: 'UZ', name: 'Uzbekistan' },
+  { code: 'VU', name: 'Vanuatu' },
+  { code: 'VA', name: 'Vatican City' },
+  { code: 'VE', name: 'Venezuela' },
+  { code: 'VN', name: 'Vietnam' },
+  { code: 'YE', name: 'Yemen' },
+  { code: 'ZM', name: 'Zambia' },
+  { code: 'ZW', name: 'Zimbabwe' }
+];
+
+// Add US state options
+const US_STATE_OPTIONS = [
+  { key: 1, value: "Alabama" },
+  { key: 2, value: "Alaska" },
+  { key: 3, value: "AE" },
+  { key: 4, value: "AP" },
+  { key: 5, value: "Arizona" },
+  { key: 6, value: "Arkansas" },
+  { key: 7, value: "California" },
+  { key: 8, value: "Colorado" },
+  { key: 9, value: "Connecticut" },
+  { key: 10, value: "DC" },
+  { key: 11, value: "Delaware" },
+  { key: 12, value: "Florida" },
+  { key: 13, value: "Georgia" },
+  { key: 14, value: "Guam" },
+  { key: 15, value: "Hawaii" },
+  { key: 16, value: "Idaho" },
+  { key: 17, value: "Illinois" },
+  { key: 18, value: "Indiana" },
+  { key: 19, value: "Iowa" },
+  { key: 20, value: "Kansas" },
+  { key: 21, value: "Kentucky" },
+  { key: 22, value: "Louisiana" },
+  { key: 23, value: "Maine" },
+  { key: 24, value: "Maryland" },
+  { key: 25, value: "Massachusetts" },
+  { key: 26, value: "Michigan" },
+  { key: 27, value: "Minnesota" },
+  { key: 28, value: "Mississippi" },
+  { key: 29, value: "Missouri" },
+  { key: 30, value: "Montana" },
+  { key: 31, value: "Nebraska" },
+  { key: 32, value: "Nevada" },
+  { key: 33, value: "New Hampshire" },
+  { key: 34, value: "New Jersey" },
+  { key: 35, value: "New Mexico" },
+  { key: 36, value: "New York" },
+  { key: 37, value: "North Carolina" },
+  { key: 38, value: "North Dakota" },
+  { key: 39, value: "Ohio" },
+  { key: 40, value: "Oklahoma" },
+  { key: 41, value: "Oregon" },
+  { key: 42, value: "Pennsylvania" },
+  { key: 43, value: "Puerto Rico" },
+  { key: 44, value: "Rhode Island" },
+  { key: 45, value: "South Carolina" },
+  { key: 46, value: "South Dakota" },
+  { key: 47, value: "Tennessee" },
+  { key: 48, value: "Texas" },
+  { key: 49, value: "Utah" },
+  { key: 50, value: "Vermont" },
+  { key: 51, value: "Virgin Islands" },
+  { key: 52, value: "Virginia" },
+  { key: 53, value: "Washington" },
+  { key: 54, value: "West Virginia" },
+  { key: 55, value: "Wisconsin" },
+  { key: 56, value: "Wyoming" },
+  { key: 1248, value: "American Samoa" },
+  { key: 1249, value: "Northern Mariana Islands" }
 ];
 
 // FormData interface for the checkout form
@@ -190,7 +430,7 @@ function CheckoutForm({
 
   // Check if form step 1 is valid
   useEffect(() => {
-    setStep1Valid(
+    const isAddressValid = 
       formData.firstName.trim() !== '' && 
       formData.lastName.trim() !== '' && 
       formData.email.trim() !== '' &&
@@ -198,9 +438,18 @@ function CheckoutForm({
       formData.city.trim() !== '' &&
       formData.state.trim() !== '' &&
       formData.postalCode.trim() !== '' &&
-      formData.country.trim() !== ''
-    );
-  }, [formData]);
+      formData.country.trim() !== '';
+
+    // Add US address validation for ambassadors
+    if (isAmbassador && formData.country !== 'US') {
+      setError('Ambassador program is only available for US residents at this time.');
+      setStep1Valid(false);
+      return;
+    }
+
+    setError(null);
+    setStep1Valid(isAddressValid);
+  }, [formData, isAmbassador]);
 
   // Check if entire form is valid
   useEffect(() => {
@@ -548,15 +797,33 @@ function CheckoutForm({
             <label htmlFor="state" className="block text-xs md:text-sm font-medium text-gray-700 mb-1">
               State/Province
             </label>
-            <input
-              type="text"
-              id="state"
-              name="state"
-              value={formData.state}
-              onChange={handleInputChange}
-              required
-              className="w-full px-3 py-2 h-9 text-sm border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
-            />
+            {formData.country === 'US' ? (
+              <select
+                id="state"
+                name="state"
+                value={formData.state}
+                onChange={handleInputChange}
+                required
+                className="w-full px-3 py-2 h-9 text-sm border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
+              >
+                <option value="">Select a state</option>
+                {US_STATE_OPTIONS.map(state => (
+                  <option key={state.key} value={state.value}>
+                    {state.value}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <input
+                type="text"
+                id="state"
+                name="state"
+                value={formData.state}
+                onChange={handleInputChange}
+                required
+                className="w-full px-3 py-2 h-9 text-sm border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
+              />
+            )}
           </div>
         </div>
 
@@ -674,6 +941,7 @@ function CheckoutForm({
                       <li>This fee is legally required to distinguish ambassadors.</li>
                       <li>Becoming an ambassador bypasses the 5-day free trial period.</li>
                       <li>You'll be charged immediately when signing up as an ambassador.</li>
+                      <li>The Ambassador program is currently only available to US residents.</li>
                     </ul>
                   </div>
                 </div>
@@ -758,27 +1026,6 @@ function CheckoutForm({
               I agree to the <a href="#" className="text-blue-600 hover:text-blue-800">Terms of Service</a> and <a href="#" className="text-blue-600 hover:text-blue-800">Privacy Policy</a>
             </label>
           </div>
-        </div>
-        
-        <div className="flex justify-between mt-6">
-          <button
-            type="button"
-            onClick={handleBack}
-            className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-          >
-            Back
-          </button>
-          <button
-            type="submit"
-            disabled={isLoading || !cardComplete || !agreeToTerms}
-            className={`px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm ${
-              isLoading || !cardComplete || !agreeToTerms
-                ? 'opacity-50 cursor-not-allowed'
-                : 'hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
-            }`}
-          >
-            {isLoading ? 'Processing...' : 'Complete Purchase'}
-          </button>
         </div>
       </div>
     );

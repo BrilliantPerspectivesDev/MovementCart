@@ -73,7 +73,7 @@ export default function LandingPage() {
               </p>
               
               {/* Primary Headline - Now Much Bigger */}
-              <h1 className="text-[#F5F5F0] text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-medium font-serif leading-[1.05] tracking-tight max-w-full">
+              <h1 className="text-[#F5F5F0] text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-medium font-serif leading-[1.05] tracking-tight max-w-full">
                 Making Kingdom<br className="block" />Normal
               </h1>
               
