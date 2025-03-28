@@ -1,0 +1,5 @@
+{
+  "buildCommand": "cd stripe-checkout && npm install && npm run build",
+  "outputDirectory": "stripe-checkout/.next",
+  "installCommand": "cd stripe-checkout && npm install"
+} 
