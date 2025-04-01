@@ -12,6 +12,7 @@ import { CustomerInfo } from './types';
 import { useGooglePlacesAutocomplete } from './hooks/useGooglePlacesAutocomplete';
 import { parseAddressComponents } from './utils/addressParser';
 import { Switch } from '@headlessui/react';
+import { useRouter } from 'next/navigation';
 
 // Load Stripe outside of component to avoid recreating it on renders
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
@@ -302,6 +303,7 @@ function CheckoutForm({
   const stripe = useStripe();
   const elements = useElements();
   const pathname = usePathname();
+  const router = useRouter();
   
   // Add loading and error states
   const [isLoading, setIsLoading] = useState(false);
@@ -485,12 +487,6 @@ function CheckoutForm({
     // Start with the base price info
     const baseInfo = getPriceInfo(selectedFrequency);
     
-    // Ambassador specific price IDs with the same billing intervals as the main products
-    const ambassadorPriceIds = {
-      monthly: 'price_1R42eZEWsQ0IpmHON2lotuyg', // Monthly ambassador subscription
-      annual: 'price_1R42f9EWsQ0IpmHO1u0VzEiC'   // Annual ambassador subscription
-    };
-    
     // Update the price info based on ambassador status
     const updatedInfo = {
       ...baseInfo,
@@ -501,17 +497,7 @@ function CheckoutForm({
     };
     
     // Store the ambassador status in localStorage
-    localStorage.setItem('isAmbassador', isAmbassador ? 'yes' : 'no');
-    
-    // If ambassador is selected, store the appropriate ambassador price ID
-    if (isAmbassador) {
-      const priceId = selectedFrequency.includes('month') 
-        ? ambassadorPriceIds.monthly 
-        : ambassadorPriceIds.annual;
-      localStorage.setItem('ambassadorPriceId', priceId);
-    } else {
-      localStorage.removeItem('ambassadorPriceId');
-    }
+    localStorage.setItem('isAmbassador', isAmbassador.toString());
     
     setPriceInfo(updatedInfo);
   }, [isAmbassador, selectedFrequency]);
@@ -538,55 +524,26 @@ function CheckoutForm({
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     
-    // If we're in step 1, just move to step 2
-    if (checkoutStep === 1) {
-      // Store isAmbassador in localStorage when moving to step 2
-      localStorage.setItem('isAmbassador', isAmbassador ? 'yes' : 'no');
-      
-      // Ambassador specific price IDs with the same billing intervals as the main products
-      const ambassadorPriceIds = {
-        monthly: 'price_1R42eZEWsQ0IpmHON2lotuyg', // Monthly ambassador subscription
-        annual: 'price_1R42f9EWsQ0IpmHO1u0VzEiC'   // Annual ambassador subscription
-      };
-      
-      // If ambassador is selected, store the appropriate ambassador price ID
-      if (isAmbassador) {
-        const priceId = selectedFrequency.includes('month') 
-          ? ambassadorPriceIds.monthly 
-          : ambassadorPriceIds.annual;
-        localStorage.setItem('ambassadorPriceId', priceId);
-      } else {
-        localStorage.removeItem('ambassadorPriceId');
-      }
-      
-      setCheckoutStep(2);
-      return;
-    }
-    
-    // Only validate Stripe in step 2
-    if (!stripe || !elements) {
-      setError('Stripe.js has not loaded. Please try again.');
-      return;
-    }
-
-    if (!cardElementReady) {
-      setError('Please enter your card details.');
+    if (isLoading) {
+      console.log('Submission already in progress');
       return;
     }
 
     setIsLoading(true);
-    setError(null);
-    
+    setError('');
+
     try {
-      const cardElement = elements.getElement(CardElement);
-      if (!cardElement) {
-        throw new Error('Card element not found');
+      if (checkoutStep === 1) {
+        setCheckoutStep(2);
+        localStorage.setItem('isAmbassador', isAmbassador.toString());
+        setIsLoading(false);
+        return;
       }
-      
+
       // Create payment method
-      const { error: stripeError, paymentMethod } = await stripe.createPaymentMethod({
+      const { error: stripeError, paymentMethod } = await stripe!.createPaymentMethod({
         type: 'card',
-        card: cardElement,
+        card: elements!.getElement(CardElement)!,
         billing_details: {
           name: `${formData.firstName} ${formData.lastName}`,
           email: formData.email,
@@ -599,57 +556,58 @@ function CheckoutForm({
           },
         },
       });
-      
+
       if (stripeError) {
-        throw new Error(stripeError.message);
+        console.error('Error creating payment method:', stripeError);
+        setError(stripeError.message || 'Failed to process payment method');
+        setIsLoading(false);
+        return;
       }
-      
-      if (!paymentMethod) {
-        throw new Error('Payment method creation failed');
-      }
-      
-      // Get the ambassador price ID if the ambassador option is selected
-      const ambassadorPriceId = isAmbassador ? localStorage.getItem('ambassadorPriceId') : undefined;
-      
-      // Use affiliateCode if available, fallback to pathParam
-      const referralCode = storedAffiliateCode || storedPathParam || undefined;
-      console.log(`Using referral code for checkout: ${referralCode}`);
-      
+
+      // Get affiliate code from localStorage or path parameter
+      const affiliateCode = localStorage.getItem('affiliateCode') || storedPathParam;
+
       // Process checkout
-      const response = await initiateCheckout(
-        items,
-        formData,
-        selectedFrequency,
-        paymentMethod.id,
-        referralCode, // Pass the affiliate code or path param
-        isAmbassador, // Pass the ambassador status
-        ambassadorPriceId // Pass the ambassador price ID if applicable
-      );
-      
-      console.log(`Submitting checkout with frequency: ${selectedFrequency}, affiliateCode: ${storedAffiliateCode}, pathParam: ${storedPathParam}, isAmbassador: ${isAmbassador} ${isAmbassador ? '(bypassing 5-day trial and adding $10 ambassador fee)' : '(with 5-day trial)'}`);
-      
-      if (!response.success) {
-        throw new Error(response.error || 'Checkout failed');
+      const response = await fetch('/api/direct-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerInfo: formData,
+          paymentMethodId: paymentMethod.id,
+          frequency: selectedFrequency,
+          pathParam: affiliateCode,
+          isAmbassador,
+          ambassadorPriceId: 'price_1R42MJEWsQ0IpmHOWcDQ5KvC'
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to process checkout');
       }
-      
-      // Store the subscription ID in localStorage for reference on the next page
-      if (response.subscriptionId) {
-        localStorage.setItem('subscriptionId', response.subscriptionId);
+
+      // Handle main subscription payment confirmation
+      if (data.mainPaymentIntentSecret) {
+        const { error: confirmError } = await stripe!.confirmCardPayment(data.mainPaymentIntentSecret);
+        if (confirmError) {
+          throw new Error(`Failed to confirm main subscription payment: ${confirmError.message}`);
+        }
       }
-      
-      // Redirect based on ambassador status
-      if (isAmbassador) {
-        // If user is an ambassador, redirect to ambassador details page
-        window.location.href = `/ambassador-details?subscriptionId=${response.subscriptionId}`;
-      } else {
-        // Otherwise, redirect to the standard success page
-        window.location.href = `/success?subscriptionId=${response.subscriptionId}`;
+
+      // Handle ambassador fee payment confirmation if applicable
+      if (isAmbassador && data.ambassadorPaymentIntentSecret) {
+        const { error: ambassadorConfirmError } = await stripe!.confirmCardPayment(data.ambassadorPaymentIntentSecret);
+        if (ambassadorConfirmError) {
+          throw new Error(`Failed to confirm ambassador fee payment: ${ambassadorConfirmError.message}`);
+        }
       }
-      
+
+      // Redirect to success page
+      router.push(`/ambassador-details?subscriptionId=${data.subscriptionId}`);
     } catch (error: any) {
       console.error('Checkout error:', error);
-      setError(error.message);
-    } finally {
+      setError(error.message || 'An unexpected error occurred');
       setIsLoading(false);
     }
   };
@@ -866,54 +824,38 @@ function CheckoutForm({
         </div>
 
         {/* Ambassador Add-on */}
-        <div className="flex flex-col items-start gap-x-8 gap-y-6 rounded-3xl p-8 ring-1 ring-gray-900/10 sm:gap-y-10 sm:p-10 lg:col-span-2 lg:flex-row lg:items-center bg-[#2A9D8F]/10">
-          <div className="lg:min-w-0 lg:flex-1">
-            <h3 className="text-base/7 font-semibold text-[#2A9D8F]">Ambassador Program</h3>
-            <p className="mt-1 text-lg text-gray-600">
-              Only $10 per year for additional benefits:
-            </p>
-            <ul className="mt-6 space-y-3 text-sm/6 text-gray-600">
-              <li className="flex gap-x-3">
-                <svg className="h-6 w-5 flex-none text-[#2A9D8F]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-                Provide people a link to access the BrilliantPlus app with a 5-day free trial
-              </li>
-              <li className="flex gap-x-3">
-                <svg className="h-6 w-5 flex-none text-[#2A9D8F]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-                Share in a portion of the membership fee when people join
-              </li>
-              <li className="flex gap-x-3">
-                <svg className="h-6 w-5 flex-none text-[#2A9D8F]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-                Receive Ambassador-only monthly training on growing impact and income
-              </li>
-              <li className="flex gap-x-3">
-                <svg className="h-6 w-5 flex-none text-[#2A9D8F]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-                Receive a Brilliant Debit Card to access your funds
-              </li>
-              <li className="flex gap-x-3 items-start">
-                <svg className="h-6 w-5 flex-none text-[#2A9D8F] mt-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-                <span className="text-gray-500 text-xs italic">Currently only available in the U.S.A with plans to expand internationally</span>
-              </li>
-            </ul>
+        <div className="bg-[#F8F9FF] rounded-2xl p-6">
+          <h2 className="text-[#1E40AF] text-xl font-semibold mb-4">Brilliant Ambassador Program</h2>
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-lg font-medium text-gray-900">Become an Ambassador</h3>
+              <p className="text-gray-600">Earn commissions and get exclusive benefits</p>
+            </div>
+            <div className="flex items-center gap-4">
+              <a href="#" className="text-[#2A9D8F] hover:text-[#238276] font-medium">
+                Learn More
+              </a>
+              <Switch
+                checked={isAmbassador}
+                onChange={setIsAmbassador}
+                className={`${
+                  isAmbassador ? 'bg-[#2A9D8F]' : 'bg-gray-200'
+                } relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#2A9D8F] focus:ring-offset-2`}
+              >
+                <span className="sr-only">Enable ambassador program</span>
+                <span
+                  className={`${
+                    isAmbassador ? 'translate-x-6' : 'translate-x-1'
+                  } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
+                />
+              </Switch>
+            </div>
           </div>
-          <button
-            onClick={() => {
-              setIsAmbassador(true);
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-            className="rounded-md px-3.5 py-2 text-sm/6 font-semibold text-[#2A9D8F] ring-1 ring-[#2A9D8F] ring-inset hover:bg-[#2A9D8F]/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2A9D8F]"
-          >
-            Add Ambassador Program <span aria-hidden="true">&rarr;</span>
-          </button>
+          <div className="mt-4">
+            <a href="https://go.brilliantplus.app/" className="text-[#2A9D8F] hover:text-[#238276] text-sm">
+              Just want to be an ambassador? Click here →
+            </a>
+          </div>
         </div>
       </div>
     );
@@ -1023,7 +965,7 @@ function CheckoutForm({
           ) : checkoutStep === 1 ? (
             "Continue to Payment"
           ) : (
-            "Start Your Free Trial"
+            isAmbassador ? "Pay Now" : "Start Your Free Trial"
           )}
         </button>
       </div>

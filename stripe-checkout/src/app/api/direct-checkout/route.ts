@@ -177,26 +177,22 @@ export async function POST(request: Request) {
     const mainSubscriptionParams: any = {
       customer: customer.id,
       items: [{ price: basePriceId }],
-      // Changed from default_incomplete to allow_incomplete to enable immediate charging
       payment_behavior: 'allow_incomplete',
+      default_payment_method: paymentMethodId,
       payment_settings: {
         payment_method_types: ['card'],
         save_default_payment_method: 'on_subscription',
       },
-      default_payment_method: paymentMethodId, // Explicitly set payment method
       metadata: {
         customerName: `${customerInfo.firstName} ${customerInfo.lastName}`,
         firstName: customerInfo.firstName || '',
         lastName: customerInfo.lastName || '',
         customerEmail: customerInfo.email,
         referralCode: pathParam || '',
-        referralUrl: pathParam ? `/${pathParam}` : '',
-        affiliateCode: pathParam || '',
-        plan: frequency,
-        sku: isMonthlySubscription ? 'SKU_MONTHLY_47' : 'SKU_ANNUAL_397',
+        sku: frequency.toLowerCase() === 'monthly' ? 'SKU_MONTHLY_47' : 'SKU_ANNUAL_397',
         isAmbassador: isAmbassador ? 'yes' : 'no',
       },
-      expand: ['latest_invoice.payment_intent'],
+      expand: ['latest_invoice.payment_intent']
     };
     
     // Only add trial period if NOT an ambassador
@@ -208,33 +204,17 @@ export async function POST(request: Request) {
     
     console.log(`Main subscription created: ${mainSubscription.id}`);
     
-    // For non-trial subscriptions, we need to pay the invoice immediately
-    if (isAmbassador && mainSubscription.latest_invoice && 
-        mainSubscription.latest_invoice.payment_intent) {
-      const paymentIntentId = mainSubscription.latest_invoice.payment_intent.id;
-      
-      try {
-        // Confirm the payment intent to complete the payment
-        await stripe!.paymentIntents.confirm(paymentIntentId, {
-          payment_method: paymentMethodId,
-        });
-        console.log(`Main subscription payment confirmed: ${paymentIntentId}`);
-      } catch (confirmError) {
-        console.error('Error confirming main subscription payment:', confirmError);
-      }
-    }
-    
     // For ambassadors, create a separate subscription for the ambassador fee
     let ambassadorFeeSubscription = null;
     
-    if (isAmbassador) {
+    if (isAmbassador && ambassadorPriceId) {
       try {
         // Create a separate subscription for the ambassador fee
         ambassadorFeeSubscription = await stripe!.subscriptions.create({
           customer: customer.id,
-          items: [{ price: PRICE_IDS.ambassadorFee }],
-          payment_behavior: 'allow_incomplete', // Changed to allow_incomplete
-          default_payment_method: paymentMethodId, // Explicitly set payment method
+          items: [{ price: ambassadorPriceId }],
+          payment_behavior: 'allow_incomplete',
+          default_payment_method: paymentMethodId,
           payment_settings: {
             payment_method_types: ['card'],
             save_default_payment_method: 'on_subscription',
@@ -245,11 +225,10 @@ export async function POST(request: Request) {
             lastName: customerInfo.lastName || '',
             customerEmail: customerInfo.email,
             referralCode: pathParam || '',
-            affiliateCode: pathParam || '',
-            isAmbassadorFee: 'yes',
             mainSubscriptionId: mainSubscription.id,
+            sku: 'SKU_10_ANNUALFEE'
           },
-          expand: ['latest_invoice.payment_intent'],
+          expand: ['latest_invoice.payment_intent']
         });
         
         console.log(`Ambassador fee subscription created: ${ambassadorFeeSubscription.id}`);
@@ -263,22 +242,6 @@ export async function POST(request: Request) {
             ambassadorFee: '$10/year',
           }
         });
-        
-        // Also confirm the ambassador fee payment intent
-        if (ambassadorFeeSubscription.latest_invoice && 
-            ambassadorFeeSubscription.latest_invoice.payment_intent) {
-          const feePaymentIntentId = ambassadorFeeSubscription.latest_invoice.payment_intent.id;
-          
-          try {
-            // Confirm the payment intent to complete the payment
-            await stripe!.paymentIntents.confirm(feePaymentIntentId, {
-              payment_method: paymentMethodId,
-            });
-            console.log(`Ambassador fee payment confirmed: ${feePaymentIntentId}`);
-          } catch (confirmError) {
-            console.error('Error confirming ambassador fee payment:', confirmError);
-          }
-        }
       } catch (feeError) {
         console.error('Error creating ambassador fee subscription:', feeError);
         // Continue anyway with the main subscription
@@ -289,9 +252,22 @@ export async function POST(request: Request) {
     console.log(`Ambassador status: ${mainSubscription.metadata.isAmbassador}`);
     console.log(`Trial period: ${!isAmbassador ? '5 days' : 'Bypassed (Ambassador)'}`);
     
+    // Get the payment intents that need to be confirmed
+    const mainPaymentIntent = mainSubscription.latest_invoice && 
+      typeof mainSubscription.latest_invoice !== 'string' && 
+      mainSubscription.latest_invoice.payment_intent;
+
+    const ambassadorPaymentIntent = ambassadorFeeSubscription && 
+      ambassadorFeeSubscription.latest_invoice && 
+      typeof ambassadorFeeSubscription.latest_invoice !== 'string' && 
+      ambassadorFeeSubscription.latest_invoice.payment_intent;
+
+    // Return all necessary information for the frontend to handle payment confirmation
     return NextResponse.json({
       success: true,
       subscriptionId: mainSubscription.id,
+      mainPaymentIntentSecret: typeof mainPaymentIntent !== 'string' ? mainPaymentIntent?.client_secret : null,
+      ambassadorPaymentIntentSecret: typeof ambassadorPaymentIntent !== 'string' ? ambassadorPaymentIntent?.client_secret : null
     });
   } catch (error: any) {
     console.error('Subscription creation error:', error);
