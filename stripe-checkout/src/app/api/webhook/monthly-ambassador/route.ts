@@ -1,25 +1,53 @@
 import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
 // In-memory store for demo purposes. In production, use a database
 const detailsStore = new Map<string, any>();
 
-export async function POST(req: Request) {
+export async function POST(request: NextRequest) {
   try {
-    const data = await req.json();
-    const subscriptionId = data.subscriptionId;
+    const body = await request.json();
     
-    if (!subscriptionId) {
-      return NextResponse.json({ error: 'Missing subscription ID' }, { status: 400 });
+    // Validate required fields
+    if (!body.subscriptionId || !body.details) {
+      return NextResponse.json(
+        { error: 'Missing required fields' },
+        { status: 400 }
+      );
     }
 
-    // Store the details for this subscription
-    detailsStore.set(subscriptionId, data);
-    console.log('Stored monthly ambassador details for:', subscriptionId);
-    
-    return NextResponse.json({ success: true });
+    // Validate details object
+    const { email, password, ambassadorCode } = body.details;
+    if (!email || !password || !ambassadorCode) {
+      return NextResponse.json(
+        { error: 'Missing required details' },
+        { status: 400 }
+      );
+    }
+
+    // Here you would typically:
+    // 1. Validate the subscription with Stripe
+    // 2. Create the user account
+    // 3. Store the ambassador code
+    // 4. Send welcome email
+    // For now, we'll just return success
+
+    return NextResponse.json({
+      success: true,
+      subscriptionId: body.subscriptionId,
+      details: {
+        email: body.details.email,
+        password: body.details.password,
+        ambassadorCode: body.details.ambassadorCode
+      }
+    });
+
   } catch (error) {
-    console.error('Monthly Ambassador webhook error:', error);
-    return NextResponse.json({ error: 'Invalid payload' }, { status: 400 });
+    console.error('Webhook error:', error);
+    return NextResponse.json(
+      { error: 'Invalid payload' },
+      { status: 400 }
+    );
   }
 }
 
