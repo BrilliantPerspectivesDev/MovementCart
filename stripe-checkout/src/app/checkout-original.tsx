@@ -594,13 +594,31 @@ function CheckoutForm({
         if (confirmError) {
           throw new Error(`Failed to confirm main subscription payment: ${confirmError.message}`);
         }
+        
+        // Add a small delay before processing the ambassador fee
+        if (isAmbassador && data.ambassadorPaymentIntentSecret) {
+          await new Promise(resolve => setTimeout(resolve, 1000)); // 1 second delay
+        }
       }
 
       // Handle ambassador fee payment confirmation if applicable
       if (isAmbassador && data.ambassadorPaymentIntentSecret) {
-        const { error: ambassadorConfirmError } = await stripe!.confirmCardPayment(data.ambassadorPaymentIntentSecret);
-        if (ambassadorConfirmError) {
-          throw new Error(`Failed to confirm ambassador fee payment: ${ambassadorConfirmError.message}`);
+        try {
+          const { error: ambassadorConfirmError } = await stripe!.confirmCardPayment(data.ambassadorPaymentIntentSecret);
+          if (ambassadorConfirmError) {
+            console.error('Ambassador fee confirmation error:', ambassadorConfirmError);
+            // Don't throw error, just log it and continue
+            // The main subscription is already confirmed
+          }
+        } catch (retryError) {
+          console.error('Retrying ambassador fee confirmation...');
+          // Wait 2 seconds and try one more time
+          await new Promise(resolve => setTimeout(resolve, 2000));
+          const { error: retryConfirmError } = await stripe!.confirmCardPayment(data.ambassadorPaymentIntentSecret);
+          if (retryConfirmError) {
+            console.error('Final ambassador fee confirmation error:', retryConfirmError);
+            // Still don't throw, just log the error
+          }
         }
       }
 
