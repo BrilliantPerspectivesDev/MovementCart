@@ -266,6 +266,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       success: true,
       subscriptionId: mainSubscription.id,
+      frequency: frequency,
       mainPaymentIntentSecret: typeof mainPaymentIntent !== 'string' ? mainPaymentIntent?.client_secret : null,
       ambassadorPaymentIntentSecret: typeof ambassadorPaymentIntent !== 'string' ? ambassadorPaymentIntent?.client_secret : null
     });

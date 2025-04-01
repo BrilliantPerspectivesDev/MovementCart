@@ -536,6 +536,7 @@ function CheckoutForm({
       if (checkoutStep === 1) {
         setCheckoutStep(2);
         localStorage.setItem('isAmbassador', isAmbassador.toString());
+        localStorage.setItem('selectedFrequency', selectedFrequency);
         setIsLoading(false);
         return;
       }

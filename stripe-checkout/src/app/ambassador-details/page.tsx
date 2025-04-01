@@ -26,147 +26,85 @@ function AmbassadorDetailsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const subscriptionId = searchParams.get('subscriptionId');
-  const frequency = searchParams.get('frequency');
-  const isAmbassador = searchParams.get('isAmbassador') === 'true';
-  const [loginDetails, setLoginDetails] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [retryCount, setRetryCount] = useState(0);
-  const MAX_RETRIES = 10;
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!subscriptionId) return;
 
-    const pollForLoginDetails = async () => {
+    const fetchSubscriptionDetails = async () => {
       try {
-        const response = await fetch(`/api/login-details?subscriptionId=${subscriptionId}`);
-        const data = await response.json();
+        // Get the stored values from localStorage
+        const isAmbassador = localStorage.getItem('isAmbassador') === 'true';
+        const frequency = localStorage.getItem('selectedFrequency') || 'monthly';
 
-        if (data.success && data.details) {
-          setLoginDetails(data.details);
-          setIsLoading(false);
-        } else {
-          if (retryCount < MAX_RETRIES) {
-            setTimeout(() => {
-              setRetryCount(prev => prev + 1);
-            }, 5000);
+        // Route to the appropriate thank you page based on subscription type
+        if (isAmbassador) {
+          if (frequency === 'annual') {
+            router.push(`/thank-you/annual-ambassador?subscriptionId=${subscriptionId}`);
           } else {
-            setIsLoading(false);
+            router.push(`/thank-you/monthly-ambassador?subscriptionId=${subscriptionId}`);
+          }
+        } else {
+          if (frequency === 'annual') {
+            router.push(`/thank-you/annual?subscriptionId=${subscriptionId}`);
+          } else {
+            router.push(`/thank-you/monthly?subscriptionId=${subscriptionId}`);
           }
         }
-      } catch (error) {
-        console.error('Error fetching login details:', error);
-        if (retryCount < MAX_RETRIES) {
-          setTimeout(() => {
-            setRetryCount(prev => prev + 1);
-          }, 5000);
-        } else {
-          setIsLoading(false);
-        }
+      } catch (err) {
+        console.error('Error fetching subscription details:', err);
+        setError('Unable to load subscription details. Please contact support.');
+      } finally {
+        setIsLoading(false);
       }
     };
 
-    pollForLoginDetails();
-  }, [subscriptionId, retryCount]);
+    fetchSubscriptionDetails();
+  }, [subscriptionId, router]);
 
-  useEffect(() => {
-    if (!subscriptionId) return;
-
-    // Route to the appropriate thank you page based on subscription type
-    if (isAmbassador) {
-      if (frequency === 'annual') {
-        router.push(`/thank-you/annual-ambassador?subscriptionId=${subscriptionId}`);
-      } else {
-        router.push(`/thank-you/monthly-ambassador?subscriptionId=${subscriptionId}`);
-      }
-    } else {
-      if (frequency === 'annual') {
-        router.push(`/thank-you/annual?subscriptionId=${subscriptionId}`);
-      } else {
-        router.push(`/thank-you/monthly?subscriptionId=${subscriptionId}`);
-      }
-    }
-  }, [subscriptionId, frequency, isAmbassador, router]);
-
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-[#264653] to-[#2A9D8F]">
-      <main className="container mx-auto px-4 py-16">
-        <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
-          <div className="p-8 md:p-12">
-            <div className="text-center mb-8">
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                Welcome to Brilliant!
-              </h1>
-              <p className="text-lg text-gray-600">
-                Your journey to making Kingdom normal starts now.
-              </p>
-            </div>
-
-            {isLoading ? (
-              <div className="text-center py-8">
-                <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-blue-600 border-r-transparent"></div>
-                <p className="mt-4 text-gray-600">Setting up your account...</p>
-                <p className="mt-2 text-sm text-gray-500">This may take a few moments.</p>
-              </div>
-            ) : loginDetails ? (
-              <div className="space-y-6">
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-                  <h2 className="text-xl font-semibold text-blue-900 mb-4">Your Login Details</h2>
-                  <div className="space-y-3">
-                    <p className="text-blue-800">
-                      <strong>Email:</strong> {loginDetails.email}
-                    </p>
-                    <p className="text-blue-800">
-                      <strong>Password:</strong> {loginDetails.password}
-                    </p>
-                    {loginDetails.ambassadorCode && (
-                      <p className="text-blue-800">
-                        <strong>Your Ambassador Code:</strong> {loginDetails.ambassadorCode}
-                      </p>
-                    )}
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <h3 className="text-xl font-semibold text-gray-900">Next Steps:</h3>
-                  <ol className="list-decimal list-inside space-y-2 text-gray-700">
-                    <li>Download the BrilliantPlus app</li>
-                    <li>Log in with your credentials above</li>
-                    <li>Complete your profile</li>
-                    <li>Start exploring our content library</li>
-                  </ol>
-                </div>
-
-                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 mt-8">
-                  <h3 className="text-lg font-semibold text-yellow-900 mb-2">Important:</h3>
-                  <p className="text-yellow-800">
-                    Please save your login credentials. You'll need these to access your account and all premium content.
-                  </p>
-                </div>
-              </div>
-            ) : (
-              <div className="text-center py-8">
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-[#264653] to-[#2A9D8F]">
+        <main className="container mx-auto px-4 py-16">
+          <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
+            <div className="p-8 md:p-12">
+              <div className="text-center">
                 <div className="bg-red-50 border border-red-200 rounded-lg p-6">
-                  <p className="text-red-800 mb-2">
-                    We're having trouble retrieving your login details.
-                  </p>
+                  <p className="text-red-800 mb-2">{error}</p>
                   <p className="text-red-600">
                     Please contact support at help@brilliantperspectives.com
                   </p>
                 </div>
               </div>
-            )}
+            </div>
           </div>
-        </div>
-      </main>
-    </div>
-  );
+        </main>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-[#264653] to-[#2A9D8F]">
+        <main className="container mx-auto px-4 py-16">
+          <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
+            <div className="p-8 md:p-12">
+              <div className="text-center py-8">
+                <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-blue-600 border-r-transparent"></div>
+                <p className="mt-4 text-gray-600">Loading subscription details...</p>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  return null;
 }
 
-// Main page component with Suspense boundary
+// Main page component with error boundary
 export default function AmbassadorDetails() {
-  return (
-    <Suspense fallback={<LoadingState />}>
-      <AmbassadorDetailsContent />
-    </Suspense>
-  );
+  return <AmbassadorDetailsContent />;
 } 
