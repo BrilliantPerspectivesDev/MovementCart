@@ -35,7 +35,7 @@ function ThankYouContent() {
 
     const pollForLoginDetails = async () => {
       try {
-        const response = await fetch(`/api/webhook/annual-ambassador?subscriptionId=${subscriptionId}`);
+        const response = await fetch(`/api/webhook/monthly-ambassador?subscriptionId=${subscriptionId}`);
         const data = await response.json();
 
         if (data.success && data.details) {
@@ -75,7 +75,7 @@ function ThankYouContent() {
                 Welcome to Brilliant!
               </h1>
               <p className="text-lg text-gray-600">
-                Thank you for becoming an Annual Ambassador. Your journey to making Kingdom normal starts now.
+                Thank you for becoming a Monthly Ambassador. Your journey to making Kingdom normal starts now.
               </p>
             </div>
 
@@ -139,7 +139,7 @@ function ThankYouContent() {
 }
 
 // Main page component with Suspense boundary
-export default function AnnualAmbassadorThankYou() {
+export default function MonthlyAmbassadorThankYou() {
   return (
     <Suspense fallback={<LoadingState />}>
       <ThankYouContent />

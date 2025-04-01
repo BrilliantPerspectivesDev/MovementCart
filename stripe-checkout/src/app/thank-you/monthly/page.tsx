@@ -35,7 +35,7 @@ function ThankYouContent() {
 
     const pollForLoginDetails = async () => {
       try {
-        const response = await fetch(`/api/webhook/annual-ambassador?subscriptionId=${subscriptionId}`);
+        const response = await fetch(`/api/webhook/monthly?subscriptionId=${subscriptionId}`);
         const data = await response.json();
 
         if (data.success && data.details) {
@@ -75,7 +75,7 @@ function ThankYouContent() {
                 Welcome to Brilliant!
               </h1>
               <p className="text-lg text-gray-600">
-                Thank you for becoming an Annual Ambassador. Your journey to making Kingdom normal starts now.
+                Thank you for becoming a Monthly Member. Your journey to making Kingdom normal starts now.
               </p>
             </div>
 
@@ -96,9 +96,6 @@ function ThankYouContent() {
                     <p className="text-blue-800">
                       <strong>Password:</strong> {loginDetails.details.password}
                     </p>
-                    <p className="text-blue-800">
-                      <strong>Your Ambassador Code:</strong> {loginDetails.details.ambassadorCode}
-                    </p>
                   </div>
                 </div>
 
@@ -107,15 +104,15 @@ function ThankYouContent() {
                   <ol className="list-decimal list-inside space-y-2 text-gray-700">
                     <li>Download the BrilliantPlus app</li>
                     <li>Log in with your credentials above</li>
-                    <li>Complete your ambassador profile</li>
-                    <li>Join our next monthly gathering</li>
+                    <li>Complete your profile</li>
+                    <li>Start exploring our content library</li>
                   </ol>
                 </div>
 
                 <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 mt-8">
                   <h3 className="text-lg font-semibold text-yellow-900 mb-2">Important:</h3>
                   <p className="text-yellow-800">
-                    Please save your login credentials and ambassador code. You'll need these to access your account and track your referrals.
+                    Please save your login credentials. You'll need these to access your account and all premium content.
                   </p>
                 </div>
               </div>
@@ -139,7 +136,7 @@ function ThankYouContent() {
 }
 
 // Main page component with Suspense boundary
-export default function AnnualAmbassadorThankYou() {
+export default function MonthlyThankYou() {
   return (
     <Suspense fallback={<LoadingState />}>
       <ThankYouContent />
