@@ -15,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const showNavigation = !pathname?.includes('/checkout') && !pathname?.includes('/success');
+  const showNavigation = !pathname?.includes('/checkout') && !pathname?.includes('/success') && !pathname?.includes('/thank-you');
 
   return (
     <html lang="en">

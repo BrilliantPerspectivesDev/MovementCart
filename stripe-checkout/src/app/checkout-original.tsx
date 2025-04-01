@@ -833,7 +833,7 @@ function CheckoutForm({
               <p className="text-gray-600">Earn commissions and get exclusive benefits</p>
             </div>
             <div className="flex items-center gap-4">
-              <a href="#" className="text-[#2A9D8F] hover:text-[#238276] font-medium">
+              <a href="/ambassador" className="text-[#2A9D8F] hover:text-[#238276] font-medium">
                 Learn More
               </a>
               <Switch

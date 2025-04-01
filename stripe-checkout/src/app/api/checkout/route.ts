@@ -55,7 +55,7 @@ export async function POST(request: Request) {
       ],
       mode: 'subscription',
       success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/cart`,
+      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/checkout`,
       ...(customerDetails?.email && { customer_email: customerDetails.email }),
       billing_address_collection: 'required', // Always collect billing address for subscriptions
       // Include customer name and other metadata

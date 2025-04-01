@@ -639,10 +639,10 @@ export default function LandingPage() {
                     </ul>
                   </div>
                   <a
-                    href="/checkout"
+                    href="/ambassador"
                     className="rounded-md px-3.5 py-2 text-sm/6 font-semibold text-[#2A9D8F] ring-1 ring-[#2A9D8F] ring-inset hover:bg-[#2A9D8F]/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2A9D8F]"
                   >
-                    Add Ambassador Program <span aria-hidden="true">&rarr;</span>
+                    Learn More About Ambassador Program <span aria-hidden="true">&rarr;</span>
                   </a>
                 </div>
               </div>
