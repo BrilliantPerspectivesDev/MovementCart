@@ -54,26 +54,62 @@ const DEFAULT_PRODUCT_DATA = {
   description: 'A Simple, Relational way of being with God',
 };
 
+export const maxDuration = 60; // Set max duration to 60 seconds
+
 /**
  * API endpoint to handle direct checkout with Stripe Elements
  */
 export async function POST(request: Request) {
   try {
-    // Check for critical environment variables
+    // Wrap the entire request in error boundary
     if (!process.env.STRIPE_SECRET_KEY || !stripe) {
-      console.error('STRIPE_SECRET_KEY is not defined in environment variables');
-      return NextResponse.json({ error: 'Server configuration error: Missing Stripe credentials' }, { status: 500 });
+      throw new Error('Server configuration error: Missing Stripe credentials');
     }
 
-    const { customerInfo, paymentMethodId, frequency = 'monthly', pathParam, isAmbassador, ambassadorPriceId } = await request.json();
-    
-    // Enhanced debugging logs
-    console.log(`Received subscription frequency (raw): "${frequency}"`);
-    console.log(`Received referral path param: "${pathParam}"`);
-    console.log(`Ambassador program: ${isAmbassador ? 'Yes' : 'No'}`);
-    if (isAmbassador) {
-      console.log(`Ambassador fee price ID: ${PRICE_IDS.ambassadorFee}`);
+    let body;
+    try {
+      body = await request.json();
+    } catch (parseError) {
+      return NextResponse.json({ 
+        error: 'Invalid JSON in request body',
+        details: {
+          message: parseError instanceof Error ? parseError.message : 'JSON parse error'
+        }
+      }, { status: 400 });
     }
+
+    if (!body) {
+      return NextResponse.json({ 
+        error: 'Missing request body',
+        details: { message: 'Request body is required' }
+      }, { status: 400 });
+    }
+
+    const { customerInfo, paymentMethodId, frequency = 'monthly', pathParam, isAmbassador, ambassadorPriceId } = body;
+
+    // Validate required fields with detailed errors
+    if (!customerInfo?.email) {
+      return NextResponse.json({ 
+        error: 'Validation error',
+        details: { message: 'Customer email is required' }
+      }, { status: 400 });
+    }
+
+    if (!paymentMethodId) {
+      return NextResponse.json({ 
+        error: 'Validation error',
+        details: { message: 'Payment method ID is required' }
+      }, { status: 400 });
+    }
+
+    // Enhanced debugging logs
+    console.log('Processing checkout with details:', {
+      frequency,
+      pathParam,
+      isAmbassador,
+      email: customerInfo.email,
+      hasPaymentMethod: !!paymentMethodId
+    });
 
     // Validate pricing information
     const isMonthlySubscription = frequency.toLowerCase().trim() === 'monthly';
@@ -89,14 +125,6 @@ export async function POST(request: Request) {
       }, { status: 500 });
     }
 
-    if (!customerInfo?.email) {
-      return NextResponse.json({ error: 'Customer email is required' }, { status: 400 });
-    }
-
-    if (!paymentMethodId) {
-      return NextResponse.json({ error: 'Payment method ID is required' }, { status: 400 });
-    }
-    
     // Validate country code - make sure it's a 2-letter code
     if (customerInfo.country && (
       typeof customerInfo.country !== 'string' || 
@@ -118,47 +146,75 @@ export async function POST(request: Request) {
       limit: 1,
     });
 
+    // Validate and process referral code if present
+    let referralMetadata = {};
+    if (pathParam) {
+      try {
+        // Look up the referring ambassador
+        const referringCustomers = await stripe!.customers.list({
+          limit: 1,
+          metadata: {
+            ambassadorCode: pathParam // Look for customer with this ambassador code
+          }
+        });
+
+        if (referringCustomers.data.length > 0) {
+          const referringCustomer = referringCustomers.data[0];
+          referralMetadata = {
+            referredBy: referringCustomer.id,
+            referralCode: pathParam,
+            referringEmail: referringCustomer.email
+          };
+          console.log('Found referring ambassador:', referringCustomer.id);
+        } else {
+          console.log('No ambassador found for code:', pathParam);
+        }
+      } catch (referralError) {
+        console.error('Error processing referral code:', referralError);
+        // Continue without referral if there's an error
+      }
+    }
+
     if (existingCustomers.data.length > 0) {
       customer = existingCustomers.data[0];
       console.log(`Found existing customer: ${customer.id}`);
       
-      // Update customer with latest information
-      customer = await stripe!.customers.update(customer.id, {
-        name: `${customerInfo.firstName} ${customerInfo.lastName}`,
-        address: {
-          line1: customerInfo.streetAddress,
-          city: customerInfo.city,
-          state: customerInfo.state,
-          postal_code: customerInfo.postalCode,
-          country: country,
-        },
+      // Update existing customer with new metadata
+      const updatedCustomer = await stripe!.customers.update(customer.id, {
         metadata: {
           ...customer.metadata,
-          firstName: customerInfo.firstName || '',
-          lastName: customerInfo.lastName || '',
-          updatedAt: new Date().toISOString(),
-          affiliateCode: pathParam || '',  // Store referral code in customer metadata
+          ...referralMetadata,
+          firstName: customerInfo.firstName,
+          lastName: customerInfo.lastName,
+          streetAddress: customerInfo.streetAddress,
+          city: customerInfo.city,
+          state: customerInfo.state,
+          postalCode: customerInfo.postalCode,
+          country: customerInfo.country,
+          isAmbassador: isAmbassador.toString(),
+          phone: isAmbassador ? customerInfo.phone : undefined,
+          ambassadorCode: isAmbassador ? pathParam : undefined // Store their own ambassador code if they're an ambassador
         }
       });
+      console.log('Updated existing customer:', updatedCustomer.id);
     } else {
       customer = await stripe!.customers.create({
         email: customerInfo.email,
-        name: `${customerInfo.firstName} ${customerInfo.lastName}`,
-        address: {
-          line1: customerInfo.streetAddress,
+        metadata: {
+          ...referralMetadata,
+          firstName: customerInfo.firstName,
+          lastName: customerInfo.lastName,
+          streetAddress: customerInfo.streetAddress,
           city: customerInfo.city,
           state: customerInfo.state,
-          postal_code: customerInfo.postalCode,
-          country: country,
-        },
-        metadata: {
-          firstName: customerInfo.firstName || '',
-          lastName: customerInfo.lastName || '',
-          createdAt: new Date().toISOString(),
-          affiliateCode: pathParam || '',  // Store referral code in customer metadata
+          postalCode: customerInfo.postalCode,
+          country: customerInfo.country,
+          isAmbassador: isAmbassador.toString(),
+          phone: isAmbassador ? customerInfo.phone : undefined,
+          ambassadorCode: isAmbassador ? pathParam : undefined // Store their own ambassador code if they're an ambassador
         }
       });
-      console.log(`Created new customer: ${customer.id}`);
+      console.log('Created new customer:', customer.id);
     }
 
     // Attach the payment method to the customer
@@ -206,14 +262,18 @@ export async function POST(request: Request) {
     
     // For ambassadors, create a separate subscription for the ambassador fee
     let ambassadorFeeSubscription = null;
+    let ambassadorError = null;
     
     if (isAmbassador && ambassadorPriceId) {
       try {
+        // Add a small delay before creating ambassador subscription to ensure main subscription is fully processed
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
         // Create a separate subscription for the ambassador fee
         ambassadorFeeSubscription = await stripe!.subscriptions.create({
           customer: customer.id,
           items: [{ price: ambassadorPriceId }],
-          payment_behavior: 'allow_incomplete',
+          payment_behavior: 'default_incomplete', // Changed to default_incomplete
           default_payment_method: paymentMethodId,
           payment_settings: {
             payment_method_types: ['card'],
@@ -244,7 +304,8 @@ export async function POST(request: Request) {
         });
       } catch (feeError) {
         console.error('Error creating ambassador fee subscription:', feeError);
-        // Continue anyway with the main subscription
+        ambassadorError = feeError;
+        // Continue with the main subscription, but track the error
       }
     }
     
@@ -262,19 +323,70 @@ export async function POST(request: Request) {
       typeof ambassadorFeeSubscription.latest_invoice !== 'string' && 
       ambassadorFeeSubscription.latest_invoice.payment_intent;
 
-    // Return all necessary information for the frontend to handle payment confirmation
+    // Return response with additional error information if ambassador subscription failed
     return NextResponse.json({
       success: true,
       subscriptionId: mainSubscription.id,
       frequency: frequency,
-      mainPaymentIntentSecret: typeof mainPaymentIntent !== 'string' ? mainPaymentIntent?.client_secret : null,
-      ambassadorPaymentIntentSecret: typeof ambassadorPaymentIntent !== 'string' ? ambassadorPaymentIntent?.client_secret : null
+      mainPaymentIntentSecret: mainPaymentIntent && typeof mainPaymentIntent !== 'string' ? mainPaymentIntent.client_secret : null,
+      ambassadorPaymentIntentSecret: ambassadorPaymentIntent && typeof ambassadorPaymentIntent !== 'string' ? ambassadorPaymentIntent.client_secret : null,
+      ambassadorError: ambassadorError ? {
+        message: ambassadorError.message,
+        code: ambassadorError.code,
+        type: ambassadorError.type
+      } : null
     });
   } catch (error: any) {
-    console.error('Subscription creation error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Failed to create subscription' },
-      { status: 500 }
-    );
+    // Enhanced error handling with proper JSON structure
+    console.error('Checkout error:', error);
+
+    let statusCode = error.statusCode || 500;
+    let errorResponse = {
+      error: 'Checkout error',
+      details: {
+        message: error.message || 'An unexpected error occurred',
+        type: error.type || 'unknown',
+        code: error.code || 'unknown',
+        param: error.param,
+        decline_code: error.decline_code,
+        payment_intent: error.payment_intent,
+        payment_method: error.payment_method
+      }
+    };
+
+    // Handle Stripe API errors specifically
+    if (error.type?.startsWith('Stripe')) {
+      errorResponse.details.stripeError = true;
+      // Map common Stripe errors to user-friendly messages
+      switch (error.code) {
+        case 'card_declined':
+          errorResponse.details.message = 'The card was declined. Please try another card.';
+          statusCode = 402;
+          break;
+        case 'expired_card':
+          errorResponse.details.message = 'The card has expired. Please try another card.';
+          statusCode = 402;
+          break;
+        case 'incorrect_cvc':
+          errorResponse.details.message = 'The card\'s security code is incorrect.';
+          statusCode = 402;
+          break;
+        case 'processing_error':
+          errorResponse.details.message = 'An error occurred while processing the card.';
+          statusCode = 502;
+          break;
+        default:
+          errorResponse.details.message = 'An error occurred while processing your payment.';
+      }
+    }
+
+    // Clean up undefined values from details
+    Object.keys(errorResponse.details).forEach(key => {
+      if (errorResponse.details[key] === undefined) {
+        delete errorResponse.details[key];
+      }
+    });
+
+    return NextResponse.json(errorResponse, { status: statusCode });
   }
 } 
