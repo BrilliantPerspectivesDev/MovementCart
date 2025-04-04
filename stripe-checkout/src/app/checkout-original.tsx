@@ -13,6 +13,9 @@ import { useGooglePlacesAutocomplete } from './hooks/useGooglePlacesAutocomplete
 import { parseAddressComponents } from './utils/addressParser';
 import { Switch } from '@headlessui/react';
 import { useRouter } from 'next/navigation';
+import LegalModal from './components/LegalModal';
+import PoliciesModal from './components/PoliciesModal';
+import AmbassadorAgreementModal from './components/AmbassadorAgreementModal';
 
 // Load Stripe outside of component to avoid recreating it on renders
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
@@ -281,12 +284,54 @@ interface FormData {
   firstName: string;
   lastName: string;
   email: string;
+  phone: string;
   streetAddress: string;
   city: string;
   state: string;
   postalCode: string;
   country: string; // This will now hold the 2-letter country code
 }
+
+// Add legal document content
+const TERMS_OF_SERVICE = `
+  <h2>Terms of Service</h2>
+  <p>Last updated: February 24, 2024</p>
+  
+  <h3>1. Agreement to Terms</h3>
+  <p>By accessing or using Brilliant Movement's services, you agree to be bound by these Terms of Service.</p>
+  
+  <h3>2. Membership</h3>
+  <p>Your membership includes access to our digital content, community features, and other services as described in your selected plan.</p>
+  
+  <h3>3. Payment and Billing</h3>
+  <p>You agree to pay all fees associated with your selected membership plan. Fees are billed in advance on a monthly or annual basis.</p>
+  
+  <h3>4. Cancellation</h3>
+  <p>You may cancel your membership at any time. Cancellation will take effect at the end of your current billing period.</p>
+  
+  <h3>5. Intellectual Property</h3>
+  <p>All content provided through Brilliant Movement is protected by copyright and other intellectual property laws.</p>
+`;
+
+const PRIVACY_POLICY = `
+  <h2>Privacy Policy</h2>
+  <p>Last updated: February 24, 2024</p>
+  
+  <h3>1. Information We Collect</h3>
+  <p>We collect information you provide directly to us, including name, email, and payment information.</p>
+  
+  <h3>2. How We Use Your Information</h3>
+  <p>We use your information to provide and improve our services, process payments, and communicate with you.</p>
+  
+  <h3>3. Information Sharing</h3>
+  <p>We do not sell your personal information. We may share it with service providers who assist in operating our services.</p>
+  
+  <h3>4. Data Security</h3>
+  <p>We implement appropriate security measures to protect your personal information.</p>
+  
+  <h3>5. Your Rights</h3>
+  <p>You have the right to access, correct, or delete your personal information.</p>
+`;
 
 // Inner form component that has access to Stripe hooks
 function CheckoutForm({ 
@@ -316,6 +361,19 @@ function CheckoutForm({
   
   // Add state for modal visibility
   const [showAmbassadorModal, setShowAmbassadorModal] = useState(false);
+  const [showTermsModal, setShowTermsModal] = useState(false);
+  const [showPrivacyModal, setShowPrivacyModal] = useState(false);
+  const [showPoliciesModal, setShowPoliciesModal] = useState(false);
+  const [agreeToTerms, setAgreeToTerms] = useState(false);
+  const [agreeToPolicies, setAgreeToPolicies] = useState(false);
+  const [agreeToAmbassador, setAgreeToAmbassador] = useState(false);
+  const [cardComplete, setCardComplete] = useState(false);
+  const [formValid, setFormValid] = useState(false);
+  const [step1Valid, setStep1Valid] = useState(false);
+  const [currentFeatureIndex, setCurrentFeatureIndex] = useState(0);
+  
+  // Add state for Ambassador Agreement modal
+  const [showAmbassadorAgreementModal, setShowAmbassadorAgreementModal] = useState(false);
   
   useEffect(() => {
     // Get the stored path param from localStorage
@@ -383,17 +441,14 @@ function CheckoutForm({
     firstName: '',
     lastName: '',
     email: '',
+    phone: '',
     streetAddress: '',
     city: '',
     state: '',
     postalCode: '',
     country: 'US'
   });
-  const [agreeToTerms, setAgreeToTerms] = useState(false);
-  const [cardComplete, setCardComplete] = useState(false);
-  const [formValid, setFormValid] = useState(false);
-  const [step1Valid, setStep1Valid] = useState(false);
-  const [currentFeatureIndex, setCurrentFeatureIndex] = useState(0);
+  const [agreedToMarketing, setAgreedToMarketing] = useState(false);
   
   // Features data for carousel
   const features = [
@@ -431,23 +486,34 @@ function CheckoutForm({
     setPriceInfo(getPriceInfo(selectedFrequency));
   }, [selectedFrequency]);
 
-  // Check if form step 1 is valid
+  // Update the useEffect for form validation to always check phone number
   useEffect(() => {
     const isAddressValid = 
       formData.firstName.trim() !== '' && 
       formData.lastName.trim() !== '' && 
       formData.email.trim() !== '' &&
+      formData.phone.trim() !== '' &&
       formData.streetAddress.trim() !== '' &&
       formData.city.trim() !== '' &&
       formData.state.trim() !== '' &&
       formData.postalCode.trim() !== '' &&
       formData.country.trim() !== '';
 
-    // Add US address validation for ambassadors
-    if (isAmbassador && formData.country !== 'US') {
-      setError('Ambassador program is only available for US residents at this time.');
+    // Basic phone number validation
+    const phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+    if (!phoneRegex.test(formData.phone)) {
+      setError('Please enter a valid phone number.');
       setStep1Valid(false);
       return;
+    }
+
+    // Add US address validation for ambassadors
+    if (isAmbassador) {
+      if (formData.country !== 'US') {
+        setError('Ambassador program is only available for US residents at this time.');
+        setStep1Valid(false);
+        return;
+      }
     }
 
     setError(null);
@@ -578,7 +644,8 @@ function CheckoutForm({
           frequency: selectedFrequency,
           pathParam: affiliateCode,
           isAmbassador,
-          ambassadorPriceId: 'price_1R42MJEWsQ0IpmHOWcDQ5KvC'
+          ambassadorPriceId: 'price_1R42MJEWsQ0IpmHOWcDQ5KvC',
+          marketingConsent: agreedToMarketing
         }),
       });
 
@@ -741,6 +808,22 @@ function CheckoutForm({
         </div>
 
         <div>
+          <label htmlFor="phone" className="block text-xs md:text-sm font-medium text-gray-700 mb-1">
+            Phone Number
+          </label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            value={formData.phone}
+            onChange={handleInputChange}
+            placeholder="(123) 456-7890"
+            required
+            className="w-full px-3 py-2 h-9 text-sm border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+
+        <div>
           <label htmlFor="streetAddress" className="block text-xs md:text-sm font-medium text-gray-700 mb-1">
             Billing Address
           </label>
@@ -881,17 +964,43 @@ function CheckoutForm({
   };
 
   // Render step 2 form (payment)
-  const renderStep2 = () => {
+  const renderStep2 = (): JSX.Element => {
     return (
-      <div className="space-y-4">
-        <h3 className="text-lg font-semibold mb-4">Payment Information</h3>
-        
-        <div className="mb-4">
-          <label htmlFor="card-element" className="block text-sm font-medium text-gray-700 mb-1">
-            Credit or debit card
+      <div className="space-y-6">
+        {/* Terms of Service and Marketing Checkbox */}
+        <div className="flex items-start mb-4">
+          <div className="flex items-center h-5">
+            <input
+              id="terms"
+              name="terms"
+              type="checkbox"
+              checked={agreeToTerms}
+              onChange={(e) => setAgreeToTerms(e.target.checked)}
+              className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+            />
+          </div>
+          <div className="ml-3 text-sm">
+            <label htmlFor="terms" className="font-medium text-gray-700">
+              I agree to the{' '}
+              <button
+                type="button"
+                onClick={() => window.open('https://brilliantperspectives.clickfunnels.com/terms-of-servicefskn0ipf', '_blank')}
+                className="text-blue-600 hover:text-blue-800"
+              >
+                Terms of Service
+              </button>
+              {' '}and give permission to receive communications
+            </label>
+          </div>
+        </div>
+
+        {/* Credit Card Input */}
+        <div className="space-y-2">
+          <label htmlFor="card-element" className="block text-sm font-medium text-gray-700">
+            Credit Card
           </label>
-          <div className="p-3 border border-gray-300 rounded-md bg-white">
-            <CardElement 
+          <div className="mt-1 p-3 border border-gray-300 rounded-md shadow-sm">
+            <CardElement
               id="card-element"
               options={{
                 style: {
@@ -909,100 +1018,173 @@ function CheckoutForm({
               }}
               onChange={handleCardChange}
             />
-            {checkoutStep === 2 && !cardElementReady && (
-              <p className="mt-1 text-xs text-gray-500">
-                Please enter your card details
+          </div>
+        </div>
+
+        {/* Only show these checkboxes if isAmbassador is true */}
+        {isAmbassador && (
+          <>
+            <div className="mt-4 p-4 bg-blue-50 rounded-lg">
+              <p className="text-sm text-blue-700">
+                To become an ambassador, please read and accept the following agreements:
               </p>
-            )}
+            </div>
+            <div className="mt-4">
+              <div 
+                onClick={() => setShowPoliciesModal(true)}
+                className="flex items-start cursor-pointer group"
+              >
+                <div className="flex items-center h-5">
+                  <input
+                    type="checkbox"
+                    checked={agreeToPolicies}
+                    readOnly
+                    className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded cursor-pointer"
+                    onClick={(e: React.MouseEvent) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                    }}
+                  />
+                </div>
+                <div className="ml-3 text-sm">
+                  <span className="font-medium text-gray-700">
+                    I agree to the{' '}
+                    <span className="text-blue-600 group-hover:text-blue-500">
+                      Policies and Procedures
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="mt-4">
+              <div 
+                onClick={() => setShowAmbassadorAgreementModal(true)}
+                className="flex items-start cursor-pointer group"
+              >
+                <div className="flex items-center h-5">
+                  <input
+                    type="checkbox"
+                    checked={agreeToAmbassador}
+                    readOnly
+                    className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded cursor-pointer"
+                    onClick={(e: React.MouseEvent) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                    }}
+                  />
+                </div>
+                <div className="ml-3 text-sm">
+                  <span className="font-medium text-gray-700">
+                    I agree to the{' '}
+                    <span className="text-blue-600 group-hover:text-blue-500">
+                      Ambassador Agreement
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* Show any error messages */}
+        {error && (
+          <div className="text-red-600 text-sm mt-2">
+            {error}
           </div>
-        </div>
-        
-        <div className="flex items-start mb-4">
-          <div className="flex items-center h-5">
-            <input
-              id="terms"
-              name="terms"
-              type="checkbox"
-              checked={agreeToTerms}
-              onChange={(e) => setAgreeToTerms(e.target.checked)}
-              className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-            />
-          </div>
-          <div className="ml-3 text-sm">
-            <label htmlFor="terms" className="font-medium text-gray-700">
-              I agree to the <a href="#" className="text-blue-600 hover:text-blue-800">Terms of Service</a> and <a href="#" className="text-blue-600 hover:text-blue-800">Privacy Policy</a>
-            </label>
-          </div>
-        </div>
+        )}
       </div>
     );
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 md:space-y-5">
-      {/* Checkout Steps Progress Indicator */}
-      {renderSteps()}
-      
-      <div className="max-h-[45vh] md:max-h-[55vh] overflow-y-auto pr-1 pb-2">
-        {checkoutStep === 1 && renderStep1()}
-        {checkoutStep === 2 && renderStep2()}
-      </div>
-
-      {error && (
-        <div className="bg-red-50 text-red-700 p-3 rounded-md text-sm">
-          {error}
+    <>
+      <form onSubmit={handleSubmit} className="space-y-4 md:space-y-5">
+        {/* Checkout Steps Progress Indicator */}
+        {renderSteps()}
+        
+        <div className="max-h-[45vh] md:max-h-[55vh] overflow-y-auto pr-1 pb-2">
+          {checkoutStep === 1 && renderStep1()}
+          {checkoutStep === 2 && renderStep2()}
         </div>
-      )}
 
-      <div className="flex items-center justify-between space-x-3 md:space-x-4 mt-4">
-        {checkoutStep > 1 && (
-          <button
-            type="button"
-            onClick={handleBack}
-            className="flex-1 py-2 md:py-3 px-3 md:px-4 border border-gray-300 rounded-md shadow-sm text-sm md:text-base font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-          >
-            Back
-          </button>
-        )}
-        <button
-          type="submit"
-          disabled={checkoutStep === 1 ? !step1Valid : (isLoading || !formValid || !agreeToTerms)}
-          className={`flex-1 py-2 md:py-3 px-3 md:px-4 rounded-md shadow-sm text-sm md:text-base font-medium text-white ${
-            (checkoutStep === 1 ? !step1Valid : (isLoading || !formValid || !agreeToTerms))
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-          }`}
-        >
-          {isLoading ? (
-            <span className="flex items-center justify-center">
-              <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-              Processing...
-            </span>
-          ) : checkoutStep === 1 ? (
-            "Continue to Payment"
-          ) : (
-            isAmbassador ? "Pay Now" : "Start Your Free Trial"
+        <div className="flex items-center justify-between space-x-3 md:space-x-4 mt-4">
+          {checkoutStep > 1 && (
+            <button
+              type="button"
+              onClick={handleBack}
+              className="flex-1 py-2 md:py-3 px-3 md:px-4 border border-gray-300 rounded-md shadow-sm text-sm md:text-base font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+              Back
+            </button>
           )}
-        </button>
-      </div>
-      <div className="flex justify-center space-x-4 mt-2">
-        <div className="flex items-center">
-          <svg className="h-4 w-4 text-gray-400 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-          </svg>
-          <span className="text-xs text-gray-500">Secure</span>
+          <button
+            type="submit"
+            disabled={checkoutStep === 1 ? !step1Valid : (isLoading || !formValid || !agreeToTerms || (isAmbassador && !agreeToAmbassador))}
+            className={`flex-1 py-2 md:py-3 px-3 md:px-4 rounded-md shadow-sm text-sm md:text-base font-medium text-white ${
+              (checkoutStep === 1 ? !step1Valid : (isLoading || !formValid || !agreeToTerms || (isAmbassador && !agreeToAmbassador)))
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            }`}
+          >
+            {isLoading ? (
+              <span className="flex items-center justify-center">
+                <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Processing...
+              </span>
+            ) : checkoutStep === 1 ? (
+              "Continue to Payment"
+            ) : (
+              isAmbassador ? "Pay Now" : "Start Your Free Trial"
+            )}
+          </button>
         </div>
-        <div className="flex items-center">
-          <svg className="h-4 w-4 text-gray-400 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
-          <span className="text-xs text-gray-500">Cancel Anytime</span>
+        <div className="flex justify-center space-x-4 mt-2">
+          <div className="flex items-center">
+            <svg className="h-4 w-4 text-gray-400 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+            <span className="text-xs text-gray-500">Secure</span>
+          </div>
+          <div className="flex items-center">
+            <svg className="h-4 w-4 text-gray-400 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            <span className="text-xs text-gray-500">Cancel Anytime</span>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+
+      <LegalModal
+        isOpen={showTermsModal}
+        onClose={() => setShowTermsModal(false)}
+        title="Terms of Service"
+        content={TERMS_OF_SERVICE}
+      />
+
+      <LegalModal
+        isOpen={showPrivacyModal}
+        onClose={() => setShowPrivacyModal(false)}
+        title="Privacy Policy"
+        content={PRIVACY_POLICY}
+      />
+
+      <PoliciesModal
+        isOpen={showPoliciesModal}
+        onClose={() => setShowPoliciesModal(false)}
+        onAccept={() => setAgreeToPolicies(true)}
+        onDecline={() => setAgreeToPolicies(false)}
+      />
+
+      <AmbassadorAgreementModal
+        isOpen={showAmbassadorAgreementModal}
+        onClose={() => setShowAmbassadorAgreementModal(false)}
+        onAccept={() => setAgreeToAmbassador(true)}
+        onDecline={() => setAgreeToAmbassador(false)}
+      />
+    </>
   );
 }
 
@@ -1090,258 +1272,305 @@ export default function Home() {
   }, [items.length, addToCart]);
   
   return (
-    <div className="h-screen flex flex-col md:flex-row overflow-hidden">
-      {/* Left Section (Checkout) */}
-      <div className="flex-1 md:w-3/5 bg-white p-4 md:p-8 lg:p-12 overflow-auto">
-        <div className="max-w-lg mx-auto">
-          {/* Logo */}
-          <div className="mb-6 md:mb-8">
-            <Image
-              src="/Blacklogo.png" 
-              alt="Brilliant Logo" 
-              width={180}
-              height={60} 
-              className="h-auto w-auto"
-            />
-          </div>
-          
-          {/* Headline */}
-          <div className="mb-6 md:mb-8">
-            {/* Removed headline and subtext as requested */}
-          </div>
-          
-          {/* Pricing Section */}
-          <div className="mb-6 md:mb-8">
-            <div className="grid grid-cols-2 gap-3 md:gap-4">
-              {/* Monthly Option */}
-              <div
-                className={`border ${
-                  selectedFrequency === 'monthly' ? 'border-blue-500 border-2' : 'border-gray-300'
-                } rounded-lg p-3 md:p-4 cursor-pointer hover:border-blue-400 transition-colors`}
-                onClick={() => setSelectedFrequency('monthly')}
-              >
-                <div className="flex justify-between items-start mb-2">
-                  <div>
-                    <h3 className="font-medium text-gray-900">Monthly</h3>
-                    <p className="text-sm text-gray-500">Auto-renews monthly</p>
+    <div className="min-h-screen flex flex-col">
+      <main className="flex-1 flex flex-col md:flex-row">
+        {/* Left Section (Checkout) */}
+        <div className="flex-1 md:w-3/5 bg-white p-4 md:p-8 lg:p-12 overflow-auto">
+          <div className="max-w-lg mx-auto">
+            {/* Logo */}
+            <div className="mb-6 md:mb-8">
+              <Image
+                src="/Blacklogo.png" 
+                alt="Brilliant Logo" 
+                width={180}
+                height={60} 
+                className="h-auto w-auto"
+              />
+            </div>
+            
+            {/* Pricing Section */}
+            <div className="mb-6 md:mb-8">
+              <div className="grid grid-cols-2 gap-3 md:gap-4">
+                {/* Monthly Option */}
+                <div
+                  className={`border ${
+                    selectedFrequency === 'monthly' ? 'border-blue-500 border-2' : 'border-gray-300'
+                  } rounded-lg p-3 md:p-4 cursor-pointer hover:border-blue-400 transition-colors`}
+                  onClick={() => setSelectedFrequency('monthly')}
+                >
+                  <div className="flex justify-between items-start mb-2">
+                    <div>
+                      <h3 className="font-medium text-gray-900">Monthly</h3>
+                      <p className="text-sm text-gray-500">Auto-renews monthly</p>
+                    </div>
+                    <input
+                      type="radio"
+                      name="plan"
+                      checked={selectedFrequency === 'monthly'}
+                      onChange={() => setSelectedFrequency('monthly')}
+                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                    />
                   </div>
-                  <input
-                    type="radio"
-                    name="plan"
-                    checked={selectedFrequency === 'monthly'}
-                    onChange={() => setSelectedFrequency('monthly')}
-                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
-                  />
+                  <div>
+                    <p className="text-lg font-bold">$47/mo</p>
+                    <p className="text-xs text-gray-500">Less than $1.57/day</p>
+                    <p className="text-xs mt-2"><span className="text-amber-500">★★★★★</span> <span className="text-gray-600">|</span> <span className="text-gray-600">4000+ Reviews</span></p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-lg font-bold">$47/mo</p>
-                  <p className="text-xs text-gray-500">Less than $1.57/day</p>
-                  <p className="text-xs mt-2"><span className="text-amber-500">★★★★★</span> <span className="text-gray-600">|</span> <span className="text-gray-600">4000+ Reviews</span></p>
+                
+                {/* Annual Option */}
+                <div
+                  className={`border ${
+                    selectedFrequency === 'annual' ? 'border-blue-500 border-2' : 'border-gray-300'
+                  } rounded-lg p-3 md:p-4 cursor-pointer hover:border-blue-400 transition-colors relative`}
+                  onClick={() => setSelectedFrequency('annual')}
+                >
+                  <div className="absolute -top-2 -right-2 bg-green-500 text-white text-xs font-bold py-1 px-2 rounded">
+                    BEST VALUE
+                  </div>
+                  <div className="flex justify-between items-start mb-2">
+                    <div>
+                      <h3 className="font-medium text-gray-900">Annual</h3>
+                      <p className="text-sm text-gray-500">Auto-renews yearly</p>
+                      <p className="text-xs text-green-600 font-semibold mt-1">Save 30%</p>
+                    </div>
+                    <input
+                      type="radio"
+                      name="plan"
+                      checked={selectedFrequency === 'annual'}
+                      onChange={() => setSelectedFrequency('annual')}
+                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                    />
+                  </div>
+                  <div>
+                    <p className="text-lg font-bold">$397/yr</p>
+                    <p className="text-xs text-gray-500">Less than $1.09/day</p>
+                    <p className="text-xs mt-2"><span className="text-amber-500">★★★★★</span> <span className="text-gray-600">|</span> <span className="text-gray-600">4000+ Reviews</span></p>
+                  </div>
                 </div>
+              </div>
+            </div>
+            
+            {/* Order Summary */}
+            <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-6 md:mb-8">
+              <h3 className="font-medium text-gray-900 mb-3">Order Summary</h3>
+              <div className="flex justify-between mb-2">
+                <p className="text-gray-600">{priceInfo.frequency === 'monthly' ? 'Monthly' : 'Annual'} Plan:</p>
+                <p className="font-medium">${priceInfo.discountPrice}</p>
+              </div>
+              {priceInfo.frequency === 'annual' && (
+                <div className="flex justify-between mb-2 text-green-600 text-sm">
+                  <p>You save:</p>
+                  <p>$167</p>
+                </div>
+              )}
+              {isAmbassador && (
+                <div className="flex justify-between mb-2">
+                  <p className="text-gray-600">Ambassador Program (Annual):</p>
+                  <p className="font-medium">$10.00</p>
+                </div>
+              )}
+              <div className="flex justify-between mb-2">
+                <p className="text-gray-600">{isAmbassador ? 'No Trial Period' : '5-Day Free Trial'}:</p>
+                <p className="font-medium">{isAmbassador ? 'N/A' : '$0.00'}</p>
+              </div>
+              <div className="border-t border-gray-200 my-2 pt-2"></div>
+              <div className="flex justify-between">
+                <p className="font-medium">Due today:</p>
+                <p className="font-bold">{isAmbassador ? `$${priceInfo.totalPrice.toFixed(2)}` : '$0.00'}</p>
+              </div>
+              <div className="mt-1 text-xs text-gray-500 flex items-center">
+                <svg className="h-3 w-3 mr-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                {isAmbassador ? (
+                  <span>Charged immediately: ${priceInfo.totalPrice.toFixed(2)} {priceInfo.frequency === 'monthly' ? 'per month' : 'per year'}</span>
+                ) : (
+                  <span>After trial, ${priceInfo.totalPrice} {priceInfo.frequency === 'monthly' ? 'per month' : 'per year'}</span>
+                )}
+              </div>
+            </div>
+            
+            {/* Checkout Form */}
+            <Elements stripe={stripePromise}>
+              <CheckoutForm 
+                selectedFrequency={selectedFrequency}
+                isAmbassador={isAmbassador}
+                setIsAmbassador={setIsAmbassador}
+              />
+            </Elements>
+          </div>
+        </div>
+        
+        {/* Right Section (Image) */}
+        <div className="hidden lg:block w-full xl:w-2/5 relative overflow-hidden">
+          {/* Gradient Background with Animation */}
+          <div 
+            className="absolute inset-0 w-full h-full z-0"
+            style={{
+              position: 'relative',
+              width: '100%',
+              height: '100%',
+              overflow: 'hidden'
+            }}
+          >
+            <div 
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                opacity: 0,
+                backgroundImage: 'url(/gradients/gradient1.jpg)',
+                backgroundSize: 'cover',
+                animation: 'fadeInOut 20s infinite 0s',
+                zIndex: 10,
+              }}
+            />
+            <div 
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                opacity: 0,
+                backgroundImage: 'url(/gradients/gradient2.jpg)',
+                backgroundSize: 'cover',
+                animation: 'fadeInOut 20s infinite 5s',
+                zIndex: 10,
+              }}
+            />
+            <div 
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                opacity: 0,
+                backgroundImage: 'url(/gradients/gradient3.jpg)',
+                backgroundSize: 'cover',
+                animation: 'fadeInOut 20s infinite 10s',
+                zIndex: 10,
+              }}
+            />
+            <div 
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                opacity: 0,
+                backgroundImage: 'url(/gradients/gradient4.jpg)',
+                backgroundSize: 'cover',
+                animation: 'fadeInOut 20s infinite 15s',
+                zIndex: 10,
+              }}
+            />
+            <style jsx>{`
+              @keyframes fadeInOut {
+                0% { opacity: 0; }
+                5% { opacity: 0; }
+                15% { opacity: 1; }
+                45% { opacity: 1; }
+                55% { opacity: 0; }
+                100% { opacity: 0; }
+              }
+            `}</style>
+          </div>
+
+          {/* Semi-transparent panel */}
+          <div className="relative z-20 h-full w-full p-8 sm:p-12 text-white flex flex-col justify-between">
+            <div className="bg-black/30 rounded-2xl p-6 backdrop-blur-md">
+              <h2 className="text-2xl font-bold mb-4">The Christian Prayer App</h2>
+              
+              <div className="mb-8">
+                <div className="font-semibold text-lg mb-2">What you get:</div>
+                <ul className="space-y-3">
+                  <li className="flex items-start">
+                    <span className="mr-3 text-green-300">✓</span>
+                    <span>Daily structured prayer guides</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="mr-3 text-green-300">✓</span>
+                    <span>Prayer tracking with insights</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="mr-3 text-green-300">✓</span>
+                    <span>Community prayer circles</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="mr-3 text-green-300">✓</span>
+                    <span>Scripture-based meditations</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="mr-3 text-green-300">✓</span>
+                    <span>Prayer reminders & journals</span>
+                  </li>
+                </ul>
               </div>
               
-              {/* Annual Option */}
-              <div
-                className={`border ${
-                  selectedFrequency === 'annual' ? 'border-blue-500 border-2' : 'border-gray-300'
-                } rounded-lg p-3 md:p-4 cursor-pointer hover:border-blue-400 transition-colors relative`}
-                onClick={() => setSelectedFrequency('annual')}
-              >
-                <div className="absolute -top-2 -right-2 bg-green-500 text-white text-xs font-bold py-1 px-2 rounded">
-                  BEST VALUE
-                </div>
-                <div className="flex justify-between items-start mb-2">
-                  <div>
-                    <h3 className="font-medium text-gray-900">Annual</h3>
-                    <p className="text-sm text-gray-500">Auto-renews yearly</p>
-                    <p className="text-xs text-green-600 font-semibold mt-1">Save 30%</p>
-                  </div>
-                  <input
-                    type="radio"
-                    name="plan"
-                    checked={selectedFrequency === 'annual'}
-                    onChange={() => setSelectedFrequency('annual')}
-                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
-                  />
-                </div>
-                <div>
-                  <p className="text-lg font-bold">$397/yr</p>
-                  <p className="text-xs text-gray-500">Less than $1.09/day</p>
-                  <p className="text-xs mt-2"><span className="text-amber-500">★★★★★</span> <span className="text-gray-600">|</span> <span className="text-gray-600">4000+ Reviews</span></p>
-                </div>
+              <div className="text-sm opacity-90 italic">
+                "This app has transformed my prayer life. The daily structure and community features keep me accountable."
+                <div className="mt-2 font-semibold not-italic">— Sarah M.</div>
               </div>
             </div>
           </div>
-          
-          {/* Order Summary */}
-          <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-6 md:mb-8">
-            <h3 className="font-medium text-gray-900 mb-3">Order Summary</h3>
-            <div className="flex justify-between mb-2">
-              <p className="text-gray-600">{priceInfo.frequency === 'monthly' ? 'Monthly' : 'Annual'} Plan:</p>
-              <p className="font-medium">${priceInfo.discountPrice}</p>
-            </div>
-            {priceInfo.frequency === 'annual' && (
-              <div className="flex justify-between mb-2 text-green-600 text-sm">
-                <p>You save:</p>
-                <p>$167</p>
-              </div>
-            )}
-            {isAmbassador && (
-              <div className="flex justify-between mb-2">
-                <p className="text-gray-600">Ambassador Program (Annual):</p>
-                <p className="font-medium">$10.00</p>
-              </div>
-            )}
-            <div className="flex justify-between mb-2">
-              <p className="text-gray-600">{isAmbassador ? 'No Trial Period' : '5-Day Free Trial'}:</p>
-              <p className="font-medium">{isAmbassador ? 'N/A' : '$0.00'}</p>
-            </div>
-            <div className="border-t border-gray-200 my-2 pt-2"></div>
-            <div className="flex justify-between">
-              <p className="font-medium">Due today:</p>
-              <p className="font-bold">{isAmbassador ? `$${priceInfo.totalPrice.toFixed(2)}` : '$0.00'}</p>
-            </div>
-            <div className="mt-1 text-xs text-gray-500 flex items-center">
-              <svg className="h-3 w-3 mr-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              {isAmbassador ? (
-                <span>Charged immediately: ${priceInfo.totalPrice.toFixed(2)} {priceInfo.frequency === 'monthly' ? 'per month' : 'per year'}</span>
-              ) : (
-                <span>After trial, ${priceInfo.totalPrice} {priceInfo.frequency === 'monthly' ? 'per month' : 'per year'}</span>
-              )}
-            </div>
-          </div>
-          
-          {/* Checkout Form */}
-          <Elements stripe={stripePromise}>
-            <CheckoutForm 
-              selectedFrequency={selectedFrequency}
-              isAmbassador={isAmbassador}
-              setIsAmbassador={setIsAmbassador}
-            />
-          </Elements>
         </div>
-      </div>
-      
-      {/* Right Section (Image) */}
-      <div className="hidden lg:block w-full xl:w-2/5 min-h-screen relative overflow-hidden">
-        {/* Gradient Background with Animation */}
-        <div 
-          className="absolute inset-0 w-full h-full z-0"
-          style={{
-            position: 'relative',
-            width: '100%',
-            height: '100%',
-            overflow: 'hidden'
-          }}
-        >
-          <div 
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              opacity: 0,
-              backgroundImage: 'url(/gradients/gradient1.jpg)',
-              backgroundSize: 'cover',
-              animation: 'fadeInOut 20s infinite 0s',
-              zIndex: 10,
-            }}
-          />
-          <div 
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              opacity: 0,
-              backgroundImage: 'url(/gradients/gradient2.jpg)',
-              backgroundSize: 'cover',
-              animation: 'fadeInOut 20s infinite 5s',
-              zIndex: 10,
-            }}
-          />
-          <div 
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              opacity: 0,
-              backgroundImage: 'url(/gradients/gradient3.jpg)',
-              backgroundSize: 'cover',
-              animation: 'fadeInOut 20s infinite 10s',
-              zIndex: 10,
-            }}
-          />
-          <div 
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              opacity: 0,
-              backgroundImage: 'url(/gradients/gradient4.jpg)',
-              backgroundSize: 'cover',
-              animation: 'fadeInOut 20s infinite 15s',
-              zIndex: 10,
-            }}
-          />
-          <style jsx>{`
-            @keyframes fadeInOut {
-              0% { opacity: 0; }
-              5% { opacity: 0; }
-              15% { opacity: 1; }
-              45% { opacity: 1; }
-              55% { opacity: 0; }
-              100% { opacity: 0; }
-            }
-          `}</style>
-        </div>
+      </main>
 
-        {/* Semi-transparent panel */}
-        <div className="relative z-20 h-full w-full p-8 sm:p-12 text-white flex flex-col justify-between">
-          <div className="bg-black/30 rounded-2xl p-6 backdrop-blur-md">
-            <h2 className="text-2xl font-bold mb-4">The Christian Prayer App</h2>
-            
-            <div className="mb-8">
-              <div className="font-semibold text-lg mb-2">What you get:</div>
-              <ul className="space-y-3">
-                <li className="flex items-start">
-                  <span className="mr-3 text-green-300">✓</span>
-                  <span>Daily structured prayer guides</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-3 text-green-300">✓</span>
-                  <span>Prayer tracking with insights</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-3 text-green-300">✓</span>
-                  <span>Community prayer circles</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-3 text-green-300">✓</span>
-                  <span>Scripture-based meditations</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-3 text-green-300">✓</span>
-                  <span>Prayer reminders & journals</span>
-                </li>
-              </ul>
+      {/* Footer */}
+      <footer className="bg-[#222222] text-white py-8">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between">
+            {/* Logo and copyright */}
+            <div className="mb-6 md:mb-0">
+              <h2 className="text-xl font-bold mb-2">Brilliant Perspectives LLC</h2>
+              <p className="text-gray-400 text-sm">
+                © 2025 Brilliant Perspectives LLC. All rights reserved.
+              </p>
             </div>
             
-            <div className="text-sm opacity-90 italic">
-              "This app has transformed my prayer life. The daily structure and community features keep me accountable."
-              <div className="mt-2 font-semibold not-italic">— Sarah M.</div>
+            {/* Contact info */}
+            <div>
+              <h3 className="text-lg font-semibold mb-2">Contact Us</h3>
+              <p className="text-gray-400">
+                <a href="mailto:help@brilliantperspectives.com" className="hover:text-white transition-colors">
+                  help@brilliantperspectives.com
+                </a>
+              </p>
+              <p className="text-gray-400">Voicemail: (800) 351-7541</p>
+              <p className="text-gray-400">735 State St. #517<br />Santa Barbara, CA 93101</p>
             </div>
           </div>
+          
+          {/* Bottom bar */}
+          <div className="mt-8 pt-4 border-t border-gray-700 text-center text-gray-400 text-sm">
+            <p>
+              <a 
+                href="https://brilliantperspectives.clickfunnels.com/terms-of-service7l3p11kd" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors"
+              >
+                Privacy Policy
+              </a>
+              <span className="mx-2">|</span>
+              <a 
+                href="https://brilliantperspectives.clickfunnels.com/terms-of-servicefskn0ipf" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors"
+              >
+                Terms of Service
+              </a>
+            </p>
+          </div>
         </div>
-      </div>
+      </footer>
     </div>
   );
 }
