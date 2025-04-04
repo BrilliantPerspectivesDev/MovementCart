@@ -14,6 +14,7 @@ module.exports = {
         moss: '#3E5E17',
         celadon: '#74A78E',
         charcoal: '#222222',
+        primary: "#6c4ed9",
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { storeLoginDetails } from '../login-details/route';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: Request) {
   try {
     const data = await req.json();

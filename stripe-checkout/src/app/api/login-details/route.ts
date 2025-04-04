@@ -3,6 +3,8 @@ import { NextResponse } from 'next/server';
 // In a real implementation, you would store this in a database or cache
 const loginDetailsStore = new Map<string, any>();
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);

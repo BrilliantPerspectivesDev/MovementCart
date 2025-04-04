@@ -3,6 +3,8 @@ import { NextResponse } from 'next/server';
 // In-memory store for demo purposes. In production, use a database
 const detailsStore = new Map<string, any>();
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: Request) {
   try {
     const data = await req.json();

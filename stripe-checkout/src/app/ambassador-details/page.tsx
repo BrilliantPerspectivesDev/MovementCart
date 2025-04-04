@@ -76,7 +76,7 @@ function AmbassadorDetailsContent() {
             router.push(`/thank-you/monthly?subscriptionId=${subscriptionId}`);
           }
         }
-      } catch (err) {
+    } catch (err) {
         console.error('Error fetching subscription details:', err);
         setError('Unable to load subscription details. Please contact support.');
       }

@@ -56,6 +56,8 @@ const DEFAULT_PRODUCT_DATA = {
 
 export const maxDuration = 60; // Set max duration to 60 seconds
 
+export const dynamic = 'force-dynamic';
+
 /**
  * API endpoint to handle direct checkout with Stripe Elements
  */
@@ -85,7 +87,7 @@ export async function POST(request: Request) {
       }, { status: 400 });
     }
 
-    const { customerInfo, paymentMethodId, frequency = 'monthly', pathParam, isAmbassador, ambassadorPriceId } = body;
+    const { customerInfo, paymentMethodId, frequency = 'monthly', pathParam, isAmbassador, ambassadorPriceId, marketingConsent } = body;
 
     // Validate required fields with detailed errors
     if (!customerInfo?.email) {
@@ -191,9 +193,11 @@ export async function POST(request: Request) {
           state: customerInfo.state,
           postalCode: customerInfo.postalCode,
           country: customerInfo.country,
-          isAmbassador: isAmbassador.toString(),
+          isAmbassador: isAmbassador ? 'YES' : 'NO',
           phone: isAmbassador ? customerInfo.phone : undefined,
-          ambassadorCode: isAmbassador ? pathParam : undefined // Store their own ambassador code if they're an ambassador
+          ambassadorCode: isAmbassador ? pathParam : undefined,
+          marketingConsent: marketingConsent ? 'YES' : 'NO',
+          termsAgreed: 'YES' // Since they must agree to terms to submit
         }
       });
       console.log('Updated existing customer:', updatedCustomer.id);
@@ -209,9 +213,11 @@ export async function POST(request: Request) {
           state: customerInfo.state,
           postalCode: customerInfo.postalCode,
           country: customerInfo.country,
-          isAmbassador: isAmbassador.toString(),
+          isAmbassador: isAmbassador ? 'YES' : 'NO',
           phone: isAmbassador ? customerInfo.phone : undefined,
-          ambassadorCode: isAmbassador ? pathParam : undefined // Store their own ambassador code if they're an ambassador
+          ambassadorCode: isAmbassador ? pathParam : undefined,
+          marketingConsent: marketingConsent ? 'YES' : 'NO',
+          termsAgreed: 'YES' // Since they must agree to terms to submit
         }
       });
       console.log('Created new customer:', customer.id);
