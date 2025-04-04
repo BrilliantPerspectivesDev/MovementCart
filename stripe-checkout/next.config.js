@@ -1,5 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
+  poweredByHeader: false,
+  compress: true,
+  swcMinify: true,
+  output: 'standalone',
+  experimental: {
+    optimizePackageImports: ['@heroicons/react']
+  },
   images: {
     remotePatterns: [
       {

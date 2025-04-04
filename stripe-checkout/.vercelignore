@@ -1,0 +1,11 @@
+.git
+.env
+.env.*
+node_modules
+README.md
+.next
+.vercel
+*.log
+.DS_Store
+temp_*
+*.bak 
