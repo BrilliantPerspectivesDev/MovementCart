@@ -1352,7 +1352,7 @@ export default function Home() {
                     />
                   </div>
                   <div>
-                    <p className="text-lg font-bold">$47/mo</p>
+                    <p className="text-lg font-bold text-gray-900">$47/mo</p>
                     <p className="text-xs text-gray-500">Less than $1.57/day</p>
                     <p className="text-xs mt-2"><span className="text-amber-500">★★★★★</span> <span className="text-gray-600">|</span> <span className="text-gray-600">4000+ Reviews</span></p>
                   </div>
@@ -1383,7 +1383,7 @@ export default function Home() {
                     />
                   </div>
                   <div>
-                    <p className="text-lg font-bold">$397/yr</p>
+                    <p className="text-lg font-bold text-gray-900">$397/yr</p>
                     <p className="text-xs text-gray-500">Less than $1.09/day</p>
                     <p className="text-xs mt-2"><span className="text-amber-500">★★★★★</span> <span className="text-gray-600">|</span> <span className="text-gray-600">4000+ Reviews</span></p>
                   </div>
@@ -1396,7 +1396,7 @@ export default function Home() {
               <h3 className="font-medium text-gray-900 mb-3">Order Summary</h3>
               <div className="flex justify-between mb-2">
                 <p className="text-gray-600">{priceInfo.frequency === 'monthly' ? 'Monthly' : 'Annual'} Plan:</p>
-                <p className="font-medium">${priceInfo.discountPrice}</p>
+                <p className="font-medium text-gray-900">${priceInfo.discountPrice}</p>
               </div>
               {priceInfo.frequency === 'annual' && (
                 <div className="flex justify-between mb-2 text-green-600 text-sm">
@@ -1407,17 +1407,17 @@ export default function Home() {
               {isAmbassador && (
                 <div className="flex justify-between mb-2">
                   <p className="text-gray-600">Ambassador Program (Annual):</p>
-                  <p className="font-medium">$10.00</p>
+                  <p className="font-medium text-gray-900">$10.00</p>
                 </div>
               )}
               <div className="flex justify-between mb-2">
                 <p className="text-gray-600">{isAmbassador ? 'No Trial Period' : '5-Day Free Trial'}:</p>
-                <p className="font-medium">{isAmbassador ? 'N/A' : '$0.00'}</p>
+                <p className="font-medium text-gray-900">{isAmbassador ? 'N/A' : '$0.00'}</p>
               </div>
               <div className="border-t border-gray-200 my-2 pt-2"></div>
               <div className="flex justify-between">
-                <p className="font-medium">Due today:</p>
-                <p className="font-bold">{isAmbassador ? `$${priceInfo.totalPrice.toFixed(2)}` : '$0.00'}</p>
+                <p className="font-medium text-gray-900">Due today:</p>
+                <p className="font-bold text-gray-900">{isAmbassador ? `$${priceInfo.totalPrice.toFixed(2)}` : '$0.00'}</p>
               </div>
               <div className="mt-1 text-xs text-gray-500 flex items-center">
                 <svg className="h-3 w-3 mr-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
