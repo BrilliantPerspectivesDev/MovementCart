@@ -99,7 +99,6 @@ export default function AmbassadorPage() {
               </p>
               
               <ul className="list-disc pl-5 space-y-2">
-                <li>All benefits of a standard Brilliant membership</li>
                 <li>Provide a 5-day free trial link to the BrilliantPlus app</li>
                 <li>Share in a portion of the membership fee when people join</li>
                 <li>Receive Ambassador-only monthly training</li>

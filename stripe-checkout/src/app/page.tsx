@@ -148,10 +148,10 @@ export default function LandingPage() {
       <div className="container-[how-to-get-involved] relative w-full max-w-[2000px] mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
         <div className="flex flex-col items-center justify-center mb-12 text-center">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium font-serif tracking-tight text-[#264653] mb-4">
-            How to Get Involved
+            What you'll get as a member
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto text-base sm:text-lg">
-            Join our community and experience the transformative power of Kingdom living through multiple pathways designed for your journey.
+            Enjoy these exclusive benefits as part of your Brilliant Movement membership, designed to transform your relationship with God and deepen your Kingdom experience.
           </p>
         </div>
 
