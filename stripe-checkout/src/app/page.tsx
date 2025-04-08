@@ -48,225 +48,336 @@ export default function LandingPage() {
 
   return (
     <main className="min-h-screen bg-[#f9f5f0] pt-12">
-      {/* Hero Header Container - With rounded corners on all sides */}
-      <div className="w-[90%] sm:w-[85%] md:w-[80%] mx-auto rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden relative mt-12 sm:mt-16 mb-12 sm:mb-16 min-h-[450px] sm:min-h-[500px] md:min-h-[600px] lg:min-h-[75vh]">
-        {/* Background Image - Covers the entire container */}
-        <div className="absolute inset-0 z-0">
-          {/* Added left-to-right black gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/60 to-transparent z-10"></div>
-          <Image
-            src="/Graham.jpg"
-            alt="Graham worship image"
-            fill
-            style={{ objectFit: 'cover', objectPosition: 'center' }}
-            priority
-          />
-        </div>
+      {/* New Hero Header */}
+      <div className="w-[90%] sm:w-[85%] mx-auto relative max-w-7xl py-8 sm:py-12 pt-12 sm:pt-16 lg:pt-20 pb-16 sm:pb-20 lg:pb-24 bg-[#F6F5F2] rounded-xl">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-center mx-auto max-w-5xl px-[18px] sm:px-[37px]">
+          {/* Left Content - Text and CTA */}
+          <div className="flex flex-col lg:w-[45%] space-y-4 text-left">
+            <p className="uppercase text-sm font-semibold tracking-wider text-[#264653]">JOIN THE MOVEMENT DISCOVERING</p>
+            <h1 className="text-[3.4034rem] sm:text-[3.64rem] md:text-[3.9rem] font-bold text-black leading-[1.1] tracking-[-0.03em] mb-3">
+              A simple,<br />
+              relational way<br />
+              of being<br />
+              with God
+            </h1>
+            <p className="text-base text-gray-700 mb-8">
+              Join Brilliant with Graham Cooke and become a member of the global movement experiencing God's love every day. Unlock keys to a daily routine with God that's simple and relational.
+            </p>
 
-        {/* Content Container - Using absolute positioning for perfect vertical centering */}
-        <div className="absolute inset-0 z-20 flex items-center">
-          {/* Text and Interactive Elements - In a centered column */}
-          <div className="p-4 sm:p-6 md:p-10 w-full max-w-3xl mx-auto md:mx-10">
-            <div className="space-y-3 sm:space-y-4 md:space-y-6 lg:space-y-8">
-              {/* Category Label */}
-              <p className="text-[#F5F5F0] text-[10px] sm:text-xs tracking-[0.05em] uppercase font-medium">
-                KINGDOM ACTIVATION • UPSTAIRS THINKING • DIRECT LEARNING
+            {/* CTA Button */}
+            <div className="w-full mt-2">
+              <a 
+                href="/checkout" 
+                className="block w-full text-center py-4 px-8 bg-[#E76F51] hover:bg-[#E76F51]/90 transition-colors text-white rounded-full font-medium"
+              >
+                <div className="flex flex-col items-center">
+                  <span>Start your five day free trial today</span>
+                  <div className="flex items-center space-x-1 mt-1 text-xs">
+                    <span className="text-[#FFDD99]">★★★★★</span>
+                    <span className="text-white/90">| 4000+ Reviews</span>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          {/* Right Content - Image */}
+          <div className="relative lg:w-[55%] mt-6 lg:mt-0">
+            <div className="aspect-square relative rounded-xl overflow-hidden w-[90%] mx-auto">
+              <Image 
+                src="/Graham2.png" 
+                alt="Graham Cooke" 
+                fill
+                className="object-cover object-center"
+                priority
+              />
+            </div>
+            <div className="absolute -bottom-2 right-0 left-0 text-center">
+              <p className="text-sm text-gray-700 italic bg-white/90 backdrop-blur-sm py-3 px-4 rounded-xl mx-auto inline-block">
+                With over 500 teachings, prayers & prophetic words<br />
+                from Graham Cooke
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Benefits Three Column Section */}
+      <div className="bg-white py-16 sm:py-24">
+        <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-6 lg:gap-8">
+            {/* Column 1 */}
+            <div className="flex flex-col items-center">
+              <h3 className="text-xl font-semibold text-[#264653] mb-3 text-center">
+                Discover rich, constant fellowship with God
+              </h3>
+              <div className="w-16 h-1 bg-gradient-to-r from-[#E76F51] to-[#E9C46A] rounded-full mb-4"></div>
+              <p className="text-gray-600 text-center leading-relaxed">
+                Join God in every part of your day, not just designated quiet times. Finally experience 
+                what it means to maintain consistent fellowship without the pressure of performance.
+              </p>
+            </div>
+
+            {/* Column 2 */}
+            <div className="flex flex-col items-center">
+              <h3 className="text-xl font-semibold text-[#264653] mb-3 text-center">
+                Exchange Anxiety for God's Peace
+              </h3>
+              <div className="w-16 h-1 bg-gradient-to-r from-[#E76F51] to-[#E9C46A] rounded-full mb-4"></div>
+              <p className="text-gray-600 text-center leading-relaxed">
+                Step into the Father's heart and exchange your anxiety for His firm commitment to 
+                be with you.
+              </p>
+            </div>
+
+            {/* Column 3 */}
+            <div className="flex flex-col items-center">
+              <h3 className="text-xl font-semibold text-[#264653] mb-3 text-center">
+                Recognize His Voice Daily
+              </h3>
+              <div className="w-16 h-1 bg-gradient-to-r from-[#E76F51] to-[#E9C46A] rounded-full mb-4"></div>
+              <p className="text-gray-600 text-center leading-relaxed">
+                Move from uncertain prayer monologues to confident dialogue with God. 
+                Experience the joy of truly knowing His voice in every situation.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Testimonial Images Section */}
+      <div className="bg-white pb-16 sm:pb-20">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
+          <div className="flex flex-col md:flex-row gap-0 justify-center items-center">
+            <div className="w-auto md:w-auto">
+              <Image 
+                src="/Testimonial1.png" 
+                alt="Testimonial quote"
+                width={300}
+                height={200}
+                className="h-auto"
+              />
+            </div>
+            <div className="w-auto md:w-auto">
+              <Image 
+                src="/Testimonial2.png" 
+                alt="Testimonial quote"
+                width={300}
+                height={200}
+                className="h-auto"
+              />
+            </div>
+          </div>
+          
+          {/* CTA Button under testimonials */}
+          <div className="w-full max-w-md mx-auto mt-10">
+            <a 
+              href="/checkout" 
+              className="block w-full text-center py-4 px-8 bg-[#E76F51] hover:bg-[#E76F51]/90 transition-colors text-white rounded-full font-medium"
+            >
+              <div className="flex flex-col items-center">
+                <span>Start your five day free trial today</span>
+                <div className="flex items-center space-x-1 mt-1 text-xs">
+                  <span className="text-[#FFDD99]">★★★★★</span>
+                  <span className="text-white/90">| 4000+ Reviews</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* App Showcase Section */}
+      <div className="bg-[#F6F5F2] py-16 sm:py-20 px-6 sm:px-10 lg:px-16">
+        <div className="max-w-6xl mx-auto px-0 sm:px-8 lg:px-12">
+          <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 lg:gap-4">
+            {/* Phone Mockup */}
+            <div className="w-full md:w-[50%] md:pr-4">
+              <div className="relative mx-auto max-w-[450px]">
+                <Image 
+                  src="/Final-Mockups-Medium.png" 
+                  alt="Brilliant App Interface"
+                  width={700}
+                  height={700}
+                  className="w-full h-auto"
+                />
+              </div>
+            </div>
+            
+            {/* Content */}
+            <div className="w-full md:w-[50%] mt-8 md:mt-0 md:pl-4 max-w-md">
+              <span className="text-[#E76F51] font-semibold text-sm uppercase tracking-wide">THE ESSENTIAL COMPANION TO THE MOVEMENT</span>
+              <div className="w-full mb-4">
+                <Image 
+                  src="/BlackBPlus.png" 
+                  alt="Brilliant Plus"
+                  width={500}
+                  height={150}
+                  className="w-full h-auto"
+                />
+              </div>
+              <p className="text-gray-700 mb-6">
+                Brilliant Plus is the essential companion to any member of the Brilliant Movement. With over 600 teachings, guided prayer sessions, meditations, soaking sessions and an ever growing library of sleep content, the app is dedicated to one thing - teaching you to experience the kingdom in every part of your world.
               </p>
               
-              {/* Primary Headline - Now Much Bigger */}
-              <h1 className="text-[#F5F5F0] text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-medium font-serif leading-[1.05] tracking-tight max-w-full">
-                Making Kingdom<br className="block" />Normal
-              </h1>
-              
-              {/* Subheadline */}
-              <p className="text-[#F5F5F0]/90 text-xs sm:text-sm md:text-base max-w-xl leading-relaxed mb-8">
-                Join Brilliant Movement and cultivate an extraordinary relationship with God through community, resources, and direct learning.
-              </p>
+              {/* Testimonial Quote */}
+              <div className="mb-8 italic text-gray-700">
+                "I became aware that i'm at rest and peace for where i am right now" - <span className="font-semibold">Dinka</span>
+              </div>
               
               {/* CTA Button */}
-              <div className="flex justify-start">
+              <div className="mb-4">
                 <a 
-                  href="#pricing"
-                  className="inline-flex items-center px-6 py-3 text-base sm:text-lg font-medium rounded-md bg-[#E9C46A] text-[#264653] hover:bg-[#e6bd58] transition-all shadow-lg hover:shadow-xl hover:translate-y-[-2px] active:translate-y-0"
+                  href="/checkout" 
+                  className="block w-full sm:w-auto text-center py-3 px-8 bg-[#E76F51] hover:bg-[#E76F51]/90 transition-colors text-white rounded-full font-medium"
                 >
-                  Join the movement
-                  <svg className="ml-2 -mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
+                  Start Your Journey Today
                 </a>
+              </div>
+              
+              {/* Reviews */}
+              <div className="flex items-center space-x-2">
+                <div className="flex text-[#E9C46A]">★★★★★</div>
+                <span className="text-sm text-gray-700">| 4000+ Reviews</span>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Our Mission, Vision, and Values Section with Map Integration */}
-      <div className="bg-white py-12 sm:py-16 lg:py-24 w-full">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row lg:gap-x-12 gap-y-8 sm:gap-y-12 lg:gap-y-0">
-            {/* Left Column - Big Headline */}
-            <div className="flex-1 text-left">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium font-serif tracking-tight text-[#264653] leading-tight">
-                Brilliant helps believers discover their new normal in Christ
+      {/* App Features Cards */}
+      <div className="bg-[#F6F5F2] pt-4 pb-24">
+        <div className="max-w-6xl mx-auto px-0 sm:px-8 lg:px-12">
+          <div className="flex flex-wrap -mx-3">
+            {/* Sleep Card */}
+            <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+              <div className="bg-[#1E3A59] rounded-2xl overflow-hidden h-full">
+                <div className="relative h-52 sm:h-64">
+                  <Image
+                    src="/Nighttime Medium.jpeg"
+                    alt="Night landscape with moonlight"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-6 text-white">
+                  <h3 className="text-2xl font-semibold mb-3 uppercase">Sleep</h3>
+                  <p className="text-white/90">
+                    Silence nighttime anxiety as you fall asleep to deep truths about who God is, what He's like, and how that changes everything.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Routines Card */}
+            <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+              <div className="bg-[#A58667] rounded-2xl overflow-hidden h-full">
+                <div className="relative h-52 sm:h-64">
+                  <Image
+                    src="/Routines.png"
+                    alt="Routines interface"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-6 text-white">
+                  <h3 className="text-2xl font-semibold mb-3 uppercase">Routines</h3>
+                  <p className="text-white/90">
+                    Experience the pressure lift as you step into a simple, relational way of being with God. Build your daily routine with God around rest and peace.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Teaching Card */}
+            <div className="w-full md:w-1/3 px-3">
+              <div className="bg-[#171C26] rounded-2xl overflow-hidden h-full">
+                <div className="relative h-52 sm:h-64">
+                  <Image
+                    src="/Teaching.png"
+                    alt="Teaching library interface"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-6 text-white">
+                  <h3 className="text-2xl font-semibold mb-3 uppercase">Teaching</h3>
+                  <p className="text-white/90">
+                    With Graham Cooke as your guide and digital mentor explore a digital library designed to lead you to the heart of God and teach you to stay there.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* CTA Button */}
+          <div className="mt-12 text-center">
+            <a 
+              href="/checkout" 
+              className="inline-block py-4 px-8 bg-[#E76F51] hover:bg-[#E76F51]/90 transition-colors text-white rounded-full font-medium"
+            >
+              <div className="flex flex-col items-center">
+                <span>Start your five day free trial today</span>
+                <div className="flex items-center space-x-1 mt-1 text-xs">
+                  <span className="text-[#FFDD99]">★★★★★</span>
+                  <span className="text-white/90">| 4000+ Reviews</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* Gatherings Section */}
+      <div className="bg-[#F6F5F2] py-16 sm:py-20 px-6 sm:px-10 lg:px-16">
+        <div className="max-w-6xl mx-auto px-0 sm:px-8 lg:px-12">
+          <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 lg:gap-4">
+            {/* Content */}
+            <div className="w-full md:w-[50%] mt-8 md:mt-0 md:pr-4 max-w-md">
+              <span className="text-[#E76F51] font-semibold text-sm uppercase tracking-wide">THE HEART OF THE MOVEMENT</span>
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-black mt-2 mb-6">
+                Monthly Gatherings
               </h2>
-              <div className="mt-6 sm:mt-8">
-                <a href="/checkout" className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm sm:text-base font-medium text-[#264653] bg-[#E9C46A] hover:bg-[#e6bd58] transition-colors">
-                  JOIN BRILLIANT
-                  <svg className="ml-2 -mr-1 h-4 w-4 sm:h-5 sm:w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
+              <p className="text-gray-700 mb-6">
+                As a member, you'll gain access to monthly online gatherings (held on the first Monday of each month) with Graham Cooke and the Brilliant community.
+              </p>
+              
+              <p className="text-gray-700 mb-6">
+                The gatherings and Brilliant Plus app work together seamlessly - dive deeper into the teachings from gatherings through the app, and apply what you learn from the app during our corporate times together. This creates a powerful cycle of learning, application, and community growth.
+              </p>
+              
+              {/* Testimonial Quote */}
+              <div className="mb-8 italic text-gray-700">
+                "The gatherings have completely transformed how I see God working in my life" - <span className="font-semibold">Jessica</span>
+              </div>
+              
+              {/* CTA Button */}
+              <div className="mb-4">
+                <a 
+                  href="/checkout" 
+                  className="block w-full sm:w-auto text-center py-3 px-8 bg-[#E76F51] hover:bg-[#E76F51]/90 transition-colors text-white rounded-full font-medium"
+                >
+                  Join the next gathering
                 </a>
               </div>
             </div>
-
-            {/* Right Column - Descriptive Text */}
-            <div className="flex-1 space-y-4 sm:space-y-6 text-sm sm:text-base text-gray-600 text-left">
-              <p className="text-xl sm:text-2xl text-gray-800 font-medium">
-                Brilliant is a movement of Kingdom activators who are discovering that living in the fullness of Christ is meant to be our normal reality.
-              </p>
-              
-              <p>
-                The Brilliant movement is founded on the revolutionary concept that God doesn't see anything wrong with you because of Jesus - He only sees what's missing in your life that He's excited to provide. This completely shifts the paradigm from performance-based religion to relationship-based living.
-              </p>
-              
-              <p>
-                When you understand that you're already complete in Christ, you begin to experience:
-              </p>
-              
-              <ul className="list-disc pl-5 space-y-2">
-                <li>The freedom to let go of old religious patterns and expectations</li>
-                <li>A relationship with God based on His delight in you, not your performance</li>
-                <li>The joy of living from His perspective rather than earthly limitations</li>
-                <li>Direct learning through relational engagement rather than just accumulating information</li>
-              </ul>
+            
+            {/* Gatherings Image */}
+            <div className="w-full md:w-[50%] md:pl-4">
+              <div className="relative mx-auto rounded-xl overflow-hidden">
+                <Image 
+                  src="/SmallGroups.png" 
+                  alt="Brilliant Gatherings"
+                  width={700}
+                  height={700}
+                  className="w-full h-auto"
+                />
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* How to Get Involved Section */}
-      <div className="container-[how-to-get-involved] relative w-full max-w-[2000px] mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
-        <div className="flex flex-col items-center justify-center mb-12 text-center">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium font-serif tracking-tight text-[#264653] mb-4">
-            What you'll get as a member
-          </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto text-base sm:text-lg">
-            Enjoy these exclusive benefits as part of your Brilliant Movement membership, designed to transform your relationship with God and deepen your Kingdom experience.
-          </p>
-        </div>
-
-        <div className="flex flex-wrap -mx-4">
-          {/* The App Card */}
-          <div className="w-full md:w-1/2 lg:w-1/4 px-4 mb-8">
-            <div className="group relative bg-[#264653] rounded-lg overflow-hidden h-full transition-transform duration-300 hover:scale-[1.02]">
-              <div className="absolute inset-0 bg-gradient-to-t from-[#264653] to-transparent z-10"></div>
-              <div className="relative aspect-[4/3]">
-                <Image
-                  src="/Group-21.jpg"
-                  alt="Mobile app interface"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                />
-              </div>
-              <div className="relative z-20 p-6">
-                <div className="mb-4">
-                  <span className="inline-block bg-[#E9C46A] text-[#264653] text-xs font-semibold px-2.5 py-1 rounded">
-                    Mobile App
-                  </span>
-                </div>
-                <h3 className="text-2xl font-medium font-serif tracking-tight text-white mb-3 group-hover:text-[#E9C46A] transition-colors">The App</h3>
-                <p className="text-[#F5F5F0]/90 text-base leading-relaxed">
-                  With over 500 teachings, prayers & prophetic words from Graham Cooke, Brilliant Plus with Graham Cooke is the perfect companion to engage deeply with God's love every day.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Gatherings Card */}
-          <div className="w-full md:w-1/2 lg:w-1/4 px-4 mb-8">
-            <div className="group relative bg-[#264653] rounded-lg overflow-hidden h-full transition-transform duration-300 hover:scale-[1.02]">
-              <div className="absolute inset-0 bg-gradient-to-t from-[#264653] to-transparent z-10"></div>
-              <div className="relative aspect-[4/3] w-full">
-                <Image
-                  src="/Graham2.png"
-                  alt="Community gathering"
-                  fill
-                  className="object-cover w-full h-full"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  style={{ objectFit: 'cover' }}
-                />
-              </div>
-              <div className="relative z-20 p-6">
-                <div className="mb-4">
-                  <span className="inline-block bg-[#E9C46A] text-[#264653] text-xs font-semibold px-2.5 py-1 rounded">
-                    Community
-                  </span>
-                </div>
-                <h3 className="text-2xl font-medium font-serif tracking-tight text-white mb-3 group-hover:text-[#E9C46A] transition-colors">Gatherings</h3>
-                <p className="text-[#F5F5F0]/90 text-base leading-relaxed">
-                  Your global community moving in the same direction as you. Engage with powerful teaching, immersion times and prophetic activation with believers who think just like you from around the world.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Small Groups Card */}
-          <div className="w-full md:w-1/2 lg:w-1/4 px-4 mb-8">
-            <div className="group relative bg-[#264653] rounded-lg overflow-hidden h-full transition-transform duration-300 hover:scale-[1.02]">
-              <div className="absolute inset-0 bg-gradient-to-t from-[#264653] to-transparent z-10"></div>
-              <div className="relative aspect-[4/3]">
-                <Image
-                  src="/SmallGroups.png"
-                  alt="Small group meeting"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                />
-              </div>
-              <div className="relative z-20 p-6">
-                <div className="mb-4">
-                  <span className="inline-block bg-[#E9C46A] text-[#264653] text-xs font-semibold px-2.5 py-1 rounded">
-                    Weekly Study
-                  </span>
-                </div>
-                <h3 className="text-2xl font-medium font-serif tracking-tight text-white mb-3 group-hover:text-[#E9C46A] transition-colors">Small Groups</h3>
-                <p className="text-[#F5F5F0]/90 text-base leading-relaxed">
-                  Experience the joy of belonging to a global community discovering the Father's love together. Twice yearly, dive into 12-week small group studies like "Fruit of the Spirit" where you'll connect with fellow believers practicing His presence as your normal reality.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Live Events Card */}
-          <div className="w-full md:w-1/2 lg:w-1/4 px-4 mb-8">
-            <div className="group relative bg-[#264653] rounded-lg overflow-hidden h-full transition-transform duration-300 hover:scale-[1.02]">
-              <div className="absolute inset-0 bg-gradient-to-t from-[#264653] to-transparent z-10"></div>
-              <div className="relative aspect-[4/3]">
-                <Image
-                  src="/Events.jpg"
-                  alt="Training and conference"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                />
-              </div>
-              <div className="relative z-20 p-6">
-                <div className="mb-4">
-                  <span className="inline-block bg-[#E9C46A] text-[#264653] text-xs font-semibold px-2.5 py-1 rounded">
-                    Training & Conference
-                  </span>
-                </div>
-                <h3 className="text-2xl font-medium font-serif tracking-tight text-white mb-3 group-hover:text-[#E9C46A] transition-colors">Live Events</h3>
-                <p className="text-[#F5F5F0]/90 text-base leading-relaxed">
-                  Access to "Limitless Life with God" training events and our annual "Brilliance26" 3-day virtual conference.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
       {/* Testimonials Section */}
       <div className="bg-[#264653] py-16 sm:py-20 lg:py-24 relative overflow-hidden">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
