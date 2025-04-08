@@ -1110,7 +1110,7 @@ function CheckoutForm({
         {/* Checkout Steps Progress Indicator */}
         {renderSteps()}
         
-        <div className="max-h-[45vh] md:max-h-[55vh] overflow-y-auto pr-1 pb-2">
+        <div className="pr-1 pb-2">
           {checkoutStep === 1 && renderStep1()}
           {checkoutStep === 2 && renderStep2()}
         </div>
@@ -1157,9 +1157,6 @@ function CheckoutForm({
             <span className="text-xs text-gray-500">Secure</span>
           </div>
           <div className="flex items-center">
-            <svg className="h-4 w-4 text-gray-400 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
             <span className="text-xs text-gray-500">Cancel Anytime</span>
           </div>
         </div>
@@ -1307,6 +1304,19 @@ export default function Home() {
         {/* Left Section (Checkout) */}
         <div className="flex-1 md:w-3/5 bg-white p-4 md:p-8 lg:p-12 overflow-auto">
           <div className="max-w-lg mx-auto">
+            {/* Back button */}
+            <div className="mb-4">
+              <a 
+                href="/" 
+                className="inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                <svg className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                <span>Back to main page</span>
+              </a>
+            </div>
+            
             {/* Logo */}
             <div className="mb-6 md:mb-8">
               <Image
