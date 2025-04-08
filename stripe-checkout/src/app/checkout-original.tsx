@@ -219,64 +219,64 @@ const COUNTRY_OPTIONS = [
 
 // Add US state options
 const US_STATE_OPTIONS = [
-  { key: 1, value: "Alabama" },
-  { key: 2, value: "Alaska" },
-  { key: 3, value: "AE" },
-  { key: 4, value: "AP" },
-  { key: 5, value: "Arizona" },
-  { key: 6, value: "Arkansas" },
-  { key: 7, value: "California" },
-  { key: 8, value: "Colorado" },
-  { key: 9, value: "Connecticut" },
-  { key: 10, value: "DC" },
-  { key: 11, value: "Delaware" },
-  { key: 12, value: "Florida" },
-  { key: 13, value: "Georgia" },
-  { key: 14, value: "Guam" },
-  { key: 15, value: "Hawaii" },
-  { key: 16, value: "Idaho" },
-  { key: 17, value: "Illinois" },
-  { key: 18, value: "Indiana" },
-  { key: 19, value: "Iowa" },
-  { key: 20, value: "Kansas" },
-  { key: 21, value: "Kentucky" },
-  { key: 22, value: "Louisiana" },
-  { key: 23, value: "Maine" },
-  { key: 24, value: "Maryland" },
-  { key: 25, value: "Massachusetts" },
-  { key: 26, value: "Michigan" },
-  { key: 27, value: "Minnesota" },
-  { key: 28, value: "Mississippi" },
-  { key: 29, value: "Missouri" },
-  { key: 30, value: "Montana" },
-  { key: 31, value: "Nebraska" },
-  { key: 32, value: "Nevada" },
-  { key: 33, value: "New Hampshire" },
-  { key: 34, value: "New Jersey" },
-  { key: 35, value: "New Mexico" },
-  { key: 36, value: "New York" },
-  { key: 37, value: "North Carolina" },
-  { key: 38, value: "North Dakota" },
-  { key: 39, value: "Ohio" },
-  { key: 40, value: "Oklahoma" },
-  { key: 41, value: "Oregon" },
-  { key: 42, value: "Pennsylvania" },
-  { key: 43, value: "Puerto Rico" },
-  { key: 44, value: "Rhode Island" },
-  { key: 45, value: "South Carolina" },
-  { key: 46, value: "South Dakota" },
-  { key: 47, value: "Tennessee" },
-  { key: 48, value: "Texas" },
-  { key: 49, value: "Utah" },
-  { key: 50, value: "Vermont" },
-  { key: 51, value: "Virgin Islands" },
-  { key: 52, value: "Virginia" },
-  { key: 53, value: "Washington" },
-  { key: 54, value: "West Virginia" },
-  { key: 55, value: "Wisconsin" },
-  { key: 56, value: "Wyoming" },
-  { key: 1248, value: "American Samoa" },
-  { key: 1249, value: "Northern Mariana Islands" }
+  { key: 1, value: "Alabama", abbr: "AL" },
+  { key: 2, value: "Alaska", abbr: "AK" },
+  { key: 3, value: "AE", abbr: "AE" },
+  { key: 4, value: "AP", abbr: "AP" },
+  { key: 5, value: "Arizona", abbr: "AZ" },
+  { key: 6, value: "Arkansas", abbr: "AR" },
+  { key: 7, value: "California", abbr: "CA" },
+  { key: 8, value: "Colorado", abbr: "CO" },
+  { key: 9, value: "Connecticut", abbr: "CT" },
+  { key: 10, value: "DC", abbr: "DC" },
+  { key: 11, value: "Delaware", abbr: "DE" },
+  { key: 12, value: "Florida", abbr: "FL" },
+  { key: 13, value: "Georgia", abbr: "GA" },
+  { key: 14, value: "Guam", abbr: "GU" },
+  { key: 15, value: "Hawaii", abbr: "HI" },
+  { key: 16, value: "Idaho", abbr: "ID" },
+  { key: 17, value: "Illinois", abbr: "IL" },
+  { key: 18, value: "Indiana", abbr: "IN" },
+  { key: 19, value: "Iowa", abbr: "IA" },
+  { key: 20, value: "Kansas", abbr: "KS" },
+  { key: 21, value: "Kentucky", abbr: "KY" },
+  { key: 22, value: "Louisiana", abbr: "LA" },
+  { key: 23, value: "Maine", abbr: "ME" },
+  { key: 24, value: "Maryland", abbr: "MD" },
+  { key: 25, value: "Massachusetts", abbr: "MA" },
+  { key: 26, value: "Michigan", abbr: "MI" },
+  { key: 27, value: "Minnesota", abbr: "MN" },
+  { key: 28, value: "Mississippi", abbr: "MS" },
+  { key: 29, value: "Missouri", abbr: "MO" },
+  { key: 30, value: "Montana", abbr: "MT" },
+  { key: 31, value: "Nebraska", abbr: "NE" },
+  { key: 32, value: "Nevada", abbr: "NV" },
+  { key: 33, value: "New Hampshire", abbr: "NH" },
+  { key: 34, value: "New Jersey", abbr: "NJ" },
+  { key: 35, value: "New Mexico", abbr: "NM" },
+  { key: 36, value: "New York", abbr: "NY" },
+  { key: 37, value: "North Carolina", abbr: "NC" },
+  { key: 38, value: "North Dakota", abbr: "ND" },
+  { key: 39, value: "Ohio", abbr: "OH" },
+  { key: 40, value: "Oklahoma", abbr: "OK" },
+  { key: 41, value: "Oregon", abbr: "OR" },
+  { key: 42, value: "Pennsylvania", abbr: "PA" },
+  { key: 43, value: "Puerto Rico", abbr: "PR" },
+  { key: 44, value: "Rhode Island", abbr: "RI" },
+  { key: 45, value: "South Carolina", abbr: "SC" },
+  { key: 46, value: "South Dakota", abbr: "SD" },
+  { key: 47, value: "Tennessee", abbr: "TN" },
+  { key: 48, value: "Texas", abbr: "TX" },
+  { key: 49, value: "Utah", abbr: "UT" },
+  { key: 50, value: "Vermont", abbr: "VT" },
+  { key: 51, value: "Virgin Islands", abbr: "VI" },
+  { key: 52, value: "Virginia", abbr: "VA" },
+  { key: 53, value: "Washington", abbr: "WA" },
+  { key: 54, value: "West Virginia", abbr: "WV" },
+  { key: 55, value: "Wisconsin", abbr: "WI" },
+  { key: 56, value: "Wyoming", abbr: "WY" },
+  { key: 1248, value: "American Samoa", abbr: "AS" },
+  { key: 1249, value: "Northern Mariana Islands", abbr: "MP" }
 ];
 
 // FormData interface for the checkout form
@@ -285,11 +285,14 @@ interface FormData {
   lastName: string;
   email: string;
   phone: string;
-  streetAddress: string;
+  address: string;
   city: string;
   state: string;
-  postalCode: string;
-  country: string; // This will now hold the 2-letter country code
+  zipCode: string;
+  country: string;
+  isAmbassador: boolean;
+  agreedToAmbassadorAgreement: boolean;
+  agreedToPolicies: boolean;
 }
 
 // Add legal document content
@@ -442,11 +445,14 @@ function CheckoutForm({
     lastName: '',
     email: '',
     phone: '',
-    streetAddress: '',
+    address: '',
     city: '',
     state: '',
-    postalCode: '',
-    country: 'US'
+    zipCode: '',
+    country: 'US',
+    isAmbassador: false,
+    agreedToAmbassadorAgreement: false,
+    agreedToPolicies: false
   });
   const [agreedToMarketing, setAgreedToMarketing] = useState(false);
   
@@ -493,10 +499,10 @@ function CheckoutForm({
       formData.lastName.trim() !== '' && 
       formData.email.trim() !== '' &&
       formData.phone.trim() !== '' &&
-      formData.streetAddress.trim() !== '' &&
+      formData.address.trim() !== '' &&
       formData.city.trim() !== '' &&
       formData.state.trim() !== '' &&
-      formData.postalCode.trim() !== '' &&
+      formData.zipCode.trim() !== '' &&
       formData.country.trim() !== '';
 
     // Basic phone number validation
@@ -615,10 +621,10 @@ function CheckoutForm({
           name: `${formData.firstName} ${formData.lastName}`,
           email: formData.email,
           address: {
-            line1: formData.streetAddress,
+            line1: formData.address,
             city: formData.city,
             state: formData.state,
-            postal_code: formData.postalCode,
+            postal_code: formData.zipCode,
             country: formData.country,
           },
         },
@@ -722,17 +728,17 @@ function CheckoutForm({
     // Update form data with the parsed address
     setFormData(prevData => ({
       ...prevData,
-      streetAddress: address.streetAddress,
+      address: address.streetAddress,
       city: address.city,
       state: address.state,
-      postalCode: address.postalCode,
+      zipCode: address.postalCode,
       country: countryCode // Use the country code instead of name
     }));
   };
   
   // Initialize the Google Places autocomplete
   useGooglePlacesAutocomplete({
-    inputId: 'streetAddress',
+    inputId: 'address',
     onPlaceSelected: handlePlaceSelected
   });
 
@@ -824,14 +830,14 @@ function CheckoutForm({
         </div>
 
         <div>
-          <label htmlFor="streetAddress" className="block text-xs md:text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="address" className="block text-xs md:text-sm font-medium text-gray-700 mb-1">
             Billing Address
           </label>
           <input
             type="text"
-            id="streetAddress"
-            name="streetAddress"
-            value={formData.streetAddress}
+            id="address"
+            name="address"
+            value={formData.address}
             onChange={handleInputChange}
             required
             autoComplete="off"
@@ -869,7 +875,7 @@ function CheckoutForm({
               >
                 <option value="">Select a state</option>
                 {US_STATE_OPTIONS.map(state => (
-                  <option key={state.key} value={state.value}>
+                  <option key={state.key} value={state.abbr}>
                     {state.value}
                   </option>
                 ))}
@@ -890,14 +896,14 @@ function CheckoutForm({
 
         <div className="grid grid-cols-2 gap-x-3 gap-y-3">
           <div>
-            <label htmlFor="postalCode" className="block text-xs md:text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="zipCode" className="block text-xs md:text-sm font-medium text-gray-700 mb-1">
               Postal Code
             </label>
             <input
               type="text"
-              id="postalCode"
-              name="postalCode"
-              value={formData.postalCode}
+              id="zipCode"
+              name="zipCode"
+              value={formData.zipCode}
               onChange={handleInputChange}
               required
               className="w-full px-3 py-2 h-9 text-sm border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
@@ -1030,56 +1036,58 @@ function CheckoutForm({
               </p>
             </div>
             <div className="mt-4">
-              <div 
-                onClick={() => setShowPoliciesModal(true)}
-                className="flex items-start cursor-pointer group"
-              >
+              <div className="flex items-start space-x-3">
                 <div className="flex items-center h-5">
                   <input
                     type="checkbox"
-                    checked={agreeToPolicies}
-                    readOnly
-                    className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded cursor-pointer"
-                    onClick={(e: React.MouseEvent) => {
+                    checked={formData.agreedToAmbassadorAgreement}
+                    onChange={() => {}}
+                    onClick={(e) => {
                       e.preventDefault();
-                      e.stopPropagation();
+                      setShowAmbassadorAgreementModal(true);
                     }}
+                    className="h-4 w-4 rounded border-gray-300 text-[#2A9D8F] focus:ring-[#2A9D8F] cursor-pointer"
                   />
                 </div>
-                <div className="ml-3 text-sm">
-                  <span className="font-medium text-gray-700">
-                    I agree to the{' '}
-                    <span className="text-blue-600 group-hover:text-blue-500">
-                      Policies and Procedures
-                    </span>
-                  </span>
+                <div className="text-sm text-gray-600">
+                  <p>
+                    I have read and agree to the{' '}
+                    <button
+                      type="button"
+                      onClick={() => setShowAmbassadorAgreementModal(true)}
+                      className="font-medium text-[#2A9D8F] hover:text-[#2A9D8F]/80 underline"
+                    >
+                      Ambassador Agreement
+                    </button>
+                  </p>
                 </div>
               </div>
             </div>
             <div className="mt-4">
-              <div 
-                onClick={() => setShowAmbassadorAgreementModal(true)}
-                className="flex items-start cursor-pointer group"
-              >
+              <div className="flex items-start space-x-3">
                 <div className="flex items-center h-5">
                   <input
                     type="checkbox"
-                    checked={agreeToAmbassador}
-                    readOnly
-                    className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded cursor-pointer"
-                    onClick={(e: React.MouseEvent) => {
+                    checked={formData.agreedToPolicies}
+                    onChange={() => {}}
+                    onClick={(e) => {
                       e.preventDefault();
-                      e.stopPropagation();
+                      setShowPoliciesModal(true);
                     }}
+                    className="h-4 w-4 rounded border-gray-300 text-[#2A9D8F] focus:ring-[#2A9D8F] cursor-pointer"
                   />
                 </div>
-                <div className="ml-3 text-sm">
-                  <span className="font-medium text-gray-700">
-                    I agree to the{' '}
-                    <span className="text-blue-600 group-hover:text-blue-500">
-                      Ambassador Agreement
-                    </span>
-                  </span>
+                <div className="text-sm text-gray-600">
+                  <p>
+                    I have read and agree to the{' '}
+                    <button
+                      type="button"
+                      onClick={() => setShowPoliciesModal(true)}
+                      className="font-medium text-[#2A9D8F] hover:text-[#2A9D8F]/80 underline"
+                    >
+                      Policies and Procedures
+                    </button>
+                  </p>
                 </div>
               </div>
             </div>
@@ -1228,6 +1236,16 @@ export default function Home() {
   const [priceInfo, setPriceInfo] = useState(() => getPriceInfo('annual'));
   const [referralCode, setReferralCode] = useState<string>('');
   const [isAmbassador, setIsAmbassador] = useState(false);
+  
+  // Set initial frequency from URL parameter
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const planParam = searchParams.get('plan');
+    if (planParam && (planParam === 'monthly' || planParam === 'annual')) {
+      setSelectedFrequency(planParam);
+      setPriceInfo(getPriceInfo(planParam));
+    }
+  }, []);
   
   // Check if the user came from the ambassador page and set isAmbassador accordingly
   useEffect(() => {
