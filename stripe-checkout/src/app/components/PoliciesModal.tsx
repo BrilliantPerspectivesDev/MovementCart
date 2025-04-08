@@ -35,6 +35,18 @@ const PoliciesModal: React.FC<PoliciesModalProps> = ({
 
   if (!isOpen) return null;
 
+  // Handle accept click - call the onAccept prop function and then close the modal
+  const handleAccept = () => {
+    onAccept();
+    onClose();
+  };
+  
+  // Handle decline click - call the onDecline prop function and then close the modal
+  const handleDecline = () => {
+    onDecline();
+    onClose();
+  };
+
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
@@ -66,10 +78,7 @@ const PoliciesModal: React.FC<PoliciesModalProps> = ({
           <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
             <button
               type="button"
-              onClick={() => {
-                onAccept();
-                onClose();
-              }}
+              onClick={handleAccept}
               disabled={!isButtonEnabled}
               className={`w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm ${
                 isButtonEnabled
@@ -81,10 +90,7 @@ const PoliciesModal: React.FC<PoliciesModalProps> = ({
             </button>
             <button
               type="button"
-              onClick={() => {
-                onDecline();
-                onClose();
-              }}
+              onClick={handleDecline}
               className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
             >
               Decline

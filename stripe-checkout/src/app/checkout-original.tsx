@@ -1182,14 +1182,26 @@ function CheckoutForm({
       <PoliciesModal
         isOpen={showPoliciesModal}
         onClose={() => setShowPoliciesModal(false)}
-        onAccept={() => setAgreeToPolicies(true)}
+        onAccept={() => {
+          setAgreeToPolicies(true);
+          setFormData(prevData => ({
+            ...prevData,
+            agreedToPolicies: true
+          }));
+        }}
         onDecline={() => setAgreeToPolicies(false)}
       />
 
       <AmbassadorAgreementModal
         isOpen={showAmbassadorAgreementModal}
         onClose={() => setShowAmbassadorAgreementModal(false)}
-        onAccept={() => setAgreeToAmbassador(true)}
+        onAccept={() => {
+          setAgreeToAmbassador(true);
+          setFormData(prevData => ({
+            ...prevData,
+            agreedToAmbassadorAgreement: true
+          }));
+        }}
         onDecline={() => setAgreeToAmbassador(false)}
       />
     </>
