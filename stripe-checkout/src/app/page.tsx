@@ -61,14 +61,14 @@ export default function LandingPage() {
               with God
             </h1>
             <p className="text-base text-gray-700 mb-8">
-              Join Brilliant with Graham Cooke and become a member of the global movement experiencing God's love every day. Unlock keys to a daily routine with God that's simple and relational.
+              Join Brilliant with Graham Cooke and become a member of the global movement experiencing God's love every day. With an exclusive app, gatherings, global small groups, you'll unlock keys to a way with God that's simple and relational.
             </p>
 
             {/* CTA Button */}
             <div className="w-full mt-2">
               <a 
                 href="/checkout" 
-                className="block w-full text-center py-4 px-8 bg-[#E76F51] hover:bg-[#E76F51]/90 transition-colors text-white rounded-full font-medium"
+                className="block w-full text-center py-4 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
               >
                 <div className="flex flex-col items-center">
                   <span>Start your five day free trial today</span>
@@ -111,7 +111,7 @@ export default function LandingPage() {
               <h3 className="text-xl font-semibold text-[#264653] mb-3 text-center">
                 Discover rich, constant fellowship with God
               </h3>
-              <div className="w-16 h-1 bg-gradient-to-r from-[#E76F51] to-[#E9C46A] rounded-full mb-4"></div>
+              <div className="w-16 h-1 bg-gradient-to-r from-[#74A78E] to-[#E9C46A] rounded-full mb-4"></div>
               <p className="text-gray-600 text-center leading-relaxed">
                 Join God in every part of your day, not just designated quiet times. Finally experience 
                 what it means to maintain consistent fellowship without the pressure of performance.
@@ -123,7 +123,7 @@ export default function LandingPage() {
               <h3 className="text-xl font-semibold text-[#264653] mb-3 text-center">
                 Exchange Anxiety for God's Peace
               </h3>
-              <div className="w-16 h-1 bg-gradient-to-r from-[#E76F51] to-[#E9C46A] rounded-full mb-4"></div>
+              <div className="w-16 h-1 bg-gradient-to-r from-[#74A78E] to-[#E9C46A] rounded-full mb-4"></div>
               <p className="text-gray-600 text-center leading-relaxed">
                 Step into the Father's heart and exchange your anxiety for His firm commitment to 
                 be with you.
@@ -135,7 +135,7 @@ export default function LandingPage() {
               <h3 className="text-xl font-semibold text-[#264653] mb-3 text-center">
                 Recognize His Voice Daily
               </h3>
-              <div className="w-16 h-1 bg-gradient-to-r from-[#E76F51] to-[#E9C46A] rounded-full mb-4"></div>
+              <div className="w-16 h-1 bg-gradient-to-r from-[#74A78E] to-[#E9C46A] rounded-full mb-4"></div>
               <p className="text-gray-600 text-center leading-relaxed">
                 Move from uncertain prayer monologues to confident dialogue with God. 
                 Experience the joy of truly knowing His voice in every situation.
@@ -173,7 +173,7 @@ export default function LandingPage() {
           <div className="w-full max-w-md mx-auto mt-10">
             <a 
               href="/checkout" 
-              className="block w-full text-center py-4 px-8 bg-[#E76F51] hover:bg-[#E76F51]/90 transition-colors text-white rounded-full font-medium"
+              className="block w-full text-center py-4 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
             >
               <div className="flex flex-col items-center">
                 <span>Start your five day free trial today</span>
@@ -206,7 +206,7 @@ export default function LandingPage() {
             
             {/* Content */}
             <div className="w-full md:w-[50%] mt-8 md:mt-0 md:pl-4 max-w-md">
-              <span className="text-[#E76F51] font-semibold text-sm uppercase tracking-wide">THE ESSENTIAL COMPANION TO THE MOVEMENT</span>
+              <span className="text-[#74A78E] font-semibold text-sm uppercase tracking-wide mb-2 inline-block">THE ESSENTIAL APP</span>
               <div className="w-full mb-4">
                 <Image 
                   src="/BlackBPlus.png" 
@@ -229,7 +229,7 @@ export default function LandingPage() {
               <div className="mb-4">
                 <a 
                   href="/checkout" 
-                  className="block w-full sm:w-auto text-center py-3 px-8 bg-[#E76F51] hover:bg-[#E76F51]/90 transition-colors text-white rounded-full font-medium"
+                  className="block w-full sm:w-auto text-center py-3 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
                 >
                   Start Your Journey Today
                 </a>
@@ -314,7 +314,7 @@ export default function LandingPage() {
           <div className="mt-12 text-center">
             <a 
               href="/checkout" 
-              className="inline-block py-4 px-8 bg-[#E76F51] hover:bg-[#E76F51]/90 transition-colors text-white rounded-full font-medium"
+              className="inline-block py-4 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
             >
               <div className="flex flex-col items-center">
                 <span>Start your five day free trial today</span>
@@ -334,7 +334,7 @@ export default function LandingPage() {
           <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 lg:gap-4">
             {/* Content */}
             <div className="w-full md:w-[50%] mt-8 md:mt-0 md:pr-4 max-w-md">
-              <span className="text-[#E76F51] font-semibold text-sm uppercase tracking-wide">THE HEART OF THE MOVEMENT</span>
+              <span className="text-[#74A78E] font-semibold text-sm uppercase tracking-wide">THE HEART OF THE MOVEMENT</span>
               <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-black mt-2 mb-6">
                 Monthly Gatherings
               </h2>
@@ -355,7 +355,7 @@ export default function LandingPage() {
               <div className="mb-4">
                 <a 
                   href="/checkout" 
-                  className="block w-full sm:w-auto text-center py-3 px-8 bg-[#E76F51] hover:bg-[#E76F51]/90 transition-colors text-white rounded-full font-medium"
+                  className="block w-full sm:w-auto text-center py-3 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
                 >
                   Join the next gathering
                 </a>
@@ -378,295 +378,300 @@ export default function LandingPage() {
         </div>
       </div>
 
-      {/* Testimonials Section */}
-      <div className="bg-[#264653] py-16 sm:py-20 lg:py-24 relative overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-0 left-1/4 w-[40rem] h-[40rem] bg-gradient-to-r from-[#2A9D8F]/20 to-transparent rounded-full mix-blend-overlay blur-3xl opacity-40 transform -translate-y-1/2"></div>
-          <div className="absolute bottom-0 right-1/4 w-[35rem] h-[35rem] bg-gradient-to-l from-[#E9C46A]/20 to-transparent rounded-full mix-blend-overlay blur-3xl opacity-30 transform translate-y-1/3"></div>
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-10 sm:mb-12 lg:mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium font-serif tracking-tight text-white mb-3 sm:mb-4">
-              What Our Community Says
+      {/* Events & Small Groups Section */}
+      <div className="bg-[#F6F5F2] py-16 sm:py-20 px-6 sm:px-10 lg:px-16">
+        <div className="max-w-6xl mx-auto px-0 sm:px-8 lg:px-12">
+          <div className="text-center mb-12">
+            <h2 className="text-xl sm:text-2xl font-bold text-[#74A78E] uppercase tracking-[0.2em]">
+              Also Included In Every Membership
             </h2>
-            <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto">
+          </div>
+          <div className="flex flex-col md:flex-row gap-10 md:gap-16">
+            {/* Events Column */}
+            <div className="w-full md:w-1/2">
+              <div className="bg-white rounded-2xl p-8 h-full shadow-sm">
+                <span className="text-[#74A78E] font-semibold text-sm uppercase tracking-wide">EXCLUSIVE ACCESS</span>
+                <h3 className="text-2xl sm:text-3xl font-bold text-black mt-2 mb-4">
+                  Event Tickets
+                </h3>
+                <div className="relative rounded-xl overflow-hidden mb-4 aspect-[16/9]">
+                  <Image 
+                    src="/Events.jpg" 
+                    alt="Brilliant Events" 
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <p className="text-gray-700 mb-6">
+                  Exclusive tickets to our biggest events of the year, all included in your membership.
+                </p>
+                <ul className="mt-4 space-y-2">
+                  <li className="flex items-start">
+                    <svg className="h-5 w-5 text-[#74A78E] mt-0.5 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>Limitless Life with God training</span>
+                  </li>
+                  <li className="flex items-start">
+                    <svg className="h-5 w-5 text-[#74A78E] mt-0.5 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>Annual Brilliance26 virtual conference</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Small Groups Column */}
+            <div className="w-full md:w-1/2">
+              <div className="bg-white rounded-2xl p-8 h-full shadow-sm">
+                <span className="text-[#74A78E] font-semibold text-sm uppercase tracking-wide">COMMUNITY LEARNING</span>
+                <h3 className="text-2xl sm:text-3xl font-bold text-black mt-2 mb-4">
+                  Small Groups
+                </h3>
+                <div className="relative rounded-xl overflow-hidden mb-4 aspect-[16/9]">
+                  <Image 
+                    src="/SmallGroups.png" 
+                    alt="Small Groups" 
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <p className="text-gray-700">
+                  Experience the joy of belonging to a global community discovering the Father's love together. Twice yearly, dive into 12-week small group studies like "Fruit of the Spirit" where you'll connect with fellow believers practicing His presence as your normal reality.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Testimonials Section */}
+      <div className="bg-white py-16 sm:py-20 px-6 sm:px-10 lg:px-16">
+        <div className="max-w-6xl mx-auto px-0 sm:px-8 lg:px-12">
+          <div className="text-center mb-12">
+            <span className="text-[#74A78E] font-semibold text-sm uppercase tracking-wide mb-2 inline-block">FROM OUR COMMUNITY</span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4">
+              What People Are Saying
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
               Join thousands of believers experiencing transformation through Kingdom perspectives.
             </p>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {/* Testimonial 1 */}
-            <div className="flex-grow basis-full sm:basis-[calc(50%-1rem)] lg:basis-[calc(33.333%-1.5rem)] max-w-full sm:max-w-[calc(50%-1rem)] lg:max-w-[calc(33.333%-1.5rem)] bg-white/5 backdrop-blur-sm rounded-2xl p-5 sm:p-6 lg:p-8 relative">
-              <div className="absolute top-0 right-0 transform translate-x-2 -translate-y-2">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 24H18L15 34H21L24 24V14H12V24ZM28 24H34L31 34H37L40 24V14H28V24Z" fill="#E9C46A" fillOpacity="0.2"/>
-                </svg>
-              </div>
-              <p className="text-sm sm:text-base text-gray-300 mb-4 sm:mb-6 relative z-10">
+            <div className="bg-[#F6F5F2] rounded-2xl p-6 relative">
+              <div className="mb-4 text-gray-700 italic">
                 "Wow!! Powerful. Transforming, Brilliant has opened up locked spaces in my life."
-              </p>
-              <p className="text-[#E9C46A] font-medium">Sarah M.</p>
+              </div>
+              <div className="font-semibold text-[#264653]">Sarah M.</div>
             </div>
 
             {/* Testimonial 2 */}
-            <div className="flex-grow basis-full sm:basis-[calc(50%-1rem)] lg:basis-[calc(33.333%-1.5rem)] max-w-full sm:max-w-[calc(50%-1rem)] lg:max-w-[calc(33.333%-1.5rem)] bg-white/5 backdrop-blur-sm rounded-2xl p-5 sm:p-6 lg:p-8 relative">
-              <div className="absolute top-0 right-0 transform translate-x-2 -translate-y-2">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 24H18L15 34H21L24 24V14H12V24ZM28 24H34L31 34H37L40 24V14H28V24Z" fill="#E9C46A" fillOpacity="0.2"/>
-                </svg>
-              </div>
-              <p className="text-sm sm:text-base text-gray-300 mb-4 sm:mb-6 relative z-10">
+            <div className="bg-[#F6F5F2] rounded-2xl p-6 relative">
+              <div className="mb-4 text-gray-700 italic">
                 "Life-changing perspectives for those with an open heart."
-              </p>
-              <p className="text-[#E9C46A] font-medium">Michael R.</p>
+              </div>
+              <div className="font-semibold text-[#264653]">Michael R.</div>
             </div>
 
             {/* Testimonial 3 */}
-            <div className="flex-grow basis-full sm:basis-[calc(50%-1rem)] lg:basis-[calc(33.333%-1.5rem)] max-w-full sm:max-w-[calc(50%-1rem)] lg:max-w-[calc(33.333%-1.5rem)] bg-white/5 backdrop-blur-sm rounded-2xl p-5 sm:p-6 lg:p-8 relative">
-              <div className="absolute top-0 right-0 transform translate-x-2 -translate-y-2">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 24H18L15 34H21L24 24V14H12V24ZM28 24H34L31 34H37L40 24V14H28V24Z" fill="#E9C46A" fillOpacity="0.2"/>
-                </svg>
-              </div>
-              <p className="text-sm sm:text-base text-gray-300 mb-4 sm:mb-6 relative z-10">
+            <div className="bg-[#F6F5F2] rounded-2xl p-6 relative">
+              <div className="mb-4 text-gray-700 italic">
                 "I'm so grateful for the truth that God wants me to understand through Brilliant perspectives."
-              </p>
-              <p className="text-[#E9C46A] font-medium">Rachel K.</p>
+              </div>
+              <div className="font-semibold text-[#264653]">Rachel K.</div>
             </div>
 
             {/* Testimonial 4 */}
-            <div className="flex-grow basis-full sm:basis-[calc(50%-1rem)] lg:basis-[calc(33.333%-1.5rem)] max-w-full sm:max-w-[calc(50%-1rem)] lg:max-w-[calc(33.333%-1.5rem)] bg-white/5 backdrop-blur-sm rounded-2xl p-5 sm:p-6 lg:p-8 relative">
-              <div className="absolute top-0 right-0 transform translate-x-2 -translate-y-2">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 24H18L15 34H21L24 24V14H12V24ZM28 24H34L31 34H37L40 24V14H28V24Z" fill="#E9C46A" fillOpacity="0.2"/>
-                </svg>
-              </div>
-              <p className="text-sm sm:text-base text-gray-300 mb-4 sm:mb-6 relative z-10">
+            <div className="bg-[#F6F5F2] rounded-2xl p-6 relative">
+              <div className="mb-4 text-gray-700 italic">
                 "It's the first time in my life I've been able to understand the work of the spirit free of the mumbo-jumbo. Thank you for taking me to the next level!"
-              </p>
-              <p className="text-[#E9C46A] font-medium">David W.</p>
+              </div>
+              <div className="font-semibold text-[#264653]">David W.</div>
             </div>
 
             {/* Testimonial 5 */}
-            <div className="flex-grow basis-full sm:basis-[calc(50%-1rem)] lg:basis-[calc(33.333%-1.5rem)] max-w-full sm:max-w-[calc(50%-1rem)] lg:max-w-[calc(33.333%-1.5rem)] bg-white/5 backdrop-blur-sm rounded-2xl p-5 sm:p-6 lg:p-8 relative">
-              <div className="absolute top-0 right-0 transform translate-x-2 -translate-y-2">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 24H18L15 34H21L24 24V14H12V24ZM28 24H34L31 34H37L40 24V14H28V24Z" fill="#E9C46A" fillOpacity="0.2"/>
-                </svg>
-              </div>
-              <p className="text-sm sm:text-base text-gray-300 mb-4 sm:mb-6 relative z-10">
+            <div className="bg-[#F6F5F2] rounded-2xl p-6 relative">
+              <div className="mb-4 text-gray-700 italic">
                 "It's such a gift listening to Graham. He opens my eyes to a beautiful faith."
-              </p>
-              <p className="text-[#E9C46A] font-medium">Emma L.</p>
+              </div>
+              <div className="font-semibold text-[#264653]">Emma L.</div>
             </div>
 
             {/* Testimonial 6 */}
-            <div className="flex-grow basis-full sm:basis-[calc(50%-1rem)] lg:basis-[calc(33.333%-1.5rem)] max-w-full sm:max-w-[calc(50%-1rem)] lg:max-w-[calc(33.333%-1.5rem)] bg-white/5 backdrop-blur-sm rounded-2xl p-5 sm:p-6 lg:p-8 relative">
-              <div className="absolute top-0 right-0 transform translate-x-2 -translate-y-2">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 24H18L15 34H21L24 24V14H12V24ZM28 24H34L31 34H37L40 24V14H28V24Z" fill="#E9C46A" fillOpacity="0.2"/>
-                </svg>
-              </div>
-              <p className="text-sm sm:text-base text-gray-300 mb-4 sm:mb-6 relative z-10">
+            <div className="bg-[#F6F5F2] rounded-2xl p-6 relative">
+              <div className="mb-4 text-gray-700 italic">
                 "Long time member and listener, these messages are an excellent affirmation of who we are in Christ and help maintain kingdom normal."
-              </p>
-              <p className="text-[#E9C46A] font-medium">James B.</p>
-            </div>
-
-            {/* Testimonial 7 */}
-            <div className="flex-grow basis-full sm:basis-[calc(50%-1rem)] lg:basis-[calc(33.333%-1.5rem)] max-w-full sm:max-w-[calc(50%-1rem)] lg:max-w-[calc(33.333%-1.5rem)] bg-white/5 backdrop-blur-sm rounded-2xl p-5 sm:p-6 lg:p-8 relative">
-              <div className="absolute top-0 right-0 transform translate-x-2 -translate-y-2">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 24H18L15 34H21L24 24V14H12V24ZM28 24H34L31 34H37L40 24V14H28V24Z" fill="#E9C46A" fillOpacity="0.2"/>
-                </svg>
               </div>
-              <p className="text-sm sm:text-base text-gray-300 mb-4 sm:mb-6 relative z-10">
-                "This content is beyond Good! Thank you!"
-              </p>
-              <p className="text-[#E9C46A] font-medium">Lisa P.</p>
+              <div className="font-semibold text-[#264653]">James B.</div>
             </div>
-
-            {/* Testimonial 8 */}
-            <div className="flex-grow basis-full sm:basis-[calc(50%-1rem)] lg:basis-[calc(33.333%-1.5rem)] max-w-full sm:max-w-[calc(50%-1rem)] lg:max-w-[calc(33.333%-1.5rem)] bg-white/5 backdrop-blur-sm rounded-2xl p-5 sm:p-6 lg:p-8 relative">
-              <div className="absolute top-0 right-0 transform translate-x-2 -translate-y-2">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 24H18L15 34H21L24 24V14H12V24ZM28 24H34L31 34H37L40 24V14H28V24Z" fill="#E9C46A" fillOpacity="0.2"/>
-                </svg>
+          </div>
+          
+          {/* CTA Button */}
+          <div className="mt-12 text-center">
+            <a 
+              href="/checkout" 
+              className="inline-block py-4 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
+            >
+              <div className="flex flex-col items-center">
+                <span>Start your five day free trial today</span>
+                <div className="flex items-center space-x-1 mt-1 text-xs">
+                  <span className="text-[#FFDD99]">★★★★★</span>
+                  <span className="text-white/90">| 4000+ Reviews</span>
+                </div>
               </div>
-              <p className="text-sm sm:text-base text-gray-300 mb-4 sm:mb-6 relative z-10">
-                "There really aren't words to convey the blessing Graham and his team. You'll find yourself soaking and relistening to content over and over. Give yourself time to go on a journey with Brilliant. You'll never be the same."
-              </p>
-              <p className="text-[#E9C46A] font-medium">Thomas H.</p>
-            </div>
-
-            {/* Testimonial 9 */}
-            <div className="flex-grow basis-full sm:basis-[calc(50%-1rem)] lg:basis-[calc(33.333%-1.5rem)] max-w-full sm:max-w-[calc(50%-1rem)] lg:max-w-[calc(33.333%-1.5rem)] bg-white/5 backdrop-blur-sm rounded-2xl p-5 sm:p-6 lg:p-8 relative">
-              <div className="absolute top-0 right-0 transform translate-x-2 -translate-y-2">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 24H18L15 34H21L24 24V14H12V24ZM28 24H34L31 34H37L40 24V14H28V24Z" fill="#E9C46A" fillOpacity="0.2"/>
-                </svg>
-              </div>
-              <p className="text-sm sm:text-base text-gray-300 mb-4 sm:mb-6 relative z-10">
-                "After 5 years of deconstructing, I got tired of doubting everything about God, and realized I miss the reality of Jesus. I've been having an astounding time with God, and Graham's teaching helped me have the right perspective on life in the spirit."
-              </p>
-              <p className="text-[#E9C46A] font-medium">Mark S.</p>
-            </div>
+            </a>
           </div>
         </div>
       </div>
       
       {/* Pricing Section */}
-      <div id="pricing" className="isolate overflow-hidden bg-[#264653]">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 pt-16 sm:pt-20 lg:pt-24 pb-64 sm:pb-80 lg:pb-96 text-center lg:px-8">
-          <div className="mx-auto max-w-4xl">
-            <h2 className="text-sm sm:text-base font-semibold text-[#E9C46A]">Membership Plans</h2>
-            <p className="mt-2 text-3xl sm:text-4xl md:text-5xl font-medium font-serif tracking-tight text-balance text-white sm:text-6xl">
+      <div id="pricing" className="bg-[#F6F5F2] py-16 sm:py-20 px-6 sm:px-10 lg:px-16">
+        <div className="max-w-6xl mx-auto px-0 sm:px-8 lg:px-12">
+          <div className="text-center mb-12">
+            <span className="text-[#74A78E] font-semibold text-sm uppercase tracking-wide mb-2 inline-block">YOUR MEMBERSHIP OPTIONS</span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4">
               Choose Your Kingdom Journey
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Select the membership that best suits your journey. Both options include full access to our community, resources, and teaching library.
             </p>
           </div>
-          <div className="relative mt-4 sm:mt-6">
-            <p className="mx-auto max-w-2xl text-base sm:text-lg font-medium text-pretty text-gray-300 sm:text-xl/8">
-              Select the membership that best suits your journey. Both options include full access to our community, resources, and teaching library to help you discover an extraordinary relationship with God.
-            </p>
-            <svg
-              viewBox="0 0 1208 1024"
-              className="absolute -top-10 left-1/2 -z-10 h-[64rem] -translate-x-1/2 [mask-image:radial-gradient(closest-side,white,transparent)] sm:-top-12 md:-top-20 lg:-top-12 xl:top-0"
-            >
-              <ellipse cx={604} cy={512} rx={604} ry={512} fill="url(#gradient-pricing)" />
-              <defs>
-                <radialGradient id="gradient-pricing">
-                  <stop stopColor="#2A9D8F" />
-                  <stop offset={1} stopColor="#E9C46A" />
-                </radialGradient>
-              </defs>
-            </svg>
-          </div>
-        </div>
-        <div className="flow-root bg-white pb-16 sm:pb-20 lg:pb-24">
-          <div className="-mt-56 sm:-mt-64 lg:-mt-80">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              <div className="mx-auto flex justify-center">
-                {/* Monthly Plan */}
-                <div className="flex flex-col justify-between rounded-3xl bg-white p-5 sm:p-8 lg:p-10 ring-1 shadow-xl ring-gray-900/10 w-full max-w-2xl">
-                  <div>
-                    <h3 id="tier-monthly" className="text-2xl sm:text-3xl lg:text-4xl font-medium font-serif tracking-tight text-[#264653] text-center mb-2 sm:mb-4">
-                      Become a member today
-                    </h3>
-                    <p className="text-sm sm:text-base text-gray-600 text-center mb-4 sm:mb-6">Full access to the Brilliant Movement with flexible monthly billing.</p>
-                    
-                    {/* Billing Toggle */}
-                    <div className="flex items-center justify-center gap-x-3 sm:gap-x-4 mb-8 sm:mb-12">
-                      <button 
-                        type="button"
-                        onClick={() => setSelectedFrequency('monthly')}
-                        className={`text-xs sm:text-sm font-medium ${selectedFrequency === 'monthly' ? 'text-[#264653]' : 'text-gray-500 hover:text-gray-700'} transition-colors cursor-pointer`}
-                      >
-                        Monthly
-                      </button>
-                      <button
-                        type="button"
-                        className="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#264653] focus:ring-offset-2 bg-gray-200"
-                        role="switch"
-                        aria-checked={selectedFrequency === 'annual'}
-                        onClick={() => setSelectedFrequency(selectedFrequency === 'monthly' ? 'annual' : 'monthly')}
-                      >
-                        <span
-                          aria-hidden="true"
-                          className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
-                            selectedFrequency === 'annual' ? 'translate-x-5' : 'translate-x-0'
-                          }`}
-                        />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setSelectedFrequency('annual')}
-                        className={`text-xs sm:text-sm font-medium ${selectedFrequency === 'annual' ? 'text-[#264653]' : 'text-gray-500 hover:text-gray-700'} transition-colors cursor-pointer`}
-                      >
-                        Annual
-                      </button>
-                    </div>
-                    
-                    <ul role="list" className="space-y-6 sm:space-y-8 text-sm/6 text-gray-600">
-                      <li className="flex flex-col sm:flex-row items-start gap-y-2 sm:gap-x-4">
-                        <div className="flex-shrink-0 mt-1 flex justify-center w-full sm:w-auto sm:justify-start">
-                          <svg className="h-5 w-5 sm:h-6 sm:w-5 flex-none text-[#E9C46A]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                          </svg>
-                        </div>
-                        <div className="flex-grow text-center sm:text-left">
-                          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-1 sm:mb-2">
-                            <h4 className="text-xl sm:text-2xl font-normal text-[#264653]">The App</h4>
-                            <span className="text-base sm:text-xl font-normal text-[#264653]">Value: $397</span>
-                          </div>
-                          <p className="text-gray-600 text-sm sm:text-base font-light">With over 500 teachings, prayers & prophetic words from Graham Cooke, Brilliant Plus with Graham Cooke is the perfect companion to engage deeply with God's love every day.</p>
-                        </div>
-                      </li>
-                      <li className="flex flex-col sm:flex-row items-start gap-y-2 sm:gap-x-4">
-                        <div className="flex-shrink-0 mt-1 flex justify-center w-full sm:w-auto sm:justify-start">
-                          <svg className="h-5 w-5 sm:h-6 sm:w-5 flex-none text-[#E9C46A]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                          </svg>
-                        </div>
-                        <div className="flex-grow text-center sm:text-left">
-                          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-1 sm:mb-2">
-                            <h4 className="text-xl sm:text-2xl font-normal text-[#264653]">Gatherings</h4>
-                            <span className="text-base sm:text-xl font-normal text-[#264653]">Value: $197</span>
-                          </div>
-                          <p className="text-gray-600 text-sm sm:text-base font-light">Your global community moving in the same direction as you. Engage with powerful teaching, immersion times and prophetic activation with believers who think just like you from around the world.</p>
-                        </div>
-                      </li>
-                      <li className="flex flex-col sm:flex-row items-start gap-y-2 sm:gap-x-4">
-                        <div className="flex-shrink-0 mt-1 flex justify-center w-full sm:w-auto sm:justify-start">
-                          <svg className="h-5 w-5 sm:h-6 sm:w-5 flex-none text-[#E9C46A]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                          </svg>
-                        </div>
-                        <div className="flex-grow text-center sm:text-left">
-                          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-1 sm:mb-2">
-                            <h4 className="text-xl sm:text-2xl font-normal text-[#264653]">Events</h4>
-                            <span className="text-base sm:text-xl font-normal text-[#264653]">Value: $297</span>
-                          </div>
-                          <p className="text-gray-600 text-sm sm:text-base font-light">Exclusive tickets to our biggest events of the year, all included in your membership.</p>
-                        </div>
-                      </li>
-                      <li className="flex flex-col sm:flex-row items-start gap-y-2 sm:gap-x-4">
-                        <div className="flex-shrink-0 mt-1 flex justify-center w-full sm:w-auto sm:justify-start">
-                          <svg className="h-5 w-5 sm:h-6 sm:w-5 flex-none text-[#E9C46A]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                          </svg>
-                        </div>
-                        <div className="flex-grow text-center sm:text-left">
-                          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-1 sm:mb-2">
-                            <h4 className="text-xl sm:text-2xl font-normal text-[#264653]">Small Groups</h4>
-                            <span className="text-base sm:text-xl font-normal text-[#264653]">Priceless</span>
-                          </div>
-                          <p className="text-gray-600 text-sm sm:text-base font-light">Experience the joy of belonging to a global community discovering the Father's love together. Twice yearly, dive into 12-week small group studies like "Fruit of the Spirit" where you'll connect with fellow believers practicing His presence as your normal reality.</p>
-                        </div>
-                      </li>
-                    </ul>
+
+          {/* Pricing Card */}
+          <div className="bg-white rounded-3xl shadow-md overflow-hidden mx-auto max-w-2xl">
+            <div className="p-6 sm:p-8">
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-black text-center mb-6">
+                Become a member today
+              </h3>
+              <p className="text-center text-gray-600 mb-8">
+                Full access to the Brilliant Movement with flexible billing.
+              </p>
+              
+              {/* Billing Toggle */}
+              <div className="flex items-center justify-center gap-x-3 sm:gap-x-4 mb-8">
+                <button 
+                  type="button"
+                  onClick={() => setSelectedFrequency('monthly')}
+                  className={`text-sm font-medium ${selectedFrequency === 'monthly' ? 'text-[#264653]' : 'text-gray-500 hover:text-gray-700'} transition-colors cursor-pointer`}
+                >
+                  Monthly
+                </button>
+                <button
+                  type="button"
+                  className="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#74A78E] focus:ring-offset-2 bg-gray-200"
+                  role="switch"
+                  aria-checked={selectedFrequency === 'annual'}
+                  onClick={() => setSelectedFrequency(selectedFrequency === 'monthly' ? 'annual' : 'monthly')}
+                >
+                  <span
+                    aria-hidden="true"
+                    className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
+                      selectedFrequency === 'annual' ? 'translate-x-5' : 'translate-x-0'
+                    }`}
+                  />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSelectedFrequency('annual')}
+                  className={`text-sm font-medium ${selectedFrequency === 'annual' ? 'text-[#264653]' : 'text-gray-500 hover:text-gray-700'} transition-colors cursor-pointer`}
+                >
+                  Annual
+                </button>
+              </div>
+              
+              {/* Feature List */}
+              <div className="space-y-6 sm:space-y-8">
+                {/* The App */}
+                <div className="flex items-start">
+                  <div className="flex-shrink-0 mt-1 mr-4">
+                    <svg className="h-6 w-6 text-[#74A78E]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
                   </div>
-                  <div className="mt-8 sm:mt-12 text-center">
-                    <div className="flex flex-col items-center gap-y-2 sm:gap-y-3">
-                      <span className="text-base sm:text-lg font-medium text-gray-600 line-through">Total Value: $891</span>
-                      <div className="flex items-baseline gap-x-1 sm:gap-x-2 justify-center mb-4 sm:mb-6">
-                        <span className="text-4xl sm:text-5xl lg:text-6xl font-medium font-serif tracking-tight text-[#264653]">
-                          ${selectedFrequency === 'annual' ? '397' : '47'}
-                        </span>
-                        <span className="text-base sm:text-xl font-semibold text-gray-600">/{selectedFrequency === 'annual' ? 'year' : 'month'}</span>
+                  <div className="flex-grow">
+                    <div className="flex justify-between items-start mb-1">
+                      <h4 className="text-xl font-semibold text-[#264653]">The App</h4>
+                      <span className="text-base font-medium text-[#264653] w-[100px] text-right">Value: $397</span>
+                    </div>
+                    <p className="text-gray-600">With over 500 teachings, prayers & prophetic words from Graham Cooke</p>
+                  </div>
+                </div>
+                
+                {/* Gatherings */}
+                <div className="flex items-start">
+                  <div className="flex-shrink-0 mt-1 mr-4">
+                    <svg className="h-6 w-6 text-[#74A78E]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div className="flex-grow">
+                    <div className="flex justify-between items-start mb-1">
+                      <h4 className="text-xl font-semibold text-[#264653]">Gatherings</h4>
+                      <span className="text-base font-medium text-[#264653] w-[100px] text-right">Value: $197</span>
+                    </div>
+                    <p className="text-gray-600">Your global community engaging with powerful teaching and prophetic activation</p>
+                  </div>
+                </div>
+                
+                {/* Events */}
+                <div className="flex items-start">
+                  <div className="flex-shrink-0 mt-1 mr-4">
+                    <svg className="h-6 w-6 text-[#74A78E]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div className="flex-grow">
+                    <div className="flex justify-between items-start mb-1">
+                      <h4 className="text-xl font-semibold text-[#264653]">Events</h4>
+                      <span className="text-base font-medium text-[#264653] w-[100px] text-right">Value: $297</span>
+                    </div>
+                    <p className="text-gray-600">Exclusive tickets to our biggest events of the year, all included</p>
+                  </div>
+                </div>
+                
+                {/* Small Groups */}
+                <div className="flex items-start">
+                  <div className="flex-shrink-0 mt-1 mr-4">
+                    <svg className="h-6 w-6 text-[#74A78E]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div className="flex-grow">
+                    <div className="flex justify-between items-start mb-1">
+                      <h4 className="text-xl font-semibold text-[#264653]">Small Groups</h4>
+                      <span className="text-base font-medium text-[#264653] w-[100px] text-right">Priceless</span>
+                    </div>
+                    <p className="text-gray-600">Twice yearly 12-week studies connecting you with fellow believers</p>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Price and CTA */}
+              <div className="mt-10 text-center">
+                <div className="flex flex-col items-center">
+                  <span className="text-base font-medium text-gray-500 line-through">Total Value: $891</span>
+                  <div className="flex items-baseline my-4">
+                    <span className="text-5xl font-bold text-[#264653]">
+                      ${selectedFrequency === 'annual' ? '397' : '47'}
+                    </span>
+                    <span className="text-xl font-medium text-gray-600 ml-2">/{selectedFrequency === 'annual' ? 'year' : 'month'}</span>
+                  </div>
+                  
+                  <a
+                    href={`/checkout?plan=${selectedFrequency}`}
+                    className="mt-4 w-full sm:w-auto px-8 py-4 bg-[#74A78E] hover:bg-[#74A78E]/90 text-white rounded-full font-medium inline-block"
+                  >
+                    <div className="flex flex-col items-center">
+                      <span>Start your five day free trial today</span>
+                      <div className="flex items-center space-x-1 mt-1 text-xs">
+                        <span className="text-[#FFDD99]">★★★★★</span>
+                        <span className="text-white/90">| 4000+ Reviews</span>
                       </div>
-                      <p className="text-xs sm:text-sm text-gray-500 mb-4 sm:mb-6">
-                        {selectedFrequency === 'annual' ? '' : ''}
-                      </p>
                     </div>
-                    <a
-                      href={`/checkout?plan=${selectedFrequency}`}
-                      aria-describedby="tier-monthly"
-                      className="block w-full sm:w-auto sm:inline-block rounded-md bg-[#264653] px-4 sm:px-6 py-3 text-center text-sm sm:text-base font-semibold text-white shadow-lg hover:bg-[#1d3741] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#264653]"
-                    >
-                      Join {selectedFrequency === 'annual' ? 'Annually' : 'Monthly'}
-                    </a>
-                  </div>
+                  </a>
                 </div>
               </div>
             </div>
