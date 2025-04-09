@@ -116,28 +116,6 @@ export default function LandingPage() {
                   </div>
                 </div>
               </a>
-              
-              {/* App Store Badges */}
-              <div className="flex justify-center mt-4 space-x-4">
-                <a href="#" className="w-[135px]">
-                  <Image 
-                    src="/app-store-badge.png" 
-                    alt="Download Brilliant Plus on the Apple App Store" 
-                    width={135}
-                    height={40}
-                    className="h-auto w-full"
-                  />
-                </a>
-                <a href="#" className="w-[135px]">
-                  <Image 
-                    src="/google-play-badge.png" 
-                    alt="Get Brilliant Plus on Google Play Store" 
-                    width={135}
-                    height={40}
-                    className="h-auto w-full"
-                  />
-                </a>
-              </div>
             </div>
           </div>
 
