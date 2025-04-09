@@ -965,6 +965,46 @@ function CheckoutForm({
             </a>
           </div>
         </div>
+        
+        {/* Order Summary */}
+        <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+          <h3 className="font-medium text-gray-900 mb-3">Order Summary</h3>
+          <div className="flex justify-between mb-2">
+            <p className="text-gray-600">{priceInfo.frequency === 'monthly' ? 'Monthly' : 'Annual'} Plan:</p>
+            <p className="font-medium text-gray-900">${priceInfo.discountPrice}</p>
+          </div>
+          {priceInfo.frequency === 'annual' && (
+            <div className="flex justify-between mb-2 text-green-600 text-sm">
+              <p>You save:</p>
+              <p>$167</p>
+            </div>
+          )}
+          {isAmbassador && (
+            <div className="flex justify-between mb-2">
+              <p className="text-gray-600">Ambassador Program (Annual):</p>
+              <p className="font-medium text-gray-900">$10.00</p>
+            </div>
+          )}
+          <div className="flex justify-between mb-2">
+            <p className="text-gray-600">{isAmbassador ? 'No Trial Period' : '5-Day Free Trial'}:</p>
+            <p className="font-medium text-gray-900">{isAmbassador ? 'N/A' : '$0.00'}</p>
+          </div>
+          <div className="border-t border-gray-200 my-2 pt-2"></div>
+          <div className="flex justify-between">
+            <p className="font-medium text-gray-900">Due today:</p>
+            <p className="font-bold text-gray-900">{isAmbassador ? `$${priceInfo.totalPrice.toFixed(2)}` : '$0.00'}</p>
+          </div>
+          <div className="mt-1 text-xs text-gray-500 flex items-center">
+            <svg className="h-3 w-3 mr-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            {isAmbassador ? (
+              <span>Charged immediately: ${priceInfo.discountPrice} {priceInfo.frequency === 'monthly' ? 'per month' : 'per year'} + $10 annual ambassador fee</span>
+            ) : (
+              <span>After trial, ${priceInfo.totalPrice} {priceInfo.frequency === 'monthly' ? 'per month' : 'per year'}</span>
+            )}
+          </div>
+        </div>
       </div>
     );
   };
@@ -1388,46 +1428,6 @@ export default function Home() {
                     <p className="text-xs mt-2"><span className="text-amber-500">★★★★★</span> <span className="text-gray-600">|</span> <span className="text-gray-600">4000+ Reviews</span></p>
                   </div>
                 </div>
-              </div>
-            </div>
-            
-            {/* Order Summary */}
-            <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-6 md:mb-8">
-              <h3 className="font-medium text-gray-900 mb-3">Order Summary</h3>
-              <div className="flex justify-between mb-2">
-                <p className="text-gray-600">{priceInfo.frequency === 'monthly' ? 'Monthly' : 'Annual'} Plan:</p>
-                <p className="font-medium text-gray-900">${priceInfo.discountPrice}</p>
-              </div>
-              {priceInfo.frequency === 'annual' && (
-                <div className="flex justify-between mb-2 text-green-600 text-sm">
-                  <p>You save:</p>
-                  <p>$167</p>
-                </div>
-              )}
-              {isAmbassador && (
-                <div className="flex justify-between mb-2">
-                  <p className="text-gray-600">Ambassador Program (Annual):</p>
-                  <p className="font-medium text-gray-900">$10.00</p>
-                </div>
-              )}
-              <div className="flex justify-between mb-2">
-                <p className="text-gray-600">{isAmbassador ? 'No Trial Period' : '5-Day Free Trial'}:</p>
-                <p className="font-medium text-gray-900">{isAmbassador ? 'N/A' : '$0.00'}</p>
-              </div>
-              <div className="border-t border-gray-200 my-2 pt-2"></div>
-              <div className="flex justify-between">
-                <p className="font-medium text-gray-900">Due today:</p>
-                <p className="font-bold text-gray-900">{isAmbassador ? `$${priceInfo.totalPrice.toFixed(2)}` : '$0.00'}</p>
-              </div>
-              <div className="mt-1 text-xs text-gray-500 flex items-center">
-                <svg className="h-3 w-3 mr-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                {isAmbassador ? (
-                  <span>Charged immediately: ${priceInfo.discountPrice} {priceInfo.frequency === 'monthly' ? 'per month' : 'per year'} + $10 annual ambassador fee</span>
-                ) : (
-                  <span>After trial, ${priceInfo.totalPrice} {priceInfo.frequency === 'monthly' ? 'per month' : 'per year'}</span>
-                )}
               </div>
             </div>
             
