@@ -6,25 +6,27 @@ import Stripe from 'stripe';
 let stripe: Stripe | null = null;
 if (process.env.STRIPE_SECRET_KEY) {
   stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-    apiVersion: '2023-10-16',
+    apiVersion: '2025-02-24.acacia',
   });
 }
 
 // Cache for price IDs to reduce unnecessary API calls
 const PRICE_CACHE: Record<string, string> = {};
 
-// Price IDs from environment variables only
+// Price IDs - using environment variables only
 const PRICE_IDS = {
-  monthly: process.env.STRIPE_MONTHLY_PRICE_ID,
-  annual: process.env.STRIPE_ANNUAL_PRICE_ID,
-  ambassadorFee: process.env.STRIPE_AMBASSADOR_FEE_PRICE_ID
+  monthly: process.env.STRIPE_MONTHLY_PRICE_ID || 'price_1QzGjMEWsQ0IpmHORqlY8Rjv', // Fallback to provided monthly price ID
+  annual: process.env.STRIPE_ANNUAL_PRICE_ID || 'price_1QzH6PEWsQ0IpmHOuuSCowDt', // Fallback to provided annual price ID
+  // Ambassador fee price ID - the specific $10/year fee
+  ambassadorFee: 'price_1R42MJEWsQ0IpmHOWcDQ5KvC'
 };
 
 // Log environment variables for debugging (excluding any sensitive values)
-console.log('Environment variables check (detailed):', {
+console.log('Environment variables check:', {
+  STRIPE_MONTHLY_PRODUCT_ID: process.env.STRIPE_MONTHLY_PRODUCT_ID ? 'Set' : 'Not set',
+  STRIPE_ANNUAL_PRODUCT_ID: process.env.STRIPE_ANNUAL_PRODUCT_ID ? 'Set' : 'Not set',
   STRIPE_MONTHLY_PRICE_ID: process.env.STRIPE_MONTHLY_PRICE_ID ? 'Set' : 'Not set',
   STRIPE_ANNUAL_PRICE_ID: process.env.STRIPE_ANNUAL_PRICE_ID ? 'Set' : 'Not set',
-  STRIPE_AMBASSADOR_FEE_PRICE_ID: process.env.STRIPE_AMBASSADOR_FEE_PRICE_ID ? 'Set' : 'Not set',
   NODE_ENV: process.env.NODE_ENV,
 });
 
@@ -85,7 +87,7 @@ export async function POST(request: Request) {
       }, { status: 400 });
     }
 
-    const { customerInfo, paymentMethodId, frequency = 'monthly', pathParam, isAmbassador, isAmbassadorFee, marketingConsent } = body;
+    const { customerInfo, paymentMethodId, frequency = 'monthly', pathParam, isAmbassador, ambassadorPriceId, marketingConsent } = body;
 
     // Validate required fields with detailed errors
     if (!customerInfo?.email) {
@@ -186,10 +188,10 @@ export async function POST(request: Request) {
           ...referralMetadata,
           firstName: customerInfo.firstName,
           lastName: customerInfo.lastName,
-          streetAddress: customerInfo.streetAddress,
+          streetAddress: customerInfo.address || customerInfo.streetAddress, // Accept either field name
           city: customerInfo.city,
           state: customerInfo.state,
-          postalCode: customerInfo.postalCode,
+          postalCode: customerInfo.zipCode || customerInfo.postalCode, // Accept either field name
           country: customerInfo.country,
           isAmbassador: isAmbassador ? 'YES' : 'NO',
           phone: isAmbassador ? customerInfo.phone : undefined,
@@ -206,10 +208,10 @@ export async function POST(request: Request) {
           ...referralMetadata,
           firstName: customerInfo.firstName,
           lastName: customerInfo.lastName,
-          streetAddress: customerInfo.streetAddress,
+          streetAddress: customerInfo.address || customerInfo.streetAddress, // Accept either field name
           city: customerInfo.city,
           state: customerInfo.state,
-          postalCode: customerInfo.postalCode,
+          postalCode: customerInfo.zipCode || customerInfo.postalCode, // Accept either field name
           country: customerInfo.country,
           isAmbassador: isAmbassador ? 'YES' : 'NO',
           phone: isAmbassador ? customerInfo.phone : undefined,
@@ -268,17 +270,10 @@ export async function POST(request: Request) {
     let ambassadorFeeSubscription = null;
     let ambassadorError = null;
     
-    if (isAmbassador && isAmbassadorFee) {
+    if (isAmbassador && ambassadorPriceId) {
       try {
         // Add a small delay before creating ambassador subscription to ensure main subscription is fully processed
         await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        // Use the ambassador fee price ID from environment variables
-        const ambassadorPriceId = PRICE_IDS.ambassadorFee;
-        
-        if (!ambassadorPriceId) {
-          throw new Error('Missing ambassador fee price ID. STRIPE_AMBASSADOR_FEE_PRICE_ID not configured.');
-        }
         
         // Create a separate subscription for the ambassador fee
         ambassadorFeeSubscription = await stripe!.subscriptions.create({
