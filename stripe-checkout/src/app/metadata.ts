@@ -328,3 +328,68 @@ export const grahamCookeSchema = {
     }
   }
 };
+
+// Ambassador Only Funnel metadata
+export const ambassadorOnlyMetadata: Metadata = {
+  title: 'Become a Brilliant Ambassador | Join Our Referral Program',
+  description: 'Join the Brilliant Ambassador Program for just $10/year. Earn commissions by sharing Brilliant with others and enjoy exclusive ambassador benefits.',
+  keywords: 'Brilliant ambassador program, referral program, earn commissions, Graham Cooke ambassador',
+  openGraph: {
+    title: 'Become a Brilliant Ambassador | Join Our Referral Program',
+    description: 'Join the Brilliant Ambassador Program for just $10/year. Earn commissions by sharing Brilliant with others and enjoy exclusive ambassador benefits.',
+    images: [
+      {
+        url: '/og-image-ambassador.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Brilliant Ambassador Program',
+      },
+    ],
+    type: 'website',
+    url: '/ambassador-only',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Become a Brilliant Ambassador | Join Our Referral Program',
+    description: 'Join the Brilliant Ambassador Program for just $10/year. Earn commissions by sharing Brilliant with others and enjoy exclusive ambassador benefits.',
+    images: ['/og-image-ambassador.jpg'],
+  },
+  alternates: {
+    canonical: '/ambassador-only',
+  },
+  robots: 'index, follow',
+};
+
+// JSON-LD schema for Ambassador Only page
+export const ambassadorSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: 'Brilliant Ambassador Program',
+  description: 'Join our ambassador program and earn commissions by sharing Brilliant with others.',
+  offers: {
+    '@type': 'Offer',
+    price: '10.00',
+    priceCurrency: 'USD',
+    priceValidUntil: '2025-12-31',
+    availability: 'https://schema.org/InStock',
+    url: 'https://brilliantmovement.com/ambassador-only',
+  },
+  brand: {
+    '@type': 'Brand',
+    name: 'Brilliant Perspectives',
+  },
+  category: 'Affiliate Program',
+  material: 'Digital Subscription',
+  additionalProperty: [
+    {
+      '@type': 'PropertyValue',
+      name: 'Subscription Period',
+      value: 'Annual',
+    },
+    {
+      '@type': 'PropertyValue',
+      name: 'Benefits',
+      value: 'Commissions on referrals, ambassador tools, exclusive resources',
+    },
+  ],
+};

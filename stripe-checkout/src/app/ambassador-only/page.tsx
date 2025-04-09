@@ -7,6 +7,11 @@ import { Elements, CardElement, useStripe, useElements } from '@stripe/react-str
 import { loadStripe } from '@stripe/stripe-js';
 import AmbassadorAgreementModal from '../components/AmbassadorAgreementModal';
 import PoliciesModal from '../components/PoliciesModal';
+import { ambassadorOnlyMetadata, ambassadorSchema } from '../metadata';
+import { Metadata } from 'next';
+
+// Export the metadata for Next.js
+export const metadata = ambassadorOnlyMetadata;
 
 // Load Stripe
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
