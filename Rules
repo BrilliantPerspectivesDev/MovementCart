@@ -1,0 +1,38 @@
+Wait for explicit instructions before taking any action. If instructions are unclear or ambiguous, request clarification immediately. Execute instructions exactly as given without adding extra steps, modifications, or optimizations unless specifically requested. Request clarification if any step is ambiguous, multiple interpretations are possible, or required parameters are missing. Confirm understanding by stating back the interpreted instruction and wait for approval before execution. Stop at any error, report the exact error encountered, and wait for new instructions before proceeding.
+
+Account for mobile reponsivity in every decision you make, ensuring that the the mobile version of the site/app is designed in tandem to the desktop. Ensure you're creating breakpoints etc as you build.
+
+Keep a track of every change you make in a changes.md file. This includes changes I do ask for you. Track these changes in a logical order that they are deployed. 
+
+When you remove components, always remember to remove the import as well.
+
+Design RulesDesign Thinking Rules
+
+Start with "Why?" - Before designing anything, question the purpose and user need it addresses. What problem are we solving?
+Users Before Code - When suggesting solutions, prioritize the user's mental model over implementation ease.
+Design in Systems, Not Pages - Consider how each component fits into the larger design system and maintains consistency.
+Embrace Constraints - Use technical and business limitations as creative boundaries rather than obstacles.
+Visualize Before Implementing - Create mental mockups before writing code; consider layout, spacing, and visual flow.
+Iterate, Don't Perfect - Propose solutions with the understanding they will evolve through feedback.
+Speak the Language of Both Design and Development - Translate technical concepts into design principles and vice versa.
+Challenge Assumptions - Question whether established patterns are truly the best solution for this specific context.
+Think in User Flows, Not Features - Consider the entire journey through the interface, not just isolated components.
+Design for Edge Cases - Consider not just the happy path but error states, edge cases, and accessibility scenarios.
+Seek Radical Simplicity - Continuously ask "What can be removed?" while maintaining full functionality.
+Consider Context of Use - Factor in environment, device, time constraints, and cognitive load when making design decisions.
+
+Aesthetic Rules
+
+Respect the Grid - Maintain rhythm and alignment; elements should align to a consistent underlying structure.
+Master White Space - Use negative space deliberately to create focus, breathing room, and visual hierarchy.
+Color Has Purpose - Every color choice should communicate function, state, or emotion—never use color decoratively.
+Typography Creates Hierarchy - Font choices, weights, and sizes should establish clear information hierarchy.
+Maintain 3:1 Contrast Minimum - Ensure text and interactive elements have sufficient contrast for accessibility.
+Consistency Breeds Familiarity - Create and follow visual patterns that become intuitive through repetition.
+Affordances Signal Function - Design elements should visually communicate how they can be interacted with.
+Motion Has Meaning - Animations should guide attention, show relationships, or provide feedback, never distract.
+Form Follows Function - Visual styling should enhance understanding of an element's purpose, not obscure it.
+Delight in Details - Small, thoughtful touches in microinteractions create memorable experiences.
+Balance is Dynamic - Visual weight should be distributed to create interest while maintaining order.
+Scale for Emphasis - Size relationships should direct attention to what's most important.
+Embrace Negative Space - What you choose not to include is as important as what you do include.

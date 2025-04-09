@@ -6,19 +6,18 @@ import Stripe from 'stripe';
 let stripe: Stripe | null = null;
 if (process.env.STRIPE_SECRET_KEY) {
   stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-    apiVersion: '2025-02-24.acacia',
+    apiVersion: '2023-10-16',
   });
 }
 
 // Cache for price IDs to reduce unnecessary API calls
 const PRICE_CACHE: Record<string, string> = {};
 
-// Price IDs - using environment variables only
+// Price IDs from environment variables only
 const PRICE_IDS = {
-  monthly: process.env.STRIPE_MONTHLY_PRICE_ID || 'price_1QzGjMEWsQ0IpmHORqlY8Rjv', // Fallback to provided monthly price ID
-  annual: process.env.STRIPE_ANNUAL_PRICE_ID || 'price_1QzH6PEWsQ0IpmHOuuSCowDt', // Fallback to provided annual price ID
-  // Ambassador fee price ID - the specific $10/year fee
-  ambassadorFee: 'price_1R42MJEWsQ0IpmHOWcDQ5KvC'
+  monthly: process.env.STRIPE_MONTHLY_PRICE_ID,
+  annual: process.env.STRIPE_ANNUAL_PRICE_ID,
+  ambassadorFee: process.env.STRIPE_AMBASSADOR_FEE_PRICE_ID
 };
 
 // Log environment variables for debugging (excluding any sensitive values)
