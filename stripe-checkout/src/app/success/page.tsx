@@ -1,14 +1,39 @@
 'use client';
 
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
+import { trackPurchase, trackPageView } from '../utils/analytics';
 
 // SuccessContent component that uses useSearchParams
 function SuccessContent() {
   const searchParams = useSearchParams();
   const subscriptionId = searchParams.get('subscriptionId');
+  const plan = searchParams.get('plan') || 'monthly';
+  const price = plan === 'monthly' ? 9.99 : 99.99;
+  
+  useEffect(() => {
+    // Track page view
+    trackPageView('Success', 'conversion', document.referrer);
+    
+    // Track purchase only once when component mounts
+    if (subscriptionId) {
+      trackPurchase(
+        subscriptionId,
+        price,
+        'USD',
+        [
+          {
+            item_id: plan === 'monthly' ? 'brilliant-monthly' : 'brilliant-annual',
+            item_name: plan === 'monthly' ? 'Brilliant Monthly Subscription' : 'Brilliant Annual Subscription',
+            price: price,
+            quantity: 1
+          }
+        ]
+      );
+    }
+  }, [subscriptionId, plan, price]);
 
   return (
     <div className="min-h-screen bg-[#f9f5f0] flex flex-col">

@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { productSchema, organizationSchema, faqSchema, grahamCookeSchema } from './metadata';
 import Script from 'next/script';
+import { trackButtonClick, trackPageView } from './utils/analytics';
 
 // Main component - Landing page
 export default function LandingPage() {
@@ -47,6 +48,18 @@ export default function LandingPage() {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [pathname]);
+
+  useEffect(() => {
+    // Track page view when component mounts
+    if (typeof window !== 'undefined') {
+      trackPageView('Home', 'landing', document.referrer);
+    }
+  }, [pathname]);
+
+  // Handle CTA button click
+  const handleCTAClick = (buttonId: string, buttonText: string, section: string) => {
+    trackButtonClick(buttonId, buttonText, section);
+  };
 
   return (
     <main className="min-h-screen bg-[#f9f5f0] pt-12">
@@ -93,6 +106,7 @@ export default function LandingPage() {
               <a 
                 href="/checkout" 
                 className="block w-full text-center py-4 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
+                onClick={() => handleCTAClick('hero-cta', 'Start your five day free trial today', 'Hero Section')}
               >
                 <div className="flex flex-col items-center">
                   <span>Start your five day free trial today</span>
@@ -220,6 +234,7 @@ export default function LandingPage() {
             <a 
               href="/checkout" 
               className="block w-full text-center py-4 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
+              onClick={() => handleCTAClick('testimonials-cta', 'Start your five day free trial today', 'Testimonials Section')}
             >
               <div className="flex flex-col items-center">
                 <span>Start your five day free trial today</span>
@@ -276,6 +291,7 @@ export default function LandingPage() {
                 <a 
                   href="/checkout" 
                   className="block w-full sm:w-auto text-center py-3 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
+                  onClick={() => handleCTAClick('app-showcase-cta', 'Start Your Journey Today', 'App Showcase Section')}
                 >
                   Start Your Journey Today
                 </a>
@@ -361,6 +377,7 @@ export default function LandingPage() {
             <a 
               href="/checkout" 
               className="inline-block py-4 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
+              onClick={() => handleCTAClick('app-features-cta', 'Start your five day free trial today', 'App Features Section')}
             >
               <div className="flex flex-col items-center">
                 <span>Start your five day free trial today</span>
@@ -559,7 +576,8 @@ export default function LandingPage() {
           <div className="mt-12 text-center">
             <a 
               href="/checkout" 
-              className="inline-block py-4 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
+              className="block w-full text-center py-4 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
+              onClick={() => handleCTAClick('testimonials-cta', 'Start your five day free trial today', 'Testimonials Section')}
             >
               <div className="flex flex-col items-center">
                 <span>Start your five day free trial today</span>
@@ -612,6 +630,7 @@ export default function LandingPage() {
                 <a 
                   href="/checkout" 
                   className="inline-block py-4 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
+                  onClick={() => handleCTAClick('graham-cta', 'Start your five day free trial today', 'Graham Cooke Section')}
                 >
                   <div className="flex flex-col items-center">
                     <span>Start your five day free trial today</span>
