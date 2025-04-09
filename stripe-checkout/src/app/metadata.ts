@@ -45,11 +45,11 @@ export const defaultMetadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/Brilliant_ICON_Full-Color.png', sizes: 'any' },
+      { url: '/Brilliant_ICON_Full-Color.png', type: 'image/png' },
     ],
     apple: [
-      { url: '/apple-icon.png', sizes: '180x180' },
+      { url: '/Brilliant_ICON_Full-Color.png', sizes: '180x180' },
     ],
   },
   manifest: '/site.webmanifest',

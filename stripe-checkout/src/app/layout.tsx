@@ -10,6 +10,7 @@ import Script from 'next/script';
 import { organizationSchema } from './metadata';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
+import Head from 'next/head';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,6 +26,8 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" href="/Brilliant_ICON_Full-Color.png" />
+        <link rel="apple-touch-icon" href="/Brilliant_ICON_Full-Color.png" />
         {/* JSON-LD structured data */}
         <Script
           id="schema-org-organization"
