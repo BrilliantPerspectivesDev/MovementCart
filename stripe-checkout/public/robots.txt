@@ -1,0 +1,17 @@
+# Robots.txt file for Brilliant Movement
+
+User-agent: *
+Allow: /
+Allow: /ambassador
+Allow: /sitemap.xml
+
+# Don't index cart pages, checkout pages, success pages
+Disallow: /cart
+Disallow: /checkout
+Disallow: /success
+
+# Don't index any URLs with query parameters
+Disallow: /*?*
+
+# Sitemap location
+Sitemap: https://brilliantmovement.com/sitemap.xml 

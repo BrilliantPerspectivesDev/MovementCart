@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
+import { productSchema, organizationSchema, faqSchema, grahamCookeSchema } from './metadata';
+import Script from 'next/script';
 
 // Main component - Landing page
 export default function LandingPage() {
@@ -48,6 +50,28 @@ export default function LandingPage() {
 
   return (
     <main className="min-h-screen bg-[#f9f5f0] pt-12">
+      {/* JSON-LD Structured Data */}
+      <Script 
+        id="product-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+      <Script 
+        id="organization-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+      />
+      <Script 
+        id="faq-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <Script 
+        id="graham-cooke-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(grahamCookeSchema) }}
+      />
+      
       {/* New Hero Header */}
       <div className="w-[90%] sm:w-[85%] mx-auto relative max-w-7xl py-8 sm:py-12 pt-12 sm:pt-16 lg:pt-20 pb-16 sm:pb-20 lg:pb-24 bg-[#F6F5F2] rounded-xl">
         <div className="flex flex-col lg:flex-row lg:items-center justify-center mx-auto max-w-5xl px-[18px] sm:px-[37px]">
@@ -78,6 +102,28 @@ export default function LandingPage() {
                   </div>
                 </div>
               </a>
+              
+              {/* App Store Badges */}
+              <div className="flex justify-center mt-4 space-x-4">
+                <a href="#" className="w-[135px]">
+                  <Image 
+                    src="/app-store-badge.png" 
+                    alt="Download Brilliant Plus on the Apple App Store" 
+                    width={135}
+                    height={40}
+                    className="h-auto w-full"
+                  />
+                </a>
+                <a href="#" className="w-[135px]">
+                  <Image 
+                    src="/google-play-badge.png" 
+                    alt="Get Brilliant Plus on Google Play Store" 
+                    width={135}
+                    height={40}
+                    className="h-auto w-full"
+                  />
+                </a>
+              </div>
             </div>
           </div>
 
@@ -86,7 +132,7 @@ export default function LandingPage() {
             <div className="aspect-square relative rounded-xl overflow-hidden w-[90%] mx-auto">
               <Image 
                 src="/Graham2.png" 
-                alt="Graham Cooke" 
+                alt="Graham Cooke leading a Brilliant Movement gathering and teaching session" 
                 fill
                 className="object-cover object-center"
                 priority
@@ -152,7 +198,7 @@ export default function LandingPage() {
             <div className="w-auto md:w-auto">
               <Image 
                 src="/Testimonial1.png" 
-                alt="Testimonial quote"
+                alt="Testimonial from Brilliant Movement member about transformative experience" 
                 width={300}
                 height={200}
                 className="h-auto"
@@ -161,7 +207,7 @@ export default function LandingPage() {
             <div className="w-auto md:w-auto">
               <Image 
                 src="/Testimonial2.png" 
-                alt="Testimonial quote"
+                alt="Testimonial from Brilliant Movement community member describing spiritual growth" 
                 width={300}
                 height={200}
                 className="h-auto"
@@ -196,7 +242,7 @@ export default function LandingPage() {
               <div className="relative mx-auto max-w-[450px]">
                 <Image 
                   src="/Final-Mockups-Medium.png" 
-                  alt="Brilliant App Interface"
+                  alt="Brilliant Plus app interface showing meditation and prayer content on smartphone" 
                   width={700}
                   height={700}
                   className="w-full h-auto"
@@ -210,7 +256,7 @@ export default function LandingPage() {
               <div className="w-full mb-4">
                 <Image 
                   src="/BlackBPlus.png" 
-                  alt="Brilliant Plus"
+                  alt="Brilliant Plus logo - the essential app for Brilliant Movement members" 
                   width={500}
                   height={150}
                   className="w-full h-auto"
@@ -255,7 +301,7 @@ export default function LandingPage() {
                 <div className="relative h-52 sm:h-64">
                   <Image
                     src="/Nighttime Medium.jpeg"
-                    alt="Night landscape with moonlight"
+                    alt="Brilliant Plus sleep content feature with calming night landscape" 
                     fill
                     className="object-cover"
                   />
@@ -275,7 +321,7 @@ export default function LandingPage() {
                 <div className="relative h-52 sm:h-64">
                   <Image
                     src="/Routines.png"
-                    alt="Routines interface"
+                    alt="Brilliant Plus routines feature interface for daily spiritual practices" 
                     fill
                     className="object-cover"
                   />
@@ -295,7 +341,7 @@ export default function LandingPage() {
                 <div className="relative h-52 sm:h-64">
                   <Image
                     src="/Teaching.png"
-                    alt="Teaching library interface"
+                    alt="Brilliant Plus teaching library with Graham Cooke content and resources" 
                     fill
                     className="object-cover"
                   />
@@ -367,7 +413,7 @@ export default function LandingPage() {
               <div className="relative mx-auto rounded-xl overflow-hidden">
                 <Image 
                   src="/SmallGroups.png" 
-                  alt="Brilliant Gatherings"
+                  alt="Brilliant Movement monthly gatherings with community members connecting online" 
                   width={700}
                   height={700}
                   className="w-full h-auto"
@@ -397,7 +443,7 @@ export default function LandingPage() {
                 <div className="relative rounded-xl overflow-hidden mb-4 aspect-[16/9]">
                   <Image 
                     src="/Events.jpg" 
-                    alt="Brilliant Events" 
+                    alt="Brilliant Movement live events and conferences with Graham Cooke" 
                     fill
                     className="object-cover"
                   />
@@ -432,7 +478,7 @@ export default function LandingPage() {
                 <div className="relative rounded-xl overflow-hidden mb-4 aspect-[16/9]">
                   <Image 
                     src="/SmallGroups.png" 
-                    alt="Small Groups" 
+                    alt="Brilliant Movement small groups connecting globally for spiritual growth and community" 
                     fill
                     className="object-cover"
                   />
@@ -523,6 +569,60 @@ export default function LandingPage() {
                 </div>
               </div>
             </a>
+          </div>
+        </div>
+      </div>
+      
+      {/* Who is Graham Cooke Section */}
+      <div className="bg-white py-16 sm:py-20 px-6 sm:px-10 lg:px-16">
+        <div className="max-w-6xl mx-auto px-0 sm:px-8 lg:px-12">
+          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+            {/* Image */}
+            <div className="w-full md:w-1/3 mb-8 md:mb-0">
+              <div className="relative rounded-xl overflow-hidden aspect-[3/4] shadow-lg">
+                <Image 
+                  src="/Graham2.png" 
+                  alt="Graham Cooke, founder of Brilliant Movement and internationally renowned speaker and author" 
+                  fill
+                  className="object-cover object-center"
+                />
+              </div>
+            </div>
+            
+            {/* Content */}
+            <div className="w-full md:w-2/3">
+              <span className="text-[#74A78E] font-semibold text-sm uppercase tracking-wide mb-2 inline-block">MEET YOUR MENTOR</span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-6">
+                Who is Graham Cooke?
+              </h2>
+              <div className="text-gray-700 space-y-4">
+                <p>
+                  Graham Cooke is an internationally recognized author, teacher, and speaker whose powerful, life-changing messages have helped transform the lives of people around the world. With over 40 years of ministry experience, Graham's unique revelatory insights about God's nature and our identity in Christ have helped countless believers move from religious performance into authentic relationship with God.
+                </p>
+                <p>
+                  As the founder of Brilliant Perspectives and the Brilliant Movement, Graham has created a global community dedicated to living in the fullness of God's presence every day. His extensive library of books, courses and teachings has become a treasured resource for individuals, small groups, and churches worldwide.
+                </p>
+                <p>
+                  Graham's passion is to mentor people in their journey of spiritual growth, empowering them to know God intimately and live victoriously. His teachings focus on experiencing the Father's affection, recognizing God's voice, and understanding your true identity in Christ.
+                </p>
+              </div>
+              
+              {/* Call to Action */}
+              <div className="mt-8">
+                <a 
+                  href="/checkout" 
+                  className="inline-block py-4 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
+                >
+                  <div className="flex flex-col items-center">
+                    <span>Start your five day free trial today</span>
+                    <div className="flex items-center space-x-1 mt-1 text-xs">
+                      <span className="text-[#FFDD99]">★★★★★</span>
+                      <span className="text-white/90">| 4000+ Reviews</span>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
