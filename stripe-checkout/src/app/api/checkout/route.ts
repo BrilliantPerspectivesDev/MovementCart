@@ -3,7 +3,7 @@ import Stripe from 'stripe';
 
 // Initialize Stripe with the secret key
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-  apiVersion: '2023-08-16',
+  apiVersion: '2023-10-16',
 });
 
 export async function POST(request: Request) {
@@ -19,11 +19,17 @@ export async function POST(request: Request) {
     // Get the correct product ID based on the frequency
     let priceId;
     if (selectedFrequency === 'monthly') {
-      // Use the monthly subscription product ID
-      priceId = 'prod_Rt2phXruARXiBG'; // Monthly subscription ID
+      // Use the monthly subscription product ID from environment variables
+      priceId = process.env.STRIPE_MONTHLY_PRODUCT_ID; 
+      if (!priceId) {
+        return NextResponse.json({ error: 'Missing monthly product ID configuration' }, { status: 500 });
+      }
     } else {
-      // Default to annual subscription
-      priceId = 'prod_Rt2mnV1JM9gTL7'; // Annual subscription ID
+      // Default to annual subscription from environment variables
+      priceId = process.env.STRIPE_ANNUAL_PRODUCT_ID;
+      if (!priceId) {
+        return NextResponse.json({ error: 'Missing annual product ID configuration' }, { status: 500 });
+      }
     }
 
     // Prepare customer details if available

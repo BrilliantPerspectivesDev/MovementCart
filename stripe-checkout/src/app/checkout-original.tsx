@@ -960,7 +960,7 @@ function CheckoutForm({
             </div>
           </div>
           <div className="mt-4">
-            <a href="https://go.brilliantplus.app/" className="text-[#2A9D8F] hover:text-[#238276] text-sm">
+            <a href="/ambassador-only" className="text-[#2A9D8F] hover:text-[#238276] text-sm">
               Just want to be an ambassador? Click here →
             </a>
           </div>
