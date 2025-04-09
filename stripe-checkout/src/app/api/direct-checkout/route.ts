@@ -21,11 +21,10 @@ const PRICE_IDS = {
 };
 
 // Log environment variables for debugging (excluding any sensitive values)
-console.log('Environment variables check:', {
-  STRIPE_MONTHLY_PRODUCT_ID: process.env.STRIPE_MONTHLY_PRODUCT_ID ? 'Set' : 'Not set',
-  STRIPE_ANNUAL_PRODUCT_ID: process.env.STRIPE_ANNUAL_PRODUCT_ID ? 'Set' : 'Not set',
+console.log('Environment variables check (detailed):', {
   STRIPE_MONTHLY_PRICE_ID: process.env.STRIPE_MONTHLY_PRICE_ID ? 'Set' : 'Not set',
   STRIPE_ANNUAL_PRICE_ID: process.env.STRIPE_ANNUAL_PRICE_ID ? 'Set' : 'Not set',
+  STRIPE_AMBASSADOR_FEE_PRICE_ID: process.env.STRIPE_AMBASSADOR_FEE_PRICE_ID ? 'Set' : 'Not set',
   NODE_ENV: process.env.NODE_ENV,
 });
 
@@ -86,7 +85,7 @@ export async function POST(request: Request) {
       }, { status: 400 });
     }
 
-    const { customerInfo, paymentMethodId, frequency = 'monthly', pathParam, isAmbassador, ambassadorPriceId, marketingConsent } = body;
+    const { customerInfo, paymentMethodId, frequency = 'monthly', pathParam, isAmbassador, isAmbassadorFee, marketingConsent } = body;
 
     // Validate required fields with detailed errors
     if (!customerInfo?.email) {
@@ -269,10 +268,17 @@ export async function POST(request: Request) {
     let ambassadorFeeSubscription = null;
     let ambassadorError = null;
     
-    if (isAmbassador && ambassadorPriceId) {
+    if (isAmbassador && isAmbassadorFee) {
       try {
         // Add a small delay before creating ambassador subscription to ensure main subscription is fully processed
         await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // Use the ambassador fee price ID from environment variables
+        const ambassadorPriceId = PRICE_IDS.ambassadorFee;
+        
+        if (!ambassadorPriceId) {
+          throw new Error('Missing ambassador fee price ID. STRIPE_AMBASSADOR_FEE_PRICE_ID not configured.');
+        }
         
         // Create a separate subscription for the ambassador fee
         ambassadorFeeSubscription = await stripe!.subscriptions.create({

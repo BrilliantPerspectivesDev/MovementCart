@@ -650,7 +650,7 @@ function CheckoutForm({
           frequency: selectedFrequency,
           pathParam: affiliateCode,
           isAmbassador,
-          ambassadorPriceId: process.env.NEXT_PUBLIC_STRIPE_AMBASSADOR_FEE_PRICE_ID,
+          isAmbassadorFee: isAmbassador,
           marketingConsent: agreedToMarketing
         }),
       });
