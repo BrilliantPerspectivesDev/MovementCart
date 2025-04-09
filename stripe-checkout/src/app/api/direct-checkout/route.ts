@@ -6,7 +6,7 @@ import Stripe from 'stripe';
 let stripe: Stripe | null = null;
 if (process.env.STRIPE_SECRET_KEY) {
   stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-    apiVersion: '2025-02-24.acacia',
+    apiVersion: '2023-10-16',
   });
 }
 
@@ -270,13 +270,19 @@ export async function POST(request: Request) {
     let ambassadorFeeSubscription = null;
     let ambassadorError = null;
     
-    if (isAmbassador && PRICE_IDS.ambassadorFee) {
+    if (isAmbassador) {
       try {
+        // Log ambassador fee attempt
+        console.log('Attempting to create ambassador fee subscription');
+        
         // Add a small delay before creating ambassador subscription to ensure main subscription is fully processed
         await new Promise(resolve => setTimeout(resolve, 1000));
         
         // Use the ambassador fee price ID from environment variables
         const ambassadorPriceId = PRICE_IDS.ambassadorFee;
+        
+        // Log the ambassador fee price ID for debugging
+        console.log('Ambassador Fee Price ID:', ambassadorPriceId);
         
         if (!ambassadorPriceId) {
           throw new Error('Missing ambassador fee price ID. STRIPE_AMBASSADOR_FEE_PRICE_ID not configured.');
@@ -286,7 +292,7 @@ export async function POST(request: Request) {
         ambassadorFeeSubscription = await stripe!.subscriptions.create({
           customer: customer.id,
           items: [{ price: ambassadorPriceId }],
-          payment_behavior: 'default_incomplete', // Changed to default_incomplete
+          payment_behavior: 'default_incomplete',
           default_payment_method: paymentMethodId,
           payment_settings: {
             payment_method_types: ['card'],
@@ -320,6 +326,8 @@ export async function POST(request: Request) {
         ambassadorError = feeError;
         // Continue with the main subscription, but track the error
       }
+    } else {
+      console.log('User did not opt for ambassador program, skipping ambassador fee subscription');
     }
     
     console.log(`Subscription plan: ${mainSubscription.metadata.plan}`);
