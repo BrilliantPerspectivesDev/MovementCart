@@ -92,12 +92,6 @@ export default function LandingPage() {
                 priority
               />
             </div>
-            <div className="absolute -bottom-2 right-0 left-0 text-center">
-              <p className="text-sm text-gray-700 italic bg-white/90 backdrop-blur-sm py-3 px-4 rounded-xl mx-auto inline-block">
-                With over 500 teachings, prayers & prophetic words<br />
-                from Graham Cooke
-              </p>
-            </div>
           </div>
         </div>
       </div>
@@ -105,41 +99,47 @@ export default function LandingPage() {
       {/* Benefits Three Column Section */}
       <div className="bg-white py-16 sm:py-24">
         <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-6 lg:gap-8">
+          <div className="flex flex-wrap -mx-4">
             {/* Column 1 */}
-            <div className="flex flex-col items-center">
-              <h3 className="text-xl font-semibold text-[#264653] mb-3 text-center">
-                Discover rich, constant fellowship with God
-              </h3>
-              <div className="w-16 h-1 bg-gradient-to-r from-[#74A78E] to-[#E9C46A] rounded-full mb-4"></div>
-              <p className="text-gray-600 text-center leading-relaxed">
-                Join God in every part of your day, not just designated quiet times. Finally experience 
-                what it means to maintain consistent fellowship without the pressure of performance.
-              </p>
+            <div className="w-full md:w-1/2 lg:w-1/3 px-4 mb-10 md:mb-8">
+              <div className="flex flex-col h-full">
+                <h3 className="text-xl font-semibold text-[#264653] mb-3 text-left sm:text-center">
+                  Discover rich, constant fellowship with God
+                </h3>
+                <div className="w-16 h-1 bg-gradient-to-r from-[#74A78E] to-[#E9C46A] rounded-full mb-4 self-start sm:self-center"></div>
+                <p className="text-gray-600 text-left sm:text-center leading-relaxed flex-grow">
+                  Join God in every part of your day, not just designated quiet times. Finally experience 
+                  what it means to maintain consistent fellowship without the pressure of performance.
+                </p>
+              </div>
             </div>
 
             {/* Column 2 */}
-            <div className="flex flex-col items-center">
-              <h3 className="text-xl font-semibold text-[#264653] mb-3 text-center">
-                Exchange Anxiety for God's Peace
-              </h3>
-              <div className="w-16 h-1 bg-gradient-to-r from-[#74A78E] to-[#E9C46A] rounded-full mb-4"></div>
-              <p className="text-gray-600 text-center leading-relaxed">
-                Step into the Father's heart and exchange your anxiety for His firm commitment to 
-                be with you.
-              </p>
+            <div className="w-full md:w-1/2 lg:w-1/3 px-4 mb-10 md:mb-8">
+              <div className="flex flex-col h-full">
+                <h3 className="text-xl font-semibold text-[#264653] mb-3 text-left sm:text-center">
+                  Exchange Anxiety for God's Peace
+                </h3>
+                <div className="w-16 h-1 bg-gradient-to-r from-[#74A78E] to-[#E9C46A] rounded-full mb-4 self-start sm:self-center"></div>
+                <p className="text-gray-600 text-left sm:text-center leading-relaxed flex-grow">
+                  Step into the Father's heart and exchange your anxiety for His firm commitment to 
+                  be with you.
+                </p>
+              </div>
             </div>
 
             {/* Column 3 */}
-            <div className="flex flex-col items-center">
-              <h3 className="text-xl font-semibold text-[#264653] mb-3 text-center">
-                Recognize His Voice Daily
-              </h3>
-              <div className="w-16 h-1 bg-gradient-to-r from-[#74A78E] to-[#E9C46A] rounded-full mb-4"></div>
-              <p className="text-gray-600 text-center leading-relaxed">
-                Move from uncertain prayer monologues to confident dialogue with God. 
-                Experience the joy of truly knowing His voice in every situation.
-              </p>
+            <div className="w-full md:w-1/2 lg:w-1/3 px-4 mb-10 md:mb-0 md:mx-auto lg:mx-0">
+              <div className="flex flex-col h-full">
+                <h3 className="text-xl font-semibold text-[#264653] mb-3 text-left sm:text-center">
+                  Recognize His Voice Daily
+                </h3>
+                <div className="w-16 h-1 bg-gradient-to-r from-[#74A78E] to-[#E9C46A] rounded-full mb-4 self-start sm:self-center"></div>
+                <p className="text-gray-600 text-left sm:text-center leading-relaxed flex-grow">
+                  Move from uncertain prayer monologues to confident dialogue with God. 
+                  Experience the joy of truly knowing His voice in every situation.
+                </p>
+              </div>
             </div>
           </div>
         </div>
