@@ -185,7 +185,8 @@ export async function POST(request: Request) {
         customerEmail: customerInfo.email,
         referralCode: pathParam || '',
         sku: 'SKU_10_ANNUALFEE',
-        ambassadorOnly: 'YES'
+        ambassadorOnly: 'YES',
+        source: 'Ambassador Only Funnel'
       },
       expand: ['latest_invoice.payment_intent']
     });

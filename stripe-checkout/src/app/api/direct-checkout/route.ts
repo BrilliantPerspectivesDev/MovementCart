@@ -305,7 +305,8 @@ export async function POST(request: Request) {
             customerEmail: customerInfo.email,
             referralCode: pathParam || '',
             mainSubscriptionId: mainSubscription.id,
-            sku: 'SKU_10_ANNUALFEE'
+            sku: 'SKU_10_ANNUALFEE',
+            source: 'Ambassador Add-on Funnel'
           },
           expand: ['latest_invoice.payment_intent']
         });
@@ -326,8 +327,6 @@ export async function POST(request: Request) {
         ambassadorError = feeError;
         // Continue with the main subscription, but track the error
       }
-    } else {
-      console.log('User did not opt for ambassador program, skipping ambassador fee subscription');
     }
     
     console.log(`Subscription plan: ${mainSubscription.metadata.plan}`);
