@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { productSchema, organizationSchema, faqSchema, grahamCookeSchema } from './metadata';
+import { productSchema, organizationSchema, faqSchema, grahamCookeSchema } from './index';
 import Script from 'next/script';
 import { trackButtonClick, trackPageView } from './utils/analytics';
 

@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { ambassadorOnlyMetadata, ambassadorSchema } from '../metadata';
+import { ambassadorOnlyMetadata, ambassadorSchema } from '../index';
 
 // Export metadata for the ambassador-only page
 export const metadata: Metadata = ambassadorOnlyMetadata;

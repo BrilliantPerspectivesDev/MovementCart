@@ -7,7 +7,7 @@ import Navigation from './components/Navigation';
 import { CartProvider } from './context/CartContext';
 import { usePathname } from 'next/navigation';
 import Script from 'next/script';
-import { organizationSchema } from './metadata';
+import { organizationSchema } from './index';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import Head from 'next/head';

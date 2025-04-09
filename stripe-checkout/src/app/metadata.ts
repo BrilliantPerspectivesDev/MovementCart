@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 // Base metadata that applies to all pages
 export const defaultMetadata: Metadata = {
   title: {
-    default: 'Brilliant Movement - Making Kingdom Normal',
+    default: 'Brilliant Movement',
     template: '%s | Brilliant Movement'
   },
   description: 'Join Brilliant Movement and cultivate an extraordinary relationship with God through community, resources, and direct learning.',
