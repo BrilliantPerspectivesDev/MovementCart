@@ -25,7 +25,7 @@ export default function AmbassadorPage() {
             {/* CTA Button */}
             <div className="w-full mt-2">
               <Link 
-                href="/checkout" 
+                href="https://brilliantmovement.com/ambassador-only" 
                 className="block w-full text-center py-4 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
                 onClick={() => localStorage.setItem('fromAmbassadorPage', 'true')}
               >
@@ -64,7 +64,7 @@ export default function AmbassadorPage() {
                 </h2>
                 <div className="mt-8 lg:mt-auto">
                   <Link 
-                    href="/checkout" 
+                    href="https://brilliantmovement.com/ambassador-only" 
                     className="inline-block py-3 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
                     onClick={() => localStorage.setItem('fromAmbassadorPage', 'true')}
                   >
