@@ -607,7 +607,7 @@ function AmbassadorOnlyForm() {
 // Main component
 export default function AmbassadorOnlyPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-gray-50 ambassador-only-page">
       <main className="flex-1 flex flex-col md:flex-row">
         <div className="flex-1 p-4 md:p-8 lg:p-12 max-w-4xl mx-auto">
           <div className="mb-4">
