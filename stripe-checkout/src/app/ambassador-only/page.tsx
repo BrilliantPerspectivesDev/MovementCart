@@ -107,6 +107,7 @@ function AmbassadorOnlyForm() {
   const [showPoliciesModal, setShowPoliciesModal] = useState(false);
   const [pathParam, setPathParam] = useState('');
   const [marketingConsent, setMarketingConsent] = useState(false);
+  const [formErrors, setFormErrors] = useState<{[key: string]: string}>({});
   
   // Get referral code from URL or localStorage
   useEffect(() => {
@@ -142,9 +143,53 @@ function AmbassadorOnlyForm() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
+    
+    // Input validation based on field type
+    let sanitizedValue = value;
+    
+    switch (name) {
+      case 'firstName':
+      case 'lastName':
+        // Allow only letters, spaces, and hyphens (no apostrophes for names)
+        sanitizedValue = value.replace(/[^a-zA-Z\s-]/g, '');
+        break;
+        
+      case 'city':
+        // Allow only letters, spaces, hyphens, and apostrophes for city names
+        sanitizedValue = value.replace(/[^a-zA-Z\s'-]/g, '');
+        break;
+        
+      case 'email':
+        // Email validation happens with the email type input, just lowercase it
+        sanitizedValue = value.toLowerCase();
+        break;
+        
+      case 'phone':
+        // Allow only numbers, spaces, and some special characters for phone formatting
+        sanitizedValue = value.replace(/[^0-9\s()-+]/g, '');
+        break;
+        
+      case 'address':
+        // Allow letters, numbers, spaces, and common address characters
+        sanitizedValue = value.replace(/[^a-zA-Z0-9\s,.'#-]/g, '');
+        break;
+        
+      case 'state':
+        // If not using the US dropdown, limit to letters and spaces for state/province
+        if (formData.country !== 'US') {
+          sanitizedValue = value.replace(/[^a-zA-Z\s]/g, '');
+        }
+        break;
+        
+      case 'zipCode':
+        // Postal/ZIP code - allow only letters and numbers (for international support)
+        sanitizedValue = value.replace(/[^a-zA-Z0-9\s-]/g, '');
+        break;
+    }
+    
     setFormData(prevData => ({
       ...prevData,
-      [name]: value
+      [name]: sanitizedValue
     }));
   };
 
@@ -157,8 +202,61 @@ function AmbassadorOnlyForm() {
     }
   };
 
+  // Validate form before submission
+  const validateForm = (): boolean => {
+    const errors: {[key: string]: string} = {};
+    
+    // Name validations - no apostrophes allowed
+    if (!/^[A-Za-z\s-]+$/.test(formData.firstName)) {
+      errors.firstName = "First name should only contain letters, spaces, and hyphens";
+    }
+    
+    if (!/^[A-Za-z\s-]+$/.test(formData.lastName)) {
+      errors.lastName = "Last name should only contain letters, spaces, and hyphens";
+    }
+    
+    // Email validation
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailPattern.test(formData.email)) {
+      errors.email = "Please enter a valid email address";
+    }
+    
+    // Phone validation
+    if (!/^[0-9\s()-+]+$/.test(formData.phone)) {
+      errors.phone = "Phone number should only contain numbers and special characters like ( ) - +";
+    }
+    
+    // Address validation
+    if (!/^[a-zA-Z0-9\s,.'#-]+$/.test(formData.address)) {
+      errors.address = "Address should only contain letters, numbers, spaces, and common address characters";
+    }
+    
+    // City validation
+    if (!/^[A-Za-z\s'-]+$/.test(formData.city)) {
+      errors.city = "City should only contain letters, spaces, hyphens, and apostrophes";
+    }
+    
+    // State validation (if not US)
+    if (formData.country !== 'US' && !/^[A-Za-z\s]+$/.test(formData.state)) {
+      errors.state = "State/Province should only contain letters and spaces";
+    }
+    
+    // ZIP/Postal code validation
+    if (!/^[a-zA-Z0-9\s-]+$/.test(formData.zipCode)) {
+      errors.zipCode = "Postal/ZIP code should only contain letters, numbers, spaces and hyphens";
+    }
+    
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate form before proceeding
+    if (!validateForm()) {
+      return;
+    }
     
     if (!stripe || !elements || !formValid || isLoading) {
       return;
@@ -247,8 +345,12 @@ function AmbassadorOnlyForm() {
               value={formData.firstName}
               onChange={handleInputChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              maxLength={50}
+              pattern="[A-Za-z\s-]+"
+              title="First name should only contain letters, spaces, and hyphens"
+              className={`w-full px-3 py-2 border ${formErrors.firstName ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500`}
             />
+            {formErrors.firstName && <p className="mt-1 text-xs text-red-600">{formErrors.firstName}</p>}
           </div>
           <div>
             <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">
@@ -261,8 +363,12 @@ function AmbassadorOnlyForm() {
               value={formData.lastName}
               onChange={handleInputChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              maxLength={50}
+              pattern="[A-Za-z\s-]+"
+              title="Last name should only contain letters, spaces, and hyphens"
+              className={`w-full px-3 py-2 border ${formErrors.lastName ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500`}
             />
+            {formErrors.lastName && <p className="mt-1 text-xs text-red-600">{formErrors.lastName}</p>}
           </div>
         </div>
         
@@ -277,8 +383,10 @@ function AmbassadorOnlyForm() {
             value={formData.email}
             onChange={handleInputChange}
             required
-            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            maxLength={100}
+            className={`w-full px-3 py-2 border ${formErrors.email ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500`}
           />
+          {formErrors.email && <p className="mt-1 text-xs text-red-600">{formErrors.email}</p>}
         </div>
         
         <div>
@@ -293,8 +401,12 @@ function AmbassadorOnlyForm() {
             onChange={handleInputChange}
             placeholder="(123) 456-7890"
             required
-            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            maxLength={20}
+            pattern="[0-9\s()-+]+"
+            title="Phone number should only contain numbers, spaces, and characters like ( ) - +"
+            className={`w-full px-3 py-2 border ${formErrors.phone ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500`}
           />
+          {formErrors.phone && <p className="mt-1 text-xs text-red-600">{formErrors.phone}</p>}
         </div>
         
         <div>
@@ -308,8 +420,12 @@ function AmbassadorOnlyForm() {
             value={formData.address}
             onChange={handleInputChange}
             required
-            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            maxLength={100}
+            pattern="[a-zA-Z0-9\s,.'#-]+"
+            title="Address should only contain letters, numbers, spaces, and common address characters"
+            className={`w-full px-3 py-2 border ${formErrors.address ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500`}
           />
+          {formErrors.address && <p className="mt-1 text-xs text-red-600">{formErrors.address}</p>}
         </div>
         
         <div className="grid grid-cols-2 gap-4">
@@ -324,8 +440,12 @@ function AmbassadorOnlyForm() {
               value={formData.city}
               onChange={handleInputChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              maxLength={50}
+              pattern="[A-Za-z\s'-]+"
+              title="City should only contain letters, spaces, hyphens, and apostrophes"
+              className={`w-full px-3 py-2 border ${formErrors.city ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500`}
             />
+            {formErrors.city && <p className="mt-1 text-xs text-red-600">{formErrors.city}</p>}
           </div>
           <div>
             <label htmlFor="state" className="block text-sm font-medium text-gray-700 mb-1">
@@ -338,7 +458,7 @@ function AmbassadorOnlyForm() {
                 value={formData.state}
                 onChange={handleInputChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className={`w-full px-3 py-2 border ${formErrors.state ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500`}
               >
                 <option value="">Select a state</option>
                 {US_STATE_OPTIONS.map(state => (
@@ -355,9 +475,13 @@ function AmbassadorOnlyForm() {
                 value={formData.state}
                 onChange={handleInputChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                maxLength={30}
+                pattern="[A-Za-z\s]+"
+                title="State/Province should only contain letters and spaces"
+                className={`w-full px-3 py-2 border ${formErrors.state ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500`}
               />
             )}
+            {formErrors.state && <p className="mt-1 text-xs text-red-600">{formErrors.state}</p>}
           </div>
         </div>
         
@@ -373,8 +497,12 @@ function AmbassadorOnlyForm() {
               value={formData.zipCode}
               onChange={handleInputChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              maxLength={15}
+              pattern="[a-zA-Z0-9\s-]+"
+              title="Postal/ZIP code should only contain letters, numbers, spaces and hyphens"
+              className={`w-full px-3 py-2 border ${formErrors.zipCode ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500`}
             />
+            {formErrors.zipCode && <p className="mt-1 text-xs text-red-600">{formErrors.zipCode}</p>}
           </div>
           <div>
             <label htmlFor="country" className="block text-sm font-medium text-gray-700 mb-1">

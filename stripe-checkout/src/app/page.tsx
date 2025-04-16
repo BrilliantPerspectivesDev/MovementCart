@@ -114,11 +114,11 @@ export default function LandingPage() {
                     <span className="text-[#FFDD99]">★★★★★</span>
                     <span className="text-white/90">| 4000+ Reviews</span>
                   </div>
-                </div>
+            </div>
               </a>
             </div>
-          </div>
-
+            </div>
+            
           {/* Right Content - Image */}
           <div className="relative lg:w-[55%] mt-6 lg:mt-0">
             <div className="aspect-square relative rounded-xl overflow-hidden w-[90%] mx-auto">
@@ -130,10 +130,10 @@ export default function LandingPage() {
                 priority
               />
             </div>
+            </div>
           </div>
         </div>
-      </div>
-
+        
       {/* Benefits Three Column Section */}
       <div className="bg-white py-16 sm:py-24">
         <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10">
@@ -149,8 +149,8 @@ export default function LandingPage() {
                   Join God in every part of your day, not just designated quiet times. Finally experience 
                   what it means to maintain consistent fellowship without the pressure of performance.
                 </p>
-              </div>
-            </div>
+          </div>
+        </div>
 
             {/* Column 2 */}
             <div className="w-full md:w-1/2 lg:w-1/3 px-4 mb-10 md:mb-8">
@@ -164,7 +164,7 @@ export default function LandingPage() {
                   be with you.
                 </p>
               </div>
-            </div>
+        </div>
 
             {/* Column 3 */}
             <div className="w-full md:w-1/2 lg:w-1/3 px-4 mb-10 md:mb-0 md:mx-auto lg:mx-0">
@@ -195,7 +195,7 @@ export default function LandingPage() {
                 height={200}
                 className="h-auto"
               />
-            </div>
+          </div>
             <div className="w-auto md:w-auto">
               <Image 
                 src="/Testimonial2.png" 
@@ -206,7 +206,7 @@ export default function LandingPage() {
               />
             </div>
           </div>
-          
+
           {/* CTA Button under testimonials */}
           <div className="w-full max-w-md mx-auto mt-10">
             <a 
@@ -225,7 +225,7 @@ export default function LandingPage() {
           </div>
         </div>
       </div>
-
+      
       {/* App Showcase Section */}
       <div className="bg-[#F6F5F2] py-16 sm:py-20 px-6 sm:px-10 lg:px-16">
         <div className="max-w-6xl mx-auto px-0 sm:px-8 lg:px-12">
@@ -242,7 +242,7 @@ export default function LandingPage() {
                 />
               </div>
             </div>
-            
+
             {/* Content */}
             <div className="w-full md:w-[50%] mt-8 md:mt-0 md:pl-4 max-w-md">
               <span className="text-[#74A78E] font-semibold text-sm uppercase tracking-wide mb-2 inline-block">THE ESSENTIAL APP</span>
@@ -280,10 +280,10 @@ export default function LandingPage() {
                 <div className="flex text-[#E9C46A]">★★★★★</div>
                 <span className="text-sm text-gray-700">| 4000+ Reviews</span>
               </div>
-            </div>
+          </div>
           </div>
         </div>
-      </div>
+        </div>
 
       {/* App Features Cards */}
       <div className="bg-[#F6F5F2] pt-4 pb-24">
@@ -299,15 +299,15 @@ export default function LandingPage() {
                     fill
                     className="object-cover"
                   />
-                </div>
+      </div>
                 <div className="p-6 text-white">
                   <h3 className="text-2xl font-semibold mb-3 uppercase">Sleep</h3>
                   <p className="text-white/90">
                     Silence nighttime anxiety as you fall asleep to deep truths about who God is, what He's like, and how that changes everything.
                   </p>
-                </div>
-              </div>
-            </div>
+          </div>
+          </div>
+        </div>
 
             {/* Routines Card */}
             <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -325,8 +325,8 @@ export default function LandingPage() {
                   <p className="text-white/90">
                     Experience the pressure lift as you step into a simple, relational way of being with God. Build your daily routine with God around rest and peace.
                   </p>
-                </div>
-              </div>
+        </div>
+        </div>
             </div>
 
             {/* Teaching Card */}
@@ -345,7 +345,7 @@ export default function LandingPage() {
                   <p className="text-white/90">
                     With Graham Cooke as your guide and digital mentor explore a digital library designed to lead you to the heart of God and teach you to stay there.
                   </p>
-                </div>
+          </div>
               </div>
             </div>
           </div>
@@ -414,7 +414,7 @@ export default function LandingPage() {
                   className="w-full h-auto"
                 />
               </div>
-            </div>
+          </div>
           </div>
         </div>
       </div>
@@ -482,11 +482,11 @@ export default function LandingPage() {
                   Experience the joy of belonging to a global community discovering the Father's love together. Twice yearly, dive into 12-week small group studies like "Fruit of the Spirit" where you'll connect with fellow believers practicing His presence as your normal reality.
                 </p>
               </div>
-            </div>
-          </div>
         </div>
       </div>
-
+        </div>
+      </div>
+      
       {/* Testimonials Section */}
       <div className="bg-white py-16 sm:py-20 px-6 sm:px-10 lg:px-16">
         <div className="max-w-6xl mx-auto px-0 sm:px-8 lg:px-12">
@@ -507,15 +507,15 @@ export default function LandingPage() {
                 "Wow!! Powerful. Transforming, Brilliant has opened up locked spaces in my life."
               </div>
               <div className="font-semibold text-[#264653]">Sarah M.</div>
-            </div>
+        </div>
 
             {/* Testimonial 2 */}
             <div className="bg-[#F6F5F2] rounded-2xl p-6 relative">
               <div className="mb-4 text-gray-700 italic">
                 "Life-changing perspectives for those with an open heart."
-              </div>
+        </div>
               <div className="font-semibold text-[#264653]">Michael R.</div>
-            </div>
+      </div>
 
             {/* Testimonial 3 */}
             <div className="bg-[#F6F5F2] rounded-2xl p-6 relative">
@@ -523,7 +523,7 @@ export default function LandingPage() {
                 "I'm so grateful for the truth that God wants me to understand through Brilliant perspectives."
               </div>
               <div className="font-semibold text-[#264653]">Rachel K.</div>
-            </div>
+      </div>
 
             {/* Testimonial 4 */}
             <div className="bg-[#F6F5F2] rounded-2xl p-6 relative">
@@ -531,7 +531,7 @@ export default function LandingPage() {
                 "It's the first time in my life I've been able to understand the work of the spirit free of the mumbo-jumbo. Thank you for taking me to the next level!"
               </div>
               <div className="font-semibold text-[#264653]">David W.</div>
-            </div>
+        </div>
 
             {/* Testimonial 5 */}
             <div className="bg-[#F6F5F2] rounded-2xl p-6 relative">
@@ -539,7 +539,7 @@ export default function LandingPage() {
                 "It's such a gift listening to Graham. He opens my eyes to a beautiful faith."
               </div>
               <div className="font-semibold text-[#264653]">Emma L.</div>
-            </div>
+      </div>
 
             {/* Testimonial 6 */}
             <div className="bg-[#F6F5F2] rounded-2xl p-6 relative">
@@ -583,7 +583,7 @@ export default function LandingPage() {
                   className="object-cover object-center"
                 />
               </div>
-            </div>
+                  </div>
             
             {/* Content */}
             <div className="w-full md:w-2/3">
@@ -601,7 +601,7 @@ export default function LandingPage() {
                 <p>
                   Graham's passion is to mentor people in their journey of spiritual growth, empowering them to know God intimately and live victoriously. His teachings focus on experiencing the Father's affection, recognizing God's voice, and understanding your true identity in Christ.
                 </p>
-              </div>
+                </div>
               
               {/* Call to Action */}
               <div className="mt-8">
@@ -616,14 +616,14 @@ export default function LandingPage() {
                       <span className="text-[#FFDD99]">★★★★★</span>
                       <span className="text-white/90">| 4000+ Reviews</span>
                     </div>
-                  </div>
+                </div>
                 </a>
               </div>
             </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      
+          
       {/* Pricing Section */}
       <div id="pricing" className="bg-[#F6F5F2] py-16 sm:py-20 px-6 sm:px-10 lg:px-16">
         <div className="max-w-6xl mx-auto px-0 sm:px-8 lg:px-12">
@@ -635,7 +635,7 @@ export default function LandingPage() {
             <p className="text-gray-600 max-w-2xl mx-auto">
               Select the membership that best suits your journey. Both options include full access to our community, resources, and teaching library.
             </p>
-          </div>
+            </div>
 
           {/* Pricing Card */}
           <div className="bg-white rounded-3xl shadow-md overflow-hidden mx-auto max-w-2xl">
@@ -677,7 +677,7 @@ export default function LandingPage() {
                 >
                   Annual
                 </button>
-              </div>
+            </div>
               
               {/* Feature List */}
               <div className="space-y-6 sm:space-y-8">
@@ -685,8 +685,8 @@ export default function LandingPage() {
                 <div className="flex items-start">
                   <div className="flex-shrink-0 mt-1 mr-4">
                     <svg className="h-6 w-6 text-[#74A78E]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                    </svg>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
                   </div>
                   <div className="flex-grow">
                     <div className="flex justify-between items-start mb-1">
@@ -701,8 +701,8 @@ export default function LandingPage() {
                 <div className="flex items-start">
                   <div className="flex-shrink-0 mt-1 mr-4">
                     <svg className="h-6 w-6 text-[#74A78E]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                    </svg>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
                   </div>
                   <div className="flex-grow">
                     <div className="flex justify-between items-start mb-1">
@@ -717,8 +717,8 @@ export default function LandingPage() {
                 <div className="flex items-start">
                   <div className="flex-shrink-0 mt-1 mr-4">
                     <svg className="h-6 w-6 text-[#74A78E]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                    </svg>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
                   </div>
                   <div className="flex-grow">
                     <div className="flex justify-between items-start mb-1">
@@ -726,15 +726,15 @@ export default function LandingPage() {
                       <span className="text-base font-medium text-[#264653] w-[100px] text-right">Value: $297</span>
                     </div>
                     <p className="text-gray-600">Exclusive tickets to our biggest events of the year, all included</p>
-                  </div>
-                </div>
-                
+            </div>
+          </div>
+          
                 {/* Small Groups */}
                 <div className="flex items-start">
                   <div className="flex-shrink-0 mt-1 mr-4">
                     <svg className="h-6 w-6 text-[#74A78E]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                    </svg>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
                   </div>
                   <div className="flex-grow">
                     <div className="flex justify-between items-start mb-1">
@@ -744,8 +744,8 @@ export default function LandingPage() {
                     <p className="text-gray-600">Twice yearly 12-week studies connecting you with fellow believers</p>
                   </div>
                 </div>
-              </div>
-              
+            </div>
+            
               {/* Price and CTA */}
               <div className="mt-10 text-center">
                 <div className="flex flex-col items-center">
@@ -755,7 +755,7 @@ export default function LandingPage() {
                       ${selectedFrequency === 'annual' ? '397' : '47'}
                     </span>
                     <span className="text-xl font-medium text-gray-600 ml-2">/{selectedFrequency === 'annual' ? 'year' : 'month'}</span>
-                  </div>
+            </div>
                   
                   <a
                     href={`/checkout?plan=${selectedFrequency}`}
@@ -769,10 +769,10 @@ export default function LandingPage() {
                       </div>
                     </div>
                   </a>
-                </div>
-              </div>
-            </div>
           </div>
+        </div>
+      </div>
+    </div>
         </div>
       </div>
       
