@@ -11,10 +11,6 @@ import PoliciesModal from '../components/PoliciesModal';
 // Country code mapping for common countries
 const COUNTRY_OPTIONS = [
   { code: 'US', name: 'United States' },
-  { code: 'CA', name: 'Canada' },
-  { code: 'GB', name: 'United Kingdom' },
-  { code: 'AU', name: 'Australia' },
-  // Add more countries as needed
 ];
 
 // US States
@@ -175,15 +171,12 @@ function AmbassadorOnlyForm() {
         break;
         
       case 'state':
-        // If not using the US dropdown, limit to letters and spaces for state/province
-        if (formData.country !== 'US') {
-          sanitizedValue = value.replace(/[^a-zA-Z\s]/g, '');
-        }
+        // State field is handled by the dropdown for US
         break;
         
       case 'zipCode':
-        // Postal/ZIP code - allow only letters and numbers (for international support)
-        sanitizedValue = value.replace(/[^a-zA-Z0-9\s-]/g, '');
+        // For US ZIP codes - allow only 5 digits
+        sanitizedValue = value.replace(/[^0-9]/g, '').substring(0, 5);
         break;
     }
     
@@ -221,7 +214,7 @@ function AmbassadorOnlyForm() {
       errors.email = "Please enter a valid email address";
     }
     
-    // Phone validation
+    // Phone validation - US format
     if (!/^[0-9\s()-+]+$/.test(formData.phone)) {
       errors.phone = "Phone number should only contain numbers and special characters like ( ) - +";
     }
@@ -236,14 +229,10 @@ function AmbassadorOnlyForm() {
       errors.city = "City should only contain letters, spaces, hyphens, and apostrophes";
     }
     
-    // State validation (if not US)
-    if (formData.country !== 'US' && !/^[A-Za-z\s]+$/.test(formData.state)) {
-      errors.state = "State/Province should only contain letters and spaces";
-    }
-    
-    // ZIP/Postal code validation
-    if (!/^[a-zA-Z0-9\s-]+$/.test(formData.zipCode)) {
-      errors.zipCode = "Postal/ZIP code should only contain letters, numbers, spaces and hyphens";
+    // ZIP code validation - US format (5 digits only)
+    const zipPattern = /^\d{5}$/;
+    if (!zipPattern.test(formData.zipCode)) {
+      errors.zipCode = "Please enter a valid 5-digit US ZIP code";
     }
     
     setFormErrors(errors);
@@ -449,38 +438,23 @@ function AmbassadorOnlyForm() {
           </div>
           <div>
             <label htmlFor="state" className="block text-sm font-medium text-gray-700 mb-1">
-              State/Province
+              State
             </label>
-            {formData.country === 'US' ? (
-              <select
-                id="state"
-                name="state"
-                value={formData.state}
-                onChange={handleInputChange}
-                required
-                className={`w-full px-3 py-2 border ${formErrors.state ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500`}
-              >
-                <option value="">Select a state</option>
-                {US_STATE_OPTIONS.map(state => (
-                  <option key={state.key} value={state.abbr}>
-                    {state.value}
-                  </option>
-                ))}
-              </select>
-            ) : (
-              <input
-                type="text"
-                id="state"
-                name="state"
-                value={formData.state}
-                onChange={handleInputChange}
-                required
-                maxLength={30}
-                pattern="[A-Za-z\s]+"
-                title="State/Province should only contain letters and spaces"
-                className={`w-full px-3 py-2 border ${formErrors.state ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500`}
-              />
-            )}
+            <select
+              id="state"
+              name="state"
+              value={formData.state}
+              onChange={handleInputChange}
+              required
+              className={`w-full px-3 py-2 border ${formErrors.state ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500`}
+            >
+              <option value="">Select a state</option>
+              {US_STATE_OPTIONS.map(state => (
+                <option key={state.key} value={state.abbr}>
+                  {state.value}
+                </option>
+              ))}
+            </select>
             {formErrors.state && <p className="mt-1 text-xs text-red-600">{formErrors.state}</p>}
           </div>
         </div>
@@ -488,7 +462,7 @@ function AmbassadorOnlyForm() {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label htmlFor="zipCode" className="block text-sm font-medium text-gray-700 mb-1">
-              Postal Code
+              ZIP Code
             </label>
             <input
               type="text"
@@ -497,32 +471,29 @@ function AmbassadorOnlyForm() {
               value={formData.zipCode}
               onChange={handleInputChange}
               required
-              maxLength={15}
-              pattern="[a-zA-Z0-9\s-]+"
-              title="Postal/ZIP code should only contain letters, numbers, spaces and hyphens"
+              maxLength={5}
+              placeholder="12345"
+              pattern="\d{5}"
+              title="Please enter a valid 5-digit US ZIP code"
               className={`w-full px-3 py-2 border ${formErrors.zipCode ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500`}
             />
             {formErrors.zipCode && <p className="mt-1 text-xs text-red-600">{formErrors.zipCode}</p>}
           </div>
+          
           <div>
             <label htmlFor="country" className="block text-sm font-medium text-gray-700 mb-1">
               Country
             </label>
-            <select
+            <input
+              type="text"
               id="country"
               name="country"
-              value={formData.country}
-              onChange={handleInputChange}
-              required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-            >
-              <option value="">Select a country</option>
-              {COUNTRY_OPTIONS.map(country => (
-                <option key={country.code} value={country.code}>
-                  {country.name}
-                </option>
-              ))}
-            </select>
+              value="United States"
+              disabled
+              className="w-full px-3 py-2 border border-gray-300 bg-gray-100 rounded-md shadow-sm text-gray-700"
+            />
+            <input type="hidden" name="country" value="US" />
+            <p className="mt-1 text-xs text-gray-500">The Ambassador program is currently only available in the United States</p>
           </div>
         </div>
         
@@ -540,6 +511,9 @@ function AmbassadorOnlyForm() {
           </ul>
           <p className="text-sm text-gray-700">
             <strong>Note:</strong> This is only the ambassador program fee. You'll need to separately purchase a Brilliant membership to access content.
+          </p>
+          <p className="text-sm text-gray-700 mt-2">
+            <strong>Important:</strong> The Brilliant Ambassador program is currently only available to residents of the United States.
           </p>
         </div>
         
@@ -767,6 +741,7 @@ export default function AmbassadorOnlyPage() {
               </h1>
               <p className="text-gray-600 text-center mb-6">
                 Join our ambassador program and earn commissions by sharing Brilliant with others.
+                <span className="block mt-1 text-sm font-medium text-blue-600">Currently available to US residents only.</span>
               </p>
               
               <div className="bg-[#F8F9FF] rounded-lg p-4 mb-6">
