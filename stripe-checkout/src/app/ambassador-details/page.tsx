@@ -61,15 +61,21 @@ function AmbassadorDetailsContent() {
         // Get the stored values from localStorage
         const isAmbassador = localStorage.getItem('isAmbassador') === 'true';
         const frequency = localStorage.getItem('selectedFrequency') || 'monthly';
-
-        // Route to the appropriate thank you page based on subscription type
-        if (isAmbassador) {
+        const ambassadorOnly = localStorage.getItem('ambassadorOnly') === 'true';
+        
+        // Route based on subscription type
+        if (ambassadorOnly) {
+          // This is an ambassador-only subscription (without a membership)
+          router.push(`/thank-you/ambassador-only?subscriptionId=${subscriptionId}`);
+        } else if (isAmbassador) {
+          // This is a membership + ambassador subscription
           if (frequency === 'annual') {
             router.push(`/thank-you/annual-ambassador?subscriptionId=${subscriptionId}`);
           } else {
             router.push(`/thank-you/monthly-ambassador?subscriptionId=${subscriptionId}`);
           }
         } else {
+          // This is a membership-only subscription
           if (frequency === 'annual') {
             router.push(`/thank-you/annual?subscriptionId=${subscriptionId}`);
           } else {

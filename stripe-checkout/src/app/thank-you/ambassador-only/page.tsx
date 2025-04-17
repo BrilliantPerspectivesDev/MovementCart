@@ -23,12 +23,10 @@ function ThankYouContent() {
   const [currentStep, setCurrentStep] = useState(1);
   const totalSteps = 3;
 
-  // Function to go to next step
   const nextStep = () => {
     setCurrentStep(prev => (prev < totalSteps ? prev + 1 : prev));
   };
 
-  // Function to go to previous step
   const prevStep = () => {
     setCurrentStep(prev => (prev > 1 ? prev - 1 : prev));
   };
@@ -75,11 +73,19 @@ function ThankYouContent() {
             {/* Welcome Message */}
             <div className="mb-6">
               <h1 className="text-2xl md:text-3xl font-bold text-[#264653] mb-4">
-                Welcome to the Brilliant Movement!
+                Welcome to the Brilliant Ambassador Program!
               </h1>
               <p className="text-gray-600 mb-2">
-                We're so excited to have you join our community! Your subscription is all set up and ready to go.
+                You're now officially a Brilliant Ambassador! Your ambassador subscription is all set up and ready to go.
               </p>
+              <div className="mt-4 px-4 py-3 bg-amber-50 border border-amber-100 rounded-lg text-amber-800">
+                <p className="text-sm font-medium">
+                  <svg className="inline-block w-4 h-4 mr-1 -mt-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9a1 1 0 00-1-1H9z" clipRule="evenodd"></path>
+                  </svg>
+                  Remember, you'll need to purchase a Brilliant membership separately to access member content.
+                </p>
+              </div>
             </div>
 
             {/* Receipt Information */}
@@ -88,13 +94,31 @@ function ThankYouContent() {
               <div className="space-y-3">
                 <div className="flex justify-between">
                   <span className="text-gray-600">Plan</span>
-                  <span className="font-medium text-[#264653]">Annual Member</span>
+                  <span className="font-medium text-[#264653]">Ambassador Program</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Price</span>
+                  <span className="font-medium text-[#264653]">$10/year</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Status</span>
                   <span className="font-medium text-[#2A9D8F]">Active</span>
                 </div>
               </div>
+            </div>
+            
+            {/* Purchase Membership CTA */}
+            <div className="bg-indigo-50 rounded-lg p-6 mb-6 border border-indigo-100">
+              <h2 className="text-lg font-semibold text-indigo-700 mb-2">Want Full Access to Brilliant Content?</h2>
+              <p className="text-gray-700 mb-4">
+                As an ambassador, we recommend also becoming a Brilliant member to access all our content and resources.
+              </p>
+              <a 
+                href="/checkout" 
+                className="block w-full text-center py-3 px-4 bg-indigo-600 hover:bg-indigo-700 transition-colors text-white rounded-md font-medium"
+              >
+                Purchase a Membership
+              </a>
             </div>
 
             {/* Email Troubleshooting Information - Now as a Carousel */}
@@ -117,7 +141,7 @@ function ThankYouContent() {
                       <h3 className="font-semibold text-blue-900">Finding Your Confirmation Email</h3>
                     </div>
                     
-                    <p>We've sent you an email with your login credentials and next steps to get started.</p>
+                    <p>We've sent you an email with your ambassador program details and next steps to get started.</p>
                     <p className="font-medium">If you can't find the email:</p>
                     <ul className="list-disc pl-5 space-y-2">
                       <li>Check your junk or spam folders</li>
@@ -133,7 +157,7 @@ function ThankYouContent() {
                   </div>
                 </div>
                 
-                {/* Step 2: App Download & Login */}
+                {/* Step 2: Ambassador Program Information */}
                 <div 
                   className={`transition-all duration-300 ${
                     currentStep === 2 ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full absolute'
@@ -142,16 +166,16 @@ function ThankYouContent() {
                   <div className="space-y-4 text-gray-700">
                     <div className="flex items-center mb-2">
                       <div className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold mr-3">2</div>
-                      <h3 className="font-semibold text-blue-900">Download The App & Login</h3>
+                      <h3 className="font-semibold text-blue-900">Your Ambassador Dashboard</h3>
                     </div>
                     
-                    <p>Once you have your login credentials:</p>
+                    <p>As a Brilliant Ambassador, you'll have access to:</p>
                     <ul className="list-disc pl-5 space-y-2">
-                      <li>Download the Brilliant Plus app from your app store</li>
-                      <li>Open the app and click "Sign In"</li>
-                      <li>Enter the email and password from your confirmation email</li>
-                      <li>You'll now have full access to all member content!</li>
+                      <li>Your unique referral link to share with others</li>
+                      <li>Commission tracking and payment history</li>
+                      <li>Marketing materials and resources</li>
                     </ul>
+                    <p className="mt-2">You can access your ambassador dashboard after logging in to your account.</p>
                   </div>
                 </div>
                 
@@ -310,37 +334,37 @@ function ThankYouContent() {
           {/* Semi-transparent panel */}
           <div className="relative z-20 h-full w-full p-8 sm:p-12 text-white flex flex-col justify-between">
             <div className="bg-black/30 rounded-2xl p-6 backdrop-blur-md">
-              <h2 className="text-2xl font-bold mb-4">Your Journey Begins Now</h2>
+              <h2 className="text-2xl font-bold mb-4">Your Ambassador Journey Begins</h2>
               
               <div className="mb-8">
                 <div className="font-semibold text-lg mb-2">What's next:</div>
                 <ul className="space-y-3">
                   <li className="flex items-start">
                     <span className="mr-3 text-green-300">✓</span>
-                    <span>Check your email for your login details</span>
+                    <span>Check your email for your ambassador details</span>
                   </li>
                   <li className="flex items-start">
                     <span className="mr-3 text-green-300">✓</span>
-                    <span>Download the Brilliant Plus app</span>
+                    <span>Get your unique referral link</span>
                   </li>
                   <li className="flex items-start">
                     <span className="mr-3 text-green-300">✓</span>
-                    <span>Join our next monthly gathering</span>
+                    <span>Start sharing with friends and family</span>
                   </li>
                   <li className="flex items-start">
                     <span className="mr-3 text-green-300">✓</span>
-                    <span>Connect with the community</span>
+                    <span>Track your commissions and earnings</span>
                   </li>
                   <li className="flex items-start">
                     <span className="mr-3 text-green-300">✓</span>
-                    <span>Start your spiritual journey</span>
+                    <span>Consider becoming a member for full content access</span>
                   </li>
                 </ul>
               </div>
               
               <div className="text-sm opacity-90 italic">
-                "This journey has transformed my relationship with God. The community and resources are incredible."
-                <div className="mt-2 font-semibold not-italic">— Rachel S.</div>
+                "Being an ambassador has allowed me to share this movement with others while supporting my own journey."
+                <div className="mt-2 font-semibold not-italic">— Michael J.</div>
               </div>
             </div>
           </div>

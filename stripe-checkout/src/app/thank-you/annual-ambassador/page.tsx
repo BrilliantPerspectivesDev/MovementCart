@@ -171,7 +171,7 @@ function ThankYouContent() {
                     
                     <p>To access on a web browser, visit <a href="https://www.brilliant.community" target="_blank" rel="noopener noreferrer" className="text-[#2A9D8F] hover:text-[#2A9D8F]/80 font-medium">www.brilliant.community</a></p>
                     
-                    <p>This login will match your Brilliant Plus login.</p>
+                    <p>To sign in, use the email address you registered with and the password from your confirmation email.</p>
                   </div>
                 </div>
               </div>

@@ -309,7 +309,13 @@ function AmbassadorOnlyForm() {
       }
       
       // Redirect to success page
-      router.push(`/ambassador-details?subscriptionId=${data.subscriptionId}`);
+      if (data.subscriptionId) {
+        // Store ambassador flag in localStorage
+        localStorage.setItem('ambassadorOnly', 'true');
+        
+        // Redirect to the details page for processing
+        router.push(`/ambassador-details?subscriptionId=${data.subscriptionId}`);
+      }
       
     } catch (error: any) {
       console.error('Payment error:', error);
