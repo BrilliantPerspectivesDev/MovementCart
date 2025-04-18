@@ -244,10 +244,18 @@ function AmbassadorOnlyForm() {
     
     // Validate form before proceeding
     if (!validateForm()) {
+      window.scrollTo(0, 0); // Scroll to top where errors are shown
       return;
     }
     
-    if (!stripe || !elements || !formValid || isLoading) {
+    if (!stripe || !elements || isLoading) {
+      return;
+    }
+    
+    // Check if all required fields are filled
+    if (!agreeToTerms || !agreeToAmbassador || !agreeToPolicies || !cardComplete) {
+      setError("Please complete all required fields, including checkboxes and credit card information.");
+      window.scrollTo(0, 0);
       return;
     }
     
@@ -560,12 +568,13 @@ function AmbassadorOnlyForm() {
                 type="checkbox"
                 checked={agreeToTerms}
                 onChange={(e) => setAgreeToTerms(e.target.checked)}
+                required
                 className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
               />
             </div>
             <div className="ml-3 text-sm">
               <label htmlFor="terms" className="font-medium text-gray-700">
-                I agree to the Terms of Service and give permission to receive communications
+                I agree to the Terms of Service and give permission to receive communications <span className="text-red-500">*</span>
               </label>
             </div>
           </div>
@@ -573,6 +582,8 @@ function AmbassadorOnlyForm() {
           <div className="flex items-start">
             <div className="flex items-center h-5">
               <input
+                id="marketing"
+                name="marketing"
                 type="checkbox"
                 checked={marketingConsent}
                 onChange={(e) => setMarketingConsent(e.target.checked)}
@@ -589,9 +600,12 @@ function AmbassadorOnlyForm() {
           <div className="flex items-start">
             <div className="flex items-center h-5">
               <input
+                id="ambassador-agreement"
+                name="ambassador-agreement"
                 type="checkbox"
-                checked={formData.agreedToAmbassadorAgreement}
-                onChange={() => {}}
+                checked={agreeToAmbassador}
+                required
+                onChange={() => {}} // Handled via modal
                 onClick={(e) => {
                   e.preventDefault();
                   setShowAmbassadorAgreementModal(true);
@@ -608,7 +622,7 @@ function AmbassadorOnlyForm() {
                   className="font-medium text-[#2A9D8F] hover:text-[#2A9D8F]/80 underline"
                 >
                   Ambassador Agreement
-                </button>
+                </button> <span className="text-red-500">*</span>
               </p>
             </div>
           </div>
@@ -616,9 +630,12 @@ function AmbassadorOnlyForm() {
           <div className="flex items-start">
             <div className="flex items-center h-5">
               <input
+                id="policies"
+                name="policies"
                 type="checkbox"
-                checked={formData.agreedToPolicies}
-                onChange={() => {}}
+                checked={agreeToPolicies}
+                required
+                onChange={() => {}} // Handled via modal
                 onClick={(e) => {
                   e.preventDefault();
                   setShowPoliciesModal(true);
@@ -635,7 +652,7 @@ function AmbassadorOnlyForm() {
                   className="font-medium text-[#2A9D8F] hover:text-[#2A9D8F]/80 underline"
                 >
                   Policies and Procedures
-                </button>
+                </button> <span className="text-red-500">*</span>
               </p>
             </div>
           </div>
@@ -647,6 +664,11 @@ function AmbassadorOnlyForm() {
             {error}
           </div>
         )}
+        
+        {/* Required Fields Note */}
+        <div className="text-sm text-gray-500">
+          <span className="text-red-500">*</span> Required fields
+        </div>
       </div>
       
       {/* Submit Button */}
