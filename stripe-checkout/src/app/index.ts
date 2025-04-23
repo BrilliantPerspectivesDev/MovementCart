@@ -1,11 +1,5 @@
-// Re-export all schema objects from metadata.ts to ensure they're available for import
-export { 
-  organizationSchema,
-  productSchema,
-  faqSchema,
-  grahamCookeSchema,
-  ambassadorSchema
-} from './metadata';
+// Re-export all schema objects and metadata from metadata.ts
+export * from './metadata';
 
 // Export default metadata for pages
 export { 
@@ -14,6 +8,15 @@ export {
   ambassadorMetadata, 
   checkoutMetadata,
   ambassadorOnlyMetadata
+} from './metadata';
+
+// Export schema objects
+export { 
+  organizationSchema,
+  productSchema,
+  faqSchema,
+  grahamCookeSchema,
+  ambassadorSchema
 } from './metadata';
 
 // Export utility function for article schema generation

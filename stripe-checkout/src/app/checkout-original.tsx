@@ -15,7 +15,6 @@ import { Switch } from '@headlessui/react';
 import { useRouter } from 'next/navigation';
 import LegalModal from './components/LegalModal';
 import PoliciesModal from './components/PoliciesModal';
-import AmbassadorAgreementModal from './components/AmbassadorAgreementModal';
 
 // Load Stripe outside of component to avoid recreating it on renders
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
@@ -284,14 +283,11 @@ interface FormData {
   firstName: string;
   lastName: string;
   email: string;
-  phone: string;
   address: string;
   city: string;
   state: string;
   zipCode: string;
   country: string;
-  isAmbassador: boolean;
-  agreedToAmbassadorAgreement: boolean;
   agreedToPolicies: boolean;
 }
 
@@ -338,13 +334,9 @@ const PRIVACY_POLICY = `
 
 // Inner form component that has access to Stripe hooks
 function CheckoutForm({ 
-  selectedFrequency,
-  isAmbassador,
-  setIsAmbassador
+  selectedFrequency
 }: { 
-  selectedFrequency: string,
-  isAmbassador: boolean,
-  setIsAmbassador: React.Dispatch<React.SetStateAction<boolean>>
+  selectedFrequency: string
 }) {
   const { items } = useCart();
   const { initiateCheckout, isLoading: checkoutLoading, error: checkoutError } = useCheckout();
@@ -363,20 +355,16 @@ function CheckoutForm({
   const [storedAffiliateCode, setStoredAffiliateCode] = useState<string>('');
   
   // Add state for modal visibility
-  const [showAmbassadorModal, setShowAmbassadorModal] = useState(false);
   const [showTermsModal, setShowTermsModal] = useState(false);
   const [showPrivacyModal, setShowPrivacyModal] = useState(false);
   const [showPoliciesModal, setShowPoliciesModal] = useState(false);
   const [agreeToTerms, setAgreeToTerms] = useState(false);
   const [agreeToPolicies, setAgreeToPolicies] = useState(false);
-  const [agreeToAmbassador, setAgreeToAmbassador] = useState(false);
   const [cardComplete, setCardComplete] = useState(false);
   const [formValid, setFormValid] = useState(false);
   const [step1Valid, setStep1Valid] = useState(false);
   const [currentFeatureIndex, setCurrentFeatureIndex] = useState(0);
-  
-  // Add state for Ambassador Agreement modal
-  const [showAmbassadorAgreementModal, setShowAmbassadorAgreementModal] = useState(false);
+  const [agreedToMarketing, setAgreedToMarketing] = useState(false);
   
   useEffect(() => {
     // Get the stored path param from localStorage
@@ -444,17 +432,13 @@ function CheckoutForm({
     firstName: '',
     lastName: '',
     email: '',
-    phone: '',
     address: '',
     city: '',
     state: '',
     zipCode: '',
     country: 'US',
-    isAmbassador: false,
-    agreedToAmbassadorAgreement: false,
     agreedToPolicies: false
   });
-  const [agreedToMarketing, setAgreedToMarketing] = useState(false);
   
   // Features data for carousel
   const features = [
@@ -492,39 +476,29 @@ function CheckoutForm({
     setPriceInfo(getPriceInfo(selectedFrequency));
   }, [selectedFrequency]);
 
-  // Update the useEffect for form validation to always check phone number
+  // Update form validation when form data changes
   useEffect(() => {
     const isAddressValid = 
       formData.firstName.trim() !== '' && 
       formData.lastName.trim() !== '' && 
       formData.email.trim() !== '' &&
-      formData.phone.trim() !== '' &&
       formData.address.trim() !== '' &&
       formData.city.trim() !== '' &&
       formData.state.trim() !== '' &&
       formData.zipCode.trim() !== '' &&
-      formData.country.trim() !== '';
+      formData.country !== '';
 
-    // Basic phone number validation
-    const phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-    if (!phoneRegex.test(formData.phone)) {
-      setError('Please enter a valid phone number.');
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setError('Please enter a valid email address.');
       setStep1Valid(false);
       return;
     }
 
-    // Add US address validation for ambassadors
-    if (isAmbassador) {
-      if (formData.country !== 'US') {
-        setError('Ambassador program is only available for US residents at this time.');
-        setStep1Valid(false);
-        return;
-      }
-    }
-
     setError(null);
     setStep1Valid(isAddressValid);
-  }, [formData, isAmbassador]);
+  }, [formData]);
 
   // Check if entire form is valid
   useEffect(() => {
@@ -553,26 +527,6 @@ function CheckoutForm({
       // addToCart(sampleProduct);
     }
   }, [items.length]);
-
-  // Add effect to update priceInfo when isAmbassador changes
-  useEffect(() => {
-    // Start with the base price info
-    const baseInfo = getPriceInfo(selectedFrequency);
-    
-    // Update the price info based on ambassador status
-    const updatedInfo = {
-      ...baseInfo,
-      // If ambassador is selected, add the ambassador program fee to display price
-      totalPrice: isAmbassador ? baseInfo.totalPrice + 10 : baseInfo.totalPrice,
-      // Set trialDays to 0 if ambassador, otherwise keep 5-day trial
-      trialDays: isAmbassador ? 0 : 5,
-    };
-    
-    // Store the ambassador status in localStorage
-    localStorage.setItem('isAmbassador', isAmbassador.toString());
-    
-    setPriceInfo(updatedInfo);
-  }, [isAmbassador, selectedFrequency]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -607,7 +561,6 @@ function CheckoutForm({
     try {
       if (checkoutStep === 1) {
         setCheckoutStep(2);
-        localStorage.setItem('isAmbassador', isAmbassador.toString());
         localStorage.setItem('selectedFrequency', selectedFrequency);
         setIsLoading(false);
         return;
@@ -649,8 +602,6 @@ function CheckoutForm({
           paymentMethodId: paymentMethod.id,
           frequency: selectedFrequency,
           pathParam: affiliateCode,
-          isAmbassador,
-          isAmbassadorFee: isAmbassador,
           marketingConsent: agreedToMarketing
         }),
       });
@@ -667,36 +618,10 @@ function CheckoutForm({
         if (confirmError) {
           throw new Error(`Failed to confirm main subscription payment: ${confirmError.message}`);
         }
-        
-        // Add a small delay before processing the ambassador fee
-        if (isAmbassador && data.ambassadorPaymentIntentSecret) {
-          await new Promise(resolve => setTimeout(resolve, 1000)); // 1 second delay
-        }
-      }
-
-      // Handle ambassador fee payment confirmation if applicable
-      if (isAmbassador && data.ambassadorPaymentIntentSecret) {
-        try {
-          const { error: ambassadorConfirmError } = await stripe!.confirmCardPayment(data.ambassadorPaymentIntentSecret);
-          if (ambassadorConfirmError) {
-            console.error('Ambassador fee confirmation error:', ambassadorConfirmError);
-            // Don't throw error, just log it and continue
-            // The main subscription is already confirmed
-          }
-        } catch (retryError) {
-          console.error('Retrying ambassador fee confirmation...');
-          // Wait 2 seconds and try one more time
-          await new Promise(resolve => setTimeout(resolve, 2000));
-          const { error: retryConfirmError } = await stripe!.confirmCardPayment(data.ambassadorPaymentIntentSecret);
-          if (retryConfirmError) {
-            console.error('Final ambassador fee confirmation error:', retryConfirmError);
-            // Still don't throw, just log the error
-          }
-        }
       }
 
       // Redirect to success page
-      router.push(`/ambassador-details?subscriptionId=${data.subscriptionId}`);
+      router.push(`/success?subscriptionId=${data.subscriptionId}`);
     } catch (error: any) {
       console.error('Checkout error:', error);
       setError(error.message || 'An unexpected error occurred');
@@ -814,22 +739,6 @@ function CheckoutForm({
         </div>
 
         <div>
-          <label htmlFor="phone" className="block text-xs md:text-sm font-medium text-gray-700 mb-1">
-            Phone Number
-          </label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            value={formData.phone}
-            onChange={handleInputChange}
-            placeholder="(123) 456-7890"
-            required
-            className="w-full px-3 py-2 h-9 text-sm border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
-          />
-        </div>
-
-        <div>
           <label htmlFor="address" className="block text-xs md:text-sm font-medium text-gray-700 mb-1">
             Billing Address
           </label>
@@ -930,41 +839,6 @@ function CheckoutForm({
             </select>
           </div>
         </div>
-
-        {/* Ambassador Add-on */}
-        <div className="bg-[#F8F9FF] rounded-2xl p-6">
-          <h2 className="text-[#1E40AF] text-xl font-semibold mb-4">Brilliant Ambassador Program</h2>
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-lg font-medium text-gray-900">Become an Ambassador</h3>
-              <p className="text-gray-600">Earn commissions and get exclusive benefits</p>
-            </div>
-            <div className="flex items-center gap-4">
-              <a href="/ambassador" className="text-[#2A9D8F] hover:text-[#238276] font-medium">
-                Learn More
-              </a>
-              <Switch
-                checked={isAmbassador}
-                onChange={setIsAmbassador}
-                className={`${
-                  isAmbassador ? 'bg-[#2A9D8F]' : 'bg-gray-200'
-                } relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#2A9D8F] focus:ring-offset-2`}
-              >
-                <span className="sr-only">Enable ambassador program</span>
-                <span
-                  className={`${
-                    isAmbassador ? 'translate-x-6' : 'translate-x-1'
-                  } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
-                />
-              </Switch>
-            </div>
-          </div>
-          <div className="mt-4">
-            <a href="/ambassador-only" className="text-[#2A9D8F] hover:text-[#238276] text-sm">
-              Just want to be an ambassador? Click here →
-            </a>
-          </div>
-        </div>
         
         {/* Order Summary */}
         <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
@@ -979,30 +853,20 @@ function CheckoutForm({
               <p>$167</p>
             </div>
           )}
-          {isAmbassador && (
-            <div className="flex justify-between mb-2">
-              <p className="text-gray-600">Ambassador Program (Annual):</p>
-              <p className="font-medium text-gray-900">$10.00</p>
-            </div>
-          )}
           <div className="flex justify-between mb-2">
-            <p className="text-gray-600">{isAmbassador ? 'No Trial Period' : '5-Day Free Trial'}:</p>
-            <p className="font-medium text-gray-900">{isAmbassador ? 'N/A' : '$0.00'}</p>
+            <p className="text-gray-600">{priceInfo.frequency === 'monthly' ? '5-Day Free Trial' : '5-Day Free Trial'}:</p>
+            <p className="font-medium text-gray-900">{priceInfo.frequency === 'monthly' ? '$0.00' : '$0.00'}</p>
           </div>
           <div className="border-t border-gray-200 my-2 pt-2"></div>
           <div className="flex justify-between">
             <p className="font-medium text-gray-900">Due today:</p>
-            <p className="font-bold text-gray-900">{isAmbassador ? `$${priceInfo.totalPrice.toFixed(2)}` : '$0.00'}</p>
+            <p className="font-bold text-gray-900">${priceInfo.totalPrice}</p>
           </div>
           <div className="mt-1 text-xs text-gray-500 flex items-center">
             <svg className="h-3 w-3 mr-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            {isAmbassador ? (
-              <span>Charged immediately: ${priceInfo.discountPrice} {priceInfo.frequency === 'monthly' ? 'per month' : 'per year'} + $10 annual ambassador fee</span>
-            ) : (
-              <span>After trial, ${priceInfo.totalPrice} {priceInfo.frequency === 'monthly' ? 'per month' : 'per year'}</span>
-            )}
+            <span>After trial, ${priceInfo.totalPrice} {priceInfo.frequency === 'monthly' ? 'per month' : 'per year'}</span>
           </div>
         </div>
       </div>
@@ -1067,73 +931,6 @@ function CheckoutForm({
           </div>
         </div>
 
-        {/* Only show these checkboxes if isAmbassador is true */}
-        {isAmbassador && (
-          <>
-            <div className="mt-4 p-4 bg-blue-50 rounded-lg">
-              <p className="text-sm text-blue-700">
-                To become an ambassador, please read and accept the following agreements:
-              </p>
-            </div>
-            <div className="mt-4">
-              <div className="flex items-start space-x-3">
-                <div className="flex items-center h-5">
-                  <input
-                    type="checkbox"
-                    checked={formData.agreedToAmbassadorAgreement}
-                    onChange={() => {}}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setShowAmbassadorAgreementModal(true);
-                    }}
-                    className="h-4 w-4 rounded border-gray-300 text-[#2A9D8F] focus:ring-[#2A9D8F] cursor-pointer"
-                  />
-                </div>
-                <div className="text-sm text-gray-600">
-                  <p>
-                    I have read and agree to the{' '}
-                    <button
-                      type="button"
-                      onClick={() => setShowAmbassadorAgreementModal(true)}
-                      className="font-medium text-[#2A9D8F] hover:text-[#2A9D8F]/80 underline"
-                    >
-                      Ambassador Agreement
-                    </button>
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="mt-4">
-              <div className="flex items-start space-x-3">
-                <div className="flex items-center h-5">
-                  <input
-                    type="checkbox"
-                    checked={formData.agreedToPolicies}
-                    onChange={() => {}}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setShowPoliciesModal(true);
-                    }}
-                    className="h-4 w-4 rounded border-gray-300 text-[#2A9D8F] focus:ring-[#2A9D8F] cursor-pointer"
-                  />
-                </div>
-                <div className="text-sm text-gray-600">
-                  <p>
-                    I have read and agree to the{' '}
-                    <button
-                      type="button"
-                      onClick={() => setShowPoliciesModal(true)}
-                      className="font-medium text-[#2A9D8F] hover:text-[#2A9D8F]/80 underline"
-                    >
-                      Policies and Procedures
-                    </button>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </>
-        )}
-
         {/* Show any error messages */}
         {error && (
           <div className="text-red-600 text-sm mt-2">
@@ -1167,9 +964,9 @@ function CheckoutForm({
           )}
           <button
             type="submit"
-            disabled={checkoutStep === 1 ? !step1Valid : (isLoading || !formValid || !agreeToTerms || (isAmbassador && !agreeToAmbassador))}
+            disabled={checkoutStep === 1 ? !step1Valid : (isLoading || !formValid || !agreeToTerms)}
             className={`flex-1 py-2 md:py-3 px-3 md:px-4 rounded-md shadow-sm text-sm md:text-base font-medium text-white ${
-              (checkoutStep === 1 ? !step1Valid : (isLoading || !formValid || !agreeToTerms || (isAmbassador && !agreeToAmbassador)))
+              (checkoutStep === 1 ? !step1Valid : (isLoading || !formValid || !agreeToTerms))
                 ? "bg-gray-400 cursor-not-allowed"
                 : "bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             }`}
@@ -1185,7 +982,7 @@ function CheckoutForm({
             ) : checkoutStep === 1 ? (
               "Continue to Payment"
             ) : (
-              isAmbassador ? "Pay Now" : "Start Your Free Trial"
+              "Pay Now"
             )}
           </button>
         </div>
@@ -1227,19 +1024,6 @@ function CheckoutForm({
           }));
         }}
         onDecline={() => setAgreeToPolicies(false)}
-      />
-
-      <AmbassadorAgreementModal
-        isOpen={showAmbassadorAgreementModal}
-        onClose={() => setShowAmbassadorAgreementModal(false)}
-        onAccept={() => {
-          setAgreeToAmbassador(true);
-          setFormData(prevData => ({
-            ...prevData,
-            agreedToAmbassadorAgreement: true
-          }));
-        }}
-        onDecline={() => setAgreeToAmbassador(false)}
       />
     </>
   );
@@ -1284,41 +1068,24 @@ export default function Home() {
   const [selectedFrequency, setSelectedFrequency] = useState('annual');
   const [priceInfo, setPriceInfo] = useState(() => getPriceInfo('annual'));
   const [referralCode, setReferralCode] = useState<string>('');
-  const [isAmbassador, setIsAmbassador] = useState(false);
   
   // Set initial frequency from URL parameter
   useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const planParam = searchParams.get('plan');
-    if (planParam && (planParam === 'monthly' || planParam === 'annual')) {
-      setSelectedFrequency(planParam);
-      setPriceInfo(getPriceInfo(planParam));
+    // Get referrer from document if available
+    const referrer = document.referrer || '';
+
+    // Set initial frequency from URL parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const frequencyParam = urlParams.get('frequency');
+    if (frequencyParam === 'monthly' || frequencyParam === 'annual') {
+      setSelectedFrequency(frequencyParam);
     }
   }, []);
   
-  // Check if the user came from the ambassador page and set isAmbassador accordingly
+  // Update priceInfo when selectedFrequency changes
   useEffect(() => {
-    // Check if the previous page was the ambassador page
-    const referrer = document.referrer;
-    const fromAmbassadorPage = referrer.includes('/ambassador') || 
-                               localStorage.getItem('fromAmbassadorPage') === 'true';
-    
-    // If coming from ambassador page, automatically set the ambassador toggle to true
-    if (fromAmbassadorPage) {
-      setIsAmbassador(true);
-      // Clear the flag after using it
-      localStorage.removeItem('fromAmbassadorPage');
-    }
-  }, []);
-
-  // Update priceInfo when selectedFrequency or isAmbassador changes
-  useEffect(() => {
-    const baseInfo = getPriceInfo(selectedFrequency);
-    setPriceInfo({
-      ...baseInfo,
-      totalPrice: isAmbassador ? baseInfo.totalPrice + 10 : baseInfo.totalPrice,
-    });
-  }, [selectedFrequency, isAmbassador]);
+    setPriceInfo(getPriceInfo(selectedFrequency));
+  }, [selectedFrequency]);
 
   // Set referral code from URL path parameter
   useEffect(() => {
@@ -1412,7 +1179,7 @@ export default function Home() {
                     <div>
                       <h3 className="font-medium text-gray-900">Annual</h3>
                       <p className="text-sm text-gray-500">Auto-renews yearly</p>
-                      <p className="text-xs text-green-600 font-semibold mt-1">Save 30%</p>
+                      <p className="text-xs text-green-600 font-semibold mt-1">Save $167</p>
                     </div>
                     <input
                       type="radio"
@@ -1435,8 +1202,6 @@ export default function Home() {
             <Elements stripe={stripePromise}>
               <CheckoutForm 
                 selectedFrequency={selectedFrequency}
-                isAmbassador={isAmbassador}
-                setIsAmbassador={setIsAmbassador}
               />
             </Elements>
           </div>
