@@ -860,7 +860,7 @@ function CheckoutForm({
           <div className="border-t border-gray-200 my-2 pt-2"></div>
           <div className="flex justify-between">
             <p className="font-medium text-gray-900">Due today:</p>
-            <p className="font-bold text-gray-900">${priceInfo.totalPrice}</p>
+            <p className="font-bold text-gray-900">$0.00</p>
           </div>
           <div className="mt-1 text-xs text-gray-500 flex items-center">
             <svg className="h-3 w-3 mr-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
