@@ -530,9 +530,34 @@ function CheckoutForm({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
+    
+    // Input validation based on field type
+    let sanitizedValue = value;
+    
+    switch (name) {
+      case 'firstName':
+      case 'lastName':
+        // Allow only letters, spaces, and hyphens
+        sanitizedValue = value.replace(/[^a-zA-Z\s-]/g, '');
+        break;
+        
+      case 'email':
+        // Email validation happens with the email type input, just lowercase it
+        sanitizedValue = value.toLowerCase();
+        break;
+        
+      case 'zipCode':
+        // For US ZIP codes - allow only 5 digits
+        sanitizedValue = value.replace(/[^0-9]/g, '').substring(0, 5);
+        break;
+        
+      default:
+        sanitizedValue = value;
+    }
+    
     setFormData(prevData => ({
       ...prevData,
-      [name]: value
+      [name]: sanitizedValue
     }));
   };
 
@@ -815,6 +840,10 @@ function CheckoutForm({
               value={formData.zipCode}
               onChange={handleInputChange}
               required
+              maxLength={5}
+              placeholder="12345"
+              pattern="\d{5}"
+              title="Please enter a valid 5-digit US ZIP code"
               className="w-full px-3 py-2 h-9 text-sm border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
