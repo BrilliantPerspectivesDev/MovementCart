@@ -59,6 +59,13 @@ export async function POST(request: Request) {
       referralCode: pathParam || 'None'
     });
 
+    // Enforce US-only restriction for ambassador program
+    if (customerInfo.country && customerInfo.country.toUpperCase() !== 'US') {
+      return NextResponse.json({
+        error: 'The ambassador program is currently only available to residents of the United States.'
+      }, { status: 400 });
+    }
+
     // Process any referral metadata
     let referralMetadata = {};
     if (pathParam) {

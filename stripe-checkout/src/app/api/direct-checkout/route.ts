@@ -130,8 +130,7 @@ export async function POST(request: Request) {
     // Validate country code - make sure it's a 2-letter code
     if (customerInfo.country && (
       typeof customerInfo.country !== 'string' || 
-      customerInfo.country.length !== 2 ||
-      !VALID_COUNTRY_CODES.includes(customerInfo.country.toUpperCase())
+      customerInfo.country.length !== 2
     )) {
       return NextResponse.json({ 
         error: 'Invalid country code. Please use a 2-letter country code (e.g., US, CA, GB)' 
