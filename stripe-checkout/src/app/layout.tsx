@@ -26,8 +26,8 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="icon" href="/Brilliant_ICON_Full-Color.png" />
-        <link rel="apple-touch-icon" href="/Brilliant_ICON_Full-Color.png" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" href="/favicon.png?v=2" />
         {/* JSON-LD structured data */}
         <Script
           id="schema-org-organization"
