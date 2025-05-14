@@ -98,10 +98,6 @@ function SuccessContent() {
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Price</span>
-                  <span className="font-medium text-[#264653]">{price}</span>
-                </div>
-                <div className="flex justify-between">
                   <span className="text-gray-600">Status</span>
                   <span className="font-medium text-[#2A9D8F]">Active</span>
                 </div>
