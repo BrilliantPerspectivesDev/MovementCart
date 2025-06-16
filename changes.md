@@ -103,4 +103,12 @@
 - Ensured consistency with the main page logo
 - Improves brand consistency across pages
 
-# Fixed Vercel Build Error with useSearchParams 
+# Fixed Vercel Build Error with useSearchParams
+
+# Added Groups Redirect Page
+
+- Created `/groups` route that redirects users to the Brilliant Church registration page
+- Added `stripe-checkout/src/app/groups/page.tsx` with client-side redirect functionality
+- Redirect URL: https://www.brilliant.church/register1710967836097
+- Includes loading spinner and message while redirecting
+- Mobile-responsive design with centered loading state 
