@@ -134,6 +134,33 @@ export default function LandingPage() {
           </div>
         </div>
         
+      {/* Video Section */}
+      <div className="bg-white py-12 sm:py-16">
+        <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-10">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#264653] mb-4">
+              Experience the Brilliant Movement
+            </h2>
+            <p className="text-gray-600 text-base sm:text-lg max-w-3xl mx-auto">
+              Watch Graham Cooke share the heart behind this transformative journey with God
+            </p>
+          </div>
+          
+          {/* Video Embed Container */}
+          <div className="relative w-full max-w-3xl mx-auto">
+            <div className="embed-container">
+              <iframe 
+                src="https://www.brillianttv.com/embed/2257349" 
+                style={{ border: 0 }} 
+                allowFullScreen
+                title="Brilliant Movement Introduction Video"
+                className="rounded-lg shadow-lg"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+        
       {/* Benefits Three Column Section */}
       <div className="bg-white py-16 sm:py-24">
         <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10">

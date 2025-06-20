@@ -111,4 +111,13 @@
 - Added `stripe-checkout/src/app/groups/page.tsx` with client-side redirect functionality
 - Redirect URL: https://www.brilliant.church/register1710967836097
 - Includes loading spinner and message while redirecting
-- Mobile-responsive design with centered loading state 
+- Mobile-responsive design with centered loading state
+
+# Added Video Section Under Header
+
+- Created new video section positioned between hero header and benefits section
+- Added responsive video embed container with 16:9 aspect ratio
+- Embedded Brilliant TV video (https://www.brillianttv.com/embed/2257349)
+- Includes section title "Experience the Brilliant Movement" and descriptive text
+- Added CSS styles for responsive video embed container in globals.css
+- Mobile-responsive design with proper padding and max-width constraints 
