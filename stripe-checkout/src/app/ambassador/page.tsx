@@ -1,11 +1,20 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 
-// Ambassador landing page
+// Ambassador landing page - CTAs now redirect to BCP for multi-country support
 export default function AmbassadorPage() {
+  const [affiliateCheckoutUrl, setAffiliateCheckoutUrl] = useState('https://central.brilliantmovement.com/checkout/affiliate');
+
+  // Check for referral code in localStorage and build URL
+  useEffect(() => {
+    const pathParam = localStorage.getItem('pathParam');
+    if (pathParam) {
+      setAffiliateCheckoutUrl(`https://central.brilliantmovement.com/checkout/affiliate?ref=${encodeURIComponent(pathParam)}`);
+    }
+  }, []);
+
   return (
     <main className="min-h-screen bg-[#f9f5f0] pt-12">
       {/* Hero Header */}
@@ -22,17 +31,16 @@ export default function AmbassadorPage() {
               Join the Brilliant Ambassador program and share the movement while growing your impact and income.
             </p>
 
-            {/* CTA Button */}
+            {/* CTA Button - Now links to BCP */}
             <div className="w-full mt-2">
-              <Link 
-                href="https://brilliantmovement.com/ambassador-only" 
+              <a 
+                href={affiliateCheckoutUrl}
                 className="block w-full text-center py-4 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
-                onClick={() => localStorage.setItem('fromAmbassadorPage', 'true')}
               >
                 <div className="flex flex-col items-center">
                   <span>BECOME AN AMBASSADOR</span>
                 </div>
-              </Link>
+              </a>
             </div>
           </div>
 
@@ -63,13 +71,12 @@ export default function AmbassadorPage() {
                   Grow your impact while sharing what you love
                 </h2>
                 <div className="mt-8 lg:mt-auto">
-                  <Link 
-                    href="https://brilliantmovement.com/ambassador-only" 
+                  <a 
+                    href={affiliateCheckoutUrl}
                     className="inline-block py-3 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
-                    onClick={() => localStorage.setItem('fromAmbassadorPage', 'true')}
                   >
                     Become an Ambassador
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>
@@ -112,7 +119,7 @@ export default function AmbassadorPage() {
                     <svg className="h-5 w-5 text-[#74A78E] mt-0.5 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <span>Get your own Brilliant Debit Card to access your funds</span>
+                    <span>Direct deposit to your bank account, with optional debit card</span>
                   </li>
                 </ul>
               </div>
