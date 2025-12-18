@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 
-// Ambassador landing page - CTAs now redirect to BCP for multi-country support
-export default function AmbassadorPage() {
+// Affiliate landing page - CTAs now redirect to BCP for multi-country support
+export default function AffiliatePage() {
   const [affiliateCheckoutUrl, setAffiliateCheckoutUrl] = useState('https://central.brilliantmovement.com/checkout/affiliate');
 
   // Check for referral code in localStorage and build URL
@@ -25,10 +25,10 @@ export default function AmbassadorPage() {
             <p className="uppercase text-sm font-semibold tracking-wider text-[#264653]">GROWTH • IMPACT • INCOME</p>
             <h1 className="text-[3.4034rem] sm:text-[3.64rem] md:text-[3.9rem] font-bold text-black leading-[1.1] tracking-[-0.03em] mb-3">
               Become an<br />
-              Ambassador
+              Affiliate
             </h1>
             <p className="text-base text-gray-700 mb-8">
-              Join the Brilliant Ambassador program and share the movement while growing your impact and income.
+              Join the Brilliant Affiliate program and share the movement while growing your impact and income.
             </p>
 
             {/* CTA Button - Now links to BCP */}
@@ -38,7 +38,7 @@ export default function AmbassadorPage() {
                 className="block w-full text-center py-4 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
               >
                 <div className="flex flex-col items-center">
-                  <span>BECOME AN AMBASSADOR</span>
+                  <span>BECOME AN AFFILIATE</span>
                 </div>
               </a>
             </div>
@@ -59,7 +59,7 @@ export default function AmbassadorPage() {
         </div>
       </div>
 
-      {/* Ambassador Benefits Section */}
+      {/* Affiliate Benefits Section */}
       <div className="bg-white py-16 sm:py-20 px-6 sm:px-10 lg:px-16">
         <div className="max-w-6xl mx-auto px-0 sm:px-8 lg:px-12">
           <div className="flex flex-wrap -mx-4">
@@ -75,7 +75,7 @@ export default function AmbassadorPage() {
                     href={affiliateCheckoutUrl}
                     className="inline-block py-3 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
                   >
-                    Become an Ambassador
+                    Become an Affiliate
                   </a>
                 </div>
               </div>
@@ -85,15 +85,15 @@ export default function AmbassadorPage() {
             <div className="w-full lg:w-1/2 px-4">
               <div className="flex flex-col h-full space-y-6 text-base text-gray-700">
                 <p className="text-xl font-medium text-gray-800">
-                  As a Brilliant Ambassador, you'll share in the growth of the movement while receiving special training and benefits.
+                  As a Brilliant Affiliate, you'll share in the growth of the movement while receiving special training and benefits.
                 </p>
 
                 <p>
-                  For just $10 per year added to your membership, you can become an Ambassador and unlock a suite of exclusive benefits designed to help you share Brilliant with others while growing your impact and income.
+                  For just $10 per year added to your membership, you can become an Affiliate and unlock a suite of exclusive benefits designed to help you share Brilliant with others while growing your impact and income.
                 </p>
 
                 <p className="font-medium">
-                  The Ambassador program includes:
+                  The Affiliate program includes:
                 </p>
 
                 <ul className="space-y-3">
@@ -113,7 +113,7 @@ export default function AmbassadorPage() {
                     <svg className="h-5 w-5 text-[#74A78E] mt-0.5 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <span>Receive Ambassador-only monthly training</span>
+                    <span>Receive regular Affiliate-only training</span>
                   </li>
                   <li className="flex items-start">
                     <svg className="h-5 w-5 text-[#74A78E] mt-0.5 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">

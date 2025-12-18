@@ -48,7 +48,7 @@ export default function Navigation() {
           {/* Right side buttons */}
           <div className="hidden md:flex items-center space-x-4">
             <Link href="/ambassador" className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${scrolled ? 'text-gray-700 hover:text-[#2A9D8F]' : 'text-gray-500 hover:text-gray-900'}`}>
-              Ambassador Program
+              Affiliate Program
             </Link>
             <Link href="/checkout" className="px-4 py-2 rounded-md bg-[#E9C46A] text-gray-800 text-sm font-medium hover:bg-[#e6bd58] transition-colors">
               Join the Movement
@@ -75,7 +75,7 @@ export default function Navigation() {
       <div className={`md:hidden w-[80%] mx-auto bg-white shadow-lg rounded-b-lg ${mobileMenuOpen ? 'block' : 'hidden'}`}>
         <div className="pt-2 pb-3 space-y-1">
           <Link href="/ambassador" className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700">
-            Ambassador Program
+            Affiliate Program
           </Link>
           <Link href="/checkout" className="block pl-3 pr-4 py-2 bg-[#E9C46A] text-gray-800 text-base font-medium">
             Join the Movement
