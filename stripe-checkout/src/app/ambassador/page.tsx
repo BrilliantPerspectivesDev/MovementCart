@@ -122,6 +122,23 @@ export default function AffiliatePage() {
                     <span>Direct deposit to your bank account, with optional debit card</span>
                   </li>
                 </ul>
+
+                {/* Global Availability */}
+                <div className="mt-6 p-4 bg-[#F6F5F2] rounded-lg">
+                  <p className="font-medium text-gray-800 mb-3">
+                    🌍 Available in 8 countries — more coming soon!
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-white text-gray-700 border border-gray-200">🇺🇸 USA</span>
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-white text-gray-700 border border-gray-200">🇨🇦 Canada</span>
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-white text-gray-700 border border-gray-200">🇬🇧 UK</span>
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-white text-gray-700 border border-gray-200">🇦🇺 Australia</span>
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-white text-gray-700 border border-gray-200">🇳🇿 New Zealand</span>
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-white text-gray-700 border border-gray-200">🇮🇪 Ireland</span>
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-white text-gray-700 border border-gray-200">🇿🇦 South Africa</span>
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-white text-gray-700 border border-gray-200">🇳🇦 Namibia</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
