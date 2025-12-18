@@ -33,7 +33,7 @@ export default function AmbassadorPage() {
 
             {/* CTA Button - Now links to BCP */}
             <div className="w-full mt-2">
-              <a 
+              <a
                 href={affiliateCheckoutUrl}
                 className="block w-full text-center py-4 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
               >
@@ -47,9 +47,9 @@ export default function AmbassadorPage() {
           {/* Right Content - Image */}
           <div className="relative lg:w-[55%] mt-6 lg:mt-0">
             <div className="aspect-square relative rounded-xl overflow-hidden w-[90%] mx-auto">
-              <Image 
-                src="/Brilliant Gradient Pack-05 Large.jpeg" 
-                alt="Brilliant gradient background" 
+              <Image
+                src="/Brilliant Gradient Pack-05 Large.jpeg"
+                alt="Brilliant gradient background"
                 fill
                 className="object-cover object-center"
                 priority
@@ -71,7 +71,7 @@ export default function AmbassadorPage() {
                   Grow your impact while sharing what you love
                 </h2>
                 <div className="mt-8 lg:mt-auto">
-                  <a 
+                  <a
                     href={affiliateCheckoutUrl}
                     className="inline-block py-3 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
                   >
@@ -87,15 +87,15 @@ export default function AmbassadorPage() {
                 <p className="text-xl font-medium text-gray-800">
                   As a Brilliant Ambassador, you'll share in the growth of the movement while receiving special training and benefits.
                 </p>
-                
+
                 <p>
                   For just $10 per year added to your membership, you can become an Ambassador and unlock a suite of exclusive benefits designed to help you share Brilliant with others while growing your impact and income.
                 </p>
-                
+
                 <p className="font-medium">
                   The Ambassador program includes:
                 </p>
-                
+
                 <ul className="space-y-3">
                   <li className="flex items-start">
                     <svg className="h-5 w-5 text-[#74A78E] mt-0.5 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -139,7 +139,7 @@ export default function AmbassadorPage() {
                 © 2025 Brilliant Perspectives LLC. All rights reserved.
               </p>
             </div>
-            
+
             {/* Contact info */}
             <div className="mb-6 md:mb-0">
               <h3 className="text-lg font-semibold mb-2">Contact Us</h3>
@@ -155,18 +155,18 @@ export default function AmbassadorPage() {
               </p>
             </div>
           </div>
-          
+
           {/* Bottom bar */}
           <div className="mt-8 pt-4 border-t border-gray-500 text-center">
             <div className="flex flex-col sm:flex-row sm:justify-center sm:space-x-8">
-              <a 
-                href="https://brilliantperspectives.clickfunnels.com/optincxp26vyu" 
+              <a
+                href="https://brilliantperspectives.clickfunnels.com/optincxp26vyu"
                 className="text-gray-300 hover:text-white transition-colors duration-200 text-sm"
               >
                 Privacy Policy
               </a>
-              <a 
-                href="https://brilliantperspectives.clickfunnels.com/optinlhu0kk20" 
+              <a
+                href="https://brilliantperspectives.clickfunnels.com/optinlhu0kk20"
                 className="text-gray-300 hover:text-white transition-colors duration-200 text-sm"
               >
                 Terms of Service
@@ -177,4 +177,4 @@ export default function AmbassadorPage() {
       </footer>
     </main>
   );
-} 
+}
