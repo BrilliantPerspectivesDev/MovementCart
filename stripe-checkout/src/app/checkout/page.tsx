@@ -1,87 +1,109 @@
-export { default } from '../checkout-original'; 
+'use client';
 
-// Inner form component that has access to Stripe hooks
-function CheckoutForm({ selectedFrequency }: { selectedFrequency: string }) {
-  const { items } = useCart();
-  const { initiateCheckout, isLoading, error } = useCheckout();
-  const stripe = useStripe();
-  const elements = useElements();
-  const pathname = usePathname();
+/**
+ * Checkout Page - Redirects to BCP
+ *
+ * The checkout has moved to central.brilliantmovement.com
+ * This page preserves referral codes during redirect.
+ *
+ * Updated: 2025-12-19
+ */
 
-  // Get stored referral code from localStorage
-  const [storedPathParam, setStoredPathParam] = useState<string>('');
-  
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
+
+export default function CheckoutRedirectPage() {
+  const [redirectUrl, setRedirectUrl] = useState('https://central.brilliantmovement.com/checkout');
+  const [countdown, setCountdown] = useState(3);
+
   useEffect(() => {
-    // Get the stored path param from localStorage
+    // Check for referral code in localStorage or URL
     const pathParam = localStorage.getItem('pathParam');
-    if (pathParam) {
-      console.log('Retrieved stored path param:', pathParam);
-      setStoredPathParam(pathParam);
+    const affiliateCode = localStorage.getItem('affiliateCode');
+    const refCode = pathParam || affiliateCode;
+
+    // Also check URL params
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlRef = urlParams.get('ref');
+    const frequency = urlParams.get('frequency');
+
+    // Build redirect URL with ref param if available
+    const finalRef = urlRef || refCode;
+    let url = 'https://central.brilliantmovement.com/checkout';
+    const params = new URLSearchParams();
+
+    if (finalRef) {
+      params.set('ref', finalRef);
     }
+    if (frequency) {
+      params.set('frequency', frequency);
+    }
+
+    if (params.toString()) {
+      url += '?' + params.toString();
+    }
+
+    setRedirectUrl(url);
+
+    // Auto-redirect after countdown
+    const timer = setInterval(() => {
+      setCountdown(prev => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          window.location.href = url;
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
   }, []);
 
-  // Handle form submission
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    
-    if (!stripe || !elements) {
-      console.error('Stripe.js has not loaded');
-      return;
-    }
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-4">
+      <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8 text-center">
+        {/* Logo */}
+        <div className="mb-6 flex justify-center">
+          <Image
+            src="/Blacklogo.png"
+            alt="Brilliant Logo"
+            width={180}
+            height={60}
+            className="h-auto w-auto"
+          />
+        </div>
 
-    setIsLoading(true);
+        {/* Message */}
+        <h1 className="text-2xl font-bold text-gray-900 mb-4">
+          Checkout Has Moved
+        </h1>
 
-    try {
-      const cardElement = elements.getElement(CardElement);
-      if (!cardElement) {
-        throw new Error('Card element not found');
-      }
+        <p className="text-gray-600 mb-6">
+          We&apos;ve upgraded our checkout experience! You&apos;re being redirected to our new checkout page.
+        </p>
 
-      // Create payment method
-      const { error: pmError, paymentMethod } = await stripe.createPaymentMethod({
-        type: 'card',
-        card: cardElement,
-        billing_details: {
-          name: `${formData.firstName} ${formData.lastName}`,
-          email: formData.email,
-          address: {
-            line1: formData.streetAddress,
-            city: formData.city,
-            state: formData.state,
-            postal_code: formData.postalCode,
-            country: formData.country,
-          },
-        },
-      });
+        {/* Countdown */}
+        <div className="mb-6">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-100 text-blue-600">
+            <span className="text-2xl font-bold">{countdown}</span>
+          </div>
+          <p className="text-sm text-gray-500 mt-2">Redirecting in {countdown} seconds...</p>
+        </div>
 
-      if (pmError) {
-        throw pmError;
-      }
+        {/* Manual redirect button */}
+        <a
+          href={redirectUrl}
+          className="inline-block w-full py-3 px-6 bg-blue-600 hover:bg-blue-700 transition-colors text-white rounded-full font-medium"
+        >
+          Continue to Checkout →
+        </a>
 
-      // Initiate checkout with payment method and stored path param
-      const response = await initiateCheckout(
-        items,
-        formData,
-        selectedFrequency,
-        paymentMethod.id,
-        storedPathParam // Pass the stored path param
-      );
-
-      if (response.error) {
-        throw new Error(response.error);
-      }
-
-      // Handle successful checkout
-      if (response.subscriptionId) {
-        window.location.href = `/success?subscription=${response.subscriptionId}`;
-      }
-    } catch (error: any) {
-      console.error('Checkout error:', error);
-      setError(error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // ... rest of the component code ...
-} 
+        {/* Note */}
+        <p className="text-xs text-gray-400 mt-6">
+          Same great 5-day free trial, now with an improved checkout experience
+        </p>
+      </div>
+    </div>
+  );
+}

@@ -39,13 +39,36 @@ npm install
 Create a `.env.local` file in the root directory with your API keys:
 
 ```
+# Stripe API Keys (BP-WY Account)
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
 STRIPE_SECRET_KEY=your_stripe_secret_key
+STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
+
+# Base URL
 NEXT_PUBLIC_BASE_URL=http://localhost:3000
-STRIPE_MONTHLY_PRODUCT_ID=your_stripe_monthly_product_id
-STRIPE_ANNUAL_PRODUCT_ID=your_stripe_annual_product_id
+
+# Movement Product IDs (BP-WY Account - December 2024)
+STRIPE_MONTHLY_PRODUCT_ID=prod_TdQqlGKWv07kaE
+STRIPE_ANNUAL_PRODUCT_ID=prod_TdQtw0iAQ1quoV
+
+# Movement Price IDs (BP-WY Account - December 2024)
+STRIPE_MONTHLY_PRICE_ID=legacy_mo47
+STRIPE_ANNUAL_PRICE_ID=legacy_yr397
+STRIPE_AMBASSADOR_FEE_PRICE_ID=legacy_10yr
+
+# Google Maps
 NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
 ```
+
+### Stripe Product Reference (BP-WY Account)
+
+| Product | Product ID | Price ID | Amount |
+|---------|-----------|----------|--------|
+| Movement Member Monthly | `prod_TdQqlGKWv07kaE` | `legacy_mo47` | $47/month |
+| Movement Member Annual | `prod_TdQtw0iAQ1quoV` | `legacy_yr397` | $397/year |
+| Movement Affiliate Annual Fee | `prod_TdQsoyLRTrRvcG` | `legacy_10yr` | $10/year |
+
+> **Note:** Additional tiered products (Silver, Gold, Platinum) are available in BP-WY and will replace these legacy products in January 2025.
 
 **IMPORTANT SECURITY NOTE:**
 - Never commit your `.env.local` file to version control
