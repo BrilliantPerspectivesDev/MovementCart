@@ -9,11 +9,24 @@
  * Updated: 2025-12-22 - Restored local checkout (removed redirect to central)
  */
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 
-export default function CheckoutPage() {
+// Loading component for Suspense fallback
+function CheckoutLoading() {
+  return (
+    <div className="min-h-screen bg-[#f9f5f0] flex items-center justify-center">
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#74A78E] mx-auto mb-4"></div>
+        <p className="text-gray-600">Loading checkout...</p>
+      </div>
+    </div>
+  );
+}
+
+// Main checkout content (uses useSearchParams)
+function CheckoutContent() {
   const searchParams = useSearchParams();
   const [isProcessing, setIsProcessing] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
@@ -207,5 +220,14 @@ export default function CheckoutPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+// Wrapper component with Suspense boundary
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={<CheckoutLoading />}>
+      <CheckoutContent />
+    </Suspense>
   );
 }
