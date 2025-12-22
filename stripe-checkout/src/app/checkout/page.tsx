@@ -1,108 +1,210 @@
 'use client';
 
 /**
- * Checkout Page - Redirects to BCP
+ * Checkout Page - Local Stripe Checkout
  *
- * The checkout has moved to central.brilliantmovement.com
- * This page preserves referral codes during redirect.
+ * Handles member subscription checkout with plan selection.
+ * Uses Stripe hosted checkout for payment collection.
  *
- * Updated: 2025-12-19
+ * Updated: 2025-12-22 - Restored local checkout (removed redirect to central)
  */
 
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 
-export default function CheckoutRedirectPage() {
-  const [redirectUrl, setRedirectUrl] = useState('https://central.brilliantmovement.com/checkout');
-  const [countdown, setCountdown] = useState(3);
+export default function CheckoutPage() {
+  const searchParams = useSearchParams();
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<'monthly' | 'annual'>('monthly');
+  const [error, setError] = useState<string | null>(null);
+
+  // Get referral code from localStorage or URL
+  const [referralCode, setReferralCode] = useState<string | null>(null);
 
   useEffect(() => {
-    // Check for referral code in localStorage or URL
+    // Check URL param first, then localStorage
+    const urlRef = searchParams.get('ref');
     const pathParam = localStorage.getItem('pathParam');
     const affiliateCode = localStorage.getItem('affiliateCode');
-    const refCode = pathParam || affiliateCode;
+    setReferralCode(urlRef || pathParam || affiliateCode || null);
 
-    // Also check URL params
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlRef = urlParams.get('ref');
-    const frequency = urlParams.get('frequency');
-
-    // Build redirect URL with ref param if available
-    const finalRef = urlRef || refCode;
-    let url = 'https://central.brilliantmovement.com/checkout';
-    const params = new URLSearchParams();
-
-    if (finalRef) {
-      params.set('ref', finalRef);
+    // Check for plan preference from URL
+    const planParam = searchParams.get('plan');
+    if (planParam === 'annual') {
+      setSelectedPlan('annual');
     }
-    if (frequency) {
-      params.set('frequency', frequency);
+  }, [searchParams]);
+
+  const handleCheckout = async () => {
+    if (!agreedToTerms) {
+      setError('Please agree to the Terms of Service to continue.');
+      return;
     }
 
-    if (params.toString()) {
-      url += '?' + params.toString();
-    }
+    setIsProcessing(true);
+    setError(null);
 
-    setRedirectUrl(url);
-
-    // Auto-redirect after countdown
-    const timer = setInterval(() => {
-      setCountdown(prev => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          window.location.href = url;
-          return 0;
-        }
-        return prev - 1;
+    try {
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: [{ id: selectedPlan }],
+          selectedFrequency: selectedPlan,
+          pathParam: referralCode,
+        }),
       });
-    }, 1000);
 
-    return () => clearInterval(timer);
-  }, []);
+      const data = await response.json();
+
+      if (data.url) {
+        // Redirect to Stripe hosted checkout
+        window.location.href = data.url;
+      } else {
+        setError(data.error || 'Failed to create checkout session');
+        setIsProcessing(false);
+      }
+    } catch (err) {
+      console.error('Checkout error:', err);
+      setError('Something went wrong. Please try again.');
+      setIsProcessing(false);
+    }
+  };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-4">
-      <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8 text-center">
-        {/* Logo */}
-        <div className="mb-6 flex justify-center">
-          <Image
-            src="/Blacklogo.png"
-            alt="Brilliant Logo"
-            width={180}
-            height={60}
-            className="h-auto w-auto"
-          />
-        </div>
-
-        {/* Message */}
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">
-          Checkout Has Moved
-        </h1>
-
-        <p className="text-gray-600 mb-6">
-          We&apos;ve upgraded our checkout experience! You&apos;re being redirected to our new checkout page.
-        </p>
-
-        {/* Countdown */}
-        <div className="mb-6">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-100 text-blue-600">
-            <span className="text-2xl font-bold">{countdown}</span>
+    <div className="min-h-screen bg-[#f9f5f0]">
+      <div className="container mx-auto px-4 max-w-4xl">
+        {/* Header with Logo */}
+        <div className="text-center pt-8 pb-6">
+          <div className="flex justify-center mb-4">
+            <Image
+              src="/Blacklogo.png"
+              alt="Brilliant Perspectives"
+              width={180}
+              height={58}
+              className="h-14 w-auto"
+            />
           </div>
-          <p className="text-sm text-gray-500 mt-2">Redirecting in {countdown} seconds...</p>
+          <h1 className="text-3xl font-bold text-[#264653] mb-2">Start Your Free Trial</h1>
         </div>
 
-        {/* Manual redirect button */}
-        <a
-          href={redirectUrl}
-          className="inline-block w-full py-3 px-6 bg-blue-600 hover:bg-blue-700 transition-colors text-white rounded-full font-medium"
-        >
-          Continue to Checkout →
-        </a>
+        {/* Main CTA Box */}
+        <div className="bg-white rounded-2xl shadow-xl mb-6">
+          <div className="p-6 sm:p-8">
+            {/* 5-Day Trial Badge */}
+            <div className="bg-green-50 border-2 border-green-200 rounded-xl p-4 mb-6">
+              <p className="text-center text-green-700 font-bold text-lg mb-1">
+                🎉 5-Day Free Trial
+              </p>
+              <p className="text-sm text-center text-gray-700">
+                Try risk-free for 5 days. Cancel anytime during your trial.
+              </p>
+            </div>
 
-        {/* Note */}
-        <p className="text-xs text-gray-400 mt-6">
-          Same great 5-day free trial, now with an improved checkout experience
-        </p>
+            <h3 className="text-xl font-bold text-center text-[#264653] mb-6">
+              Selected Plan: Movement {selectedPlan === 'monthly' ? 'Monthly' : 'Annual'}
+            </h3>
+
+            {/* Plan Selection */}
+            <div className="grid md:grid-cols-2 gap-4 mb-6">
+              {/* Monthly Option */}
+              <button
+                type="button"
+                onClick={() => setSelectedPlan('monthly')}
+                className={`rounded-xl border-2 p-6 text-center transition-all ${
+                  selectedPlan === 'monthly'
+                    ? 'border-[#74A78E] bg-[#74A78E]/5 ring-2 ring-[#74A78E]'
+                    : 'border-gray-200 hover:border-[#74A78E]/50'
+                }`}
+              >
+                <div className="inline-block px-3 py-1 bg-[#74A78E] text-white text-xs font-semibold rounded-full mb-2">
+                  Most Popular
+                </div>
+                <h4 className="text-lg font-bold text-[#264653] mb-2">Movement Monthly</h4>
+                <p className="text-4xl font-bold text-[#74A78E] mb-1">$47</p>
+                <p className="text-gray-600 text-sm mb-3">/month</p>
+                <p className="text-xs text-gray-500">After trial, billed monthly</p>
+              </button>
+
+              {/* Annual Option */}
+              <button
+                type="button"
+                onClick={() => setSelectedPlan('annual')}
+                className={`rounded-xl border-2 p-6 text-center transition-all ${
+                  selectedPlan === 'annual'
+                    ? 'border-[#74A78E] bg-[#74A78E]/5 ring-2 ring-[#74A78E]'
+                    : 'border-gray-200 hover:border-[#74A78E]/50'
+                }`}
+              >
+                <div className="inline-block px-3 py-1 bg-[#E9C46A] text-[#264653] text-xs font-semibold rounded-full mb-2">
+                  Best Value
+                </div>
+                <h4 className="text-lg font-bold text-[#264653] mb-2">Movement Annual</h4>
+                <p className="text-4xl font-bold text-[#74A78E] mb-1">$397</p>
+                <p className="text-gray-600 text-sm mb-3">/year</p>
+                <p className="text-xs text-gray-500">After trial, billed annually</p>
+              </button>
+            </div>
+
+            {/* Referral Info */}
+            {referralCode && (
+              <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
+                <p className="text-center text-blue-700">
+                  🎉 You&apos;re joining through <strong>{referralCode}</strong>&apos;s referral
+                </p>
+              </div>
+            )}
+
+            {/* Terms Checkbox */}
+            <div className="mb-6">
+              <label className="flex items-center justify-center gap-3 p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50">
+                <input
+                  type="checkbox"
+                  checked={agreedToTerms}
+                  onChange={(e) => setAgreedToTerms(e.target.checked)}
+                  className="w-5 h-5 text-[#74A78E] rounded focus:ring-[#74A78E]"
+                />
+                <span className="text-gray-700">
+                  I agree to the{' '}
+                  <a
+                    href="https://brilliantperspectives.clickfunnels.com/optinlhu0kk20"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#74A78E] underline hover:text-[#5a8a72]"
+                  >
+                    Terms of Service
+                  </a>
+                </span>
+              </label>
+            </div>
+
+            {/* Error Message */}
+            {error && (
+              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-center">
+                {error}
+              </div>
+            )}
+
+            {/* Checkout Button */}
+            <button
+              onClick={handleCheckout}
+              disabled={isProcessing || !agreedToTerms}
+              className={`w-full py-4 px-8 rounded-full font-medium text-white transition-all ${
+                agreedToTerms && !isProcessing
+                  ? 'bg-[#74A78E] hover:bg-[#5a8a72]'
+                  : 'bg-gray-300 cursor-not-allowed'
+              }`}
+            >
+              {isProcessing ? 'Processing...' : 'Start Free Trial'}
+            </button>
+
+            <p className="text-xs text-gray-500 text-center mt-4">
+              🔒 Secure checkout powered by Stripe • Cancel anytime
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
