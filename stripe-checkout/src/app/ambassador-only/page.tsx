@@ -12,23 +12,16 @@ import Image from 'next/image';
  * This page preserves the referral code from localStorage and redirects.
  */
 export default function AmbassadorOnlyPage() {
-  const [redirectUrl, setRedirectUrl] = useState('https://central.brilliantmovement.com/r/movement/affiliate');
+  const redirectUrl = 'https://central.brilliantmovement.com/r/movement/affiliate';
   const [countdown, setCountdown] = useState(3);
 
   useEffect(() => {
-    // Check for referral code
-    const pathParam = localStorage.getItem('pathParam');
-    const url = pathParam
-      ? `https://central.brilliantmovement.com/r/${encodeURIComponent(pathParam)}/affiliate`
-      : 'https://central.brilliantmovement.com/r/movement/affiliate';
-    setRedirectUrl(url);
-
     // Auto-redirect after countdown
     const timer = setInterval(() => {
       setCountdown(prev => {
         if (prev <= 1) {
           clearInterval(timer);
-          window.location.href = url;
+          window.location.href = redirectUrl;
           return 0;
         }
         return prev - 1;

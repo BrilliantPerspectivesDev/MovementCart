@@ -1,19 +1,12 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
 
 // Affiliate landing page - CTAs now redirect to BCP for multi-country support
+// Always use 'movement' as the referral code for affiliate signups from this page
 export default function AffiliatePage() {
-  const [affiliateCheckoutUrl, setAffiliateCheckoutUrl] = useState('https://central.brilliantmovement.com/r/movement/affiliate');
-
-  // Check for referral code in localStorage and build URL
-  useEffect(() => {
-    const pathParam = localStorage.getItem('pathParam');
-    if (pathParam) {
-      setAffiliateCheckoutUrl(`https://central.brilliantmovement.com/r/${encodeURIComponent(pathParam)}/affiliate`);
-    }
-  }, []);
+  const affiliateCheckoutUrl = 'https://central.brilliantmovement.com/r/movement/affiliate';
 
   return (
     <main className="min-h-screen bg-[#f9f5f0] pt-12">
