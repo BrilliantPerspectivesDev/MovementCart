@@ -16,21 +16,21 @@ export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [selectedFrequency, setSelectedFrequency] = useState('monthly');
-  
+
   useEffect(() => {
     // Extract affiliate code from URL path
     const path = window.location.pathname;
     const pathParts = path.split('/');
     const affiliateCode = pathParts[1];
-    
+
     // Only save affiliate code if it's not 'ambassador', 'checkout', etc.
-    if (affiliateCode && affiliateCode !== '' && 
+    if (affiliateCode && affiliateCode !== '' &&
         !['ambassador', 'checkout', 'cart', 'success'].includes(affiliateCode)) {
       localStorage.setItem('pathParam', affiliateCode);
       localStorage.setItem('affiliateCode', affiliateCode);
       console.log('Saved affiliate code:', affiliateCode);
     }
-    
+
     // Add scroll event listener
     const handleScroll = () => {
       const offset = window.scrollY;
@@ -42,7 +42,7 @@ export default function LandingPage() {
     };
 
     window.addEventListener('scroll', handleScroll);
-    
+
     // Clean up the event listener
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -64,27 +64,27 @@ export default function LandingPage() {
   return (
     <main className="min-h-screen bg-[#f9f5f0] pt-12">
       {/* JSON-LD Structured Data */}
-      <Script 
+      <Script
         id="product-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
       />
-      <Script 
+      <Script
         id="organization-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
       />
-      <Script 
+      <Script
         id="faq-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <Script 
+      <Script
         id="graham-cooke-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(grahamCookeSchema) }}
       />
-      
+
       {/* New Hero Header */}
       <div className="w-[90%] sm:w-[85%] mx-auto relative max-w-7xl py-8 sm:py-12 pt-12 sm:pt-16 lg:pt-20 pb-16 sm:pb-20 lg:pb-24 bg-[#F6F5F2] rounded-xl">
         <div className="flex flex-col lg:flex-row lg:items-center justify-center mx-auto max-w-5xl px-[18px] sm:px-[37px]">
@@ -103,8 +103,8 @@ export default function LandingPage() {
 
             {/* CTA Button */}
             <div className="w-full mt-2">
-              <a 
-                href="/checkout" 
+              <a
+                href="/checkout"
                 className="block w-full text-center py-4 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
                 onClick={() => handleCTAClick('hero-cta', 'Start your five day free trial today', 'Hero Section')}
               >
@@ -118,13 +118,13 @@ export default function LandingPage() {
               </a>
             </div>
             </div>
-            
+
           {/* Right Content - Image */}
           <div className="relative lg:w-[55%] mt-6 lg:mt-0">
             <div className="aspect-square relative rounded-xl overflow-hidden w-[90%] mx-auto">
-              <Image 
-                src="/Graham2.png" 
-                alt="Graham Cooke leading a Brilliant Movement gathering and teaching session" 
+              <Image
+                src="/Graham2.png"
+                alt="Graham Cooke leading a Brilliant Movement gathering and teaching session"
                 fill
                 className="object-cover object-center"
                 priority
@@ -133,7 +133,7 @@ export default function LandingPage() {
             </div>
           </div>
         </div>
-        
+
       {/* Video Section */}
       <div className="bg-white py-12 sm:py-16">
         <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-10">
@@ -145,13 +145,13 @@ export default function LandingPage() {
               Watch Graham Cooke share the heart behind this transformative journey with God
             </p>
           </div>
-          
+
           {/* Video Embed Container */}
           <div className="relative w-full max-w-3xl mx-auto">
             <div className="embed-container">
-              <iframe 
-                src="https://www.brillianttv.com/embed/2257349" 
-                style={{ border: 0 }} 
+              <iframe
+                src="https://www.brillianttv.com/embed/2257349"
+                style={{ border: 0 }}
                 allowFullScreen
                 title="Brilliant Movement Introduction Video"
                 className="rounded-lg shadow-lg"
@@ -160,7 +160,7 @@ export default function LandingPage() {
           </div>
         </div>
       </div>
-        
+
       {/* Benefits Three Column Section */}
       <div className="bg-white py-16 sm:py-24">
         <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10">
@@ -173,7 +173,7 @@ export default function LandingPage() {
                 </h3>
                 <div className="w-16 h-1 bg-gradient-to-r from-[#74A78E] to-[#E9C46A] rounded-full mb-4 self-start sm:self-center"></div>
                 <p className="text-gray-600 text-left sm:text-center leading-relaxed flex-grow">
-                  Join God in every part of your day, not just designated quiet times. Finally experience 
+                  Join God in every part of your day, not just designated quiet times. Finally experience
                   what it means to maintain consistent fellowship without the pressure of performance.
                 </p>
           </div>
@@ -187,7 +187,7 @@ export default function LandingPage() {
                 </h3>
                 <div className="w-16 h-1 bg-gradient-to-r from-[#74A78E] to-[#E9C46A] rounded-full mb-4 self-start sm:self-center"></div>
                 <p className="text-gray-600 text-left sm:text-center leading-relaxed flex-grow">
-                  Step into the Father's heart and exchange your anxiety for His firm commitment to 
+                  Step into the Father's heart and exchange your anxiety for His firm commitment to
                   be with you.
                 </p>
               </div>
@@ -201,7 +201,7 @@ export default function LandingPage() {
                 </h3>
                 <div className="w-16 h-1 bg-gradient-to-r from-[#74A78E] to-[#E9C46A] rounded-full mb-4 self-start sm:self-center"></div>
                 <p className="text-gray-600 text-left sm:text-center leading-relaxed flex-grow">
-                  Move from uncertain prayer monologues to confident dialogue with God. 
+                  Move from uncertain prayer monologues to confident dialogue with God.
                   Experience the joy of truly knowing His voice in every situation.
                 </p>
               </div>
@@ -215,18 +215,18 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
           <div className="flex flex-col md:flex-row gap-0 justify-center items-center">
             <div className="w-auto md:w-auto">
-              <Image 
-                src="/Testimonial1.png" 
-                alt="Testimonial from Brilliant Movement member about transformative experience" 
+              <Image
+                src="/Testimonial1.png"
+                alt="Testimonial from Brilliant Movement member about transformative experience"
                 width={300}
                 height={200}
                 className="h-auto"
               />
           </div>
             <div className="w-auto md:w-auto">
-              <Image 
-                src="/Testimonial2.png" 
-                alt="Testimonial from Brilliant Movement community member describing spiritual growth" 
+              <Image
+                src="/Testimonial2.png"
+                alt="Testimonial from Brilliant Movement community member describing spiritual growth"
                 width={300}
                 height={200}
                 className="h-auto"
@@ -236,8 +236,8 @@ export default function LandingPage() {
 
           {/* CTA Button under testimonials */}
           <div className="w-full max-w-md mx-auto mt-10">
-            <a 
-              href="/checkout" 
+            <a
+              href="/checkout"
               className="block w-full text-center py-4 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
               onClick={() => handleCTAClick('testimonials-cta', 'Start your five day free trial today', 'Testimonials Section')}
             >
@@ -252,7 +252,7 @@ export default function LandingPage() {
           </div>
         </div>
       </div>
-      
+
       {/* App Showcase Section */}
       <div className="bg-[#F6F5F2] py-16 sm:py-20 px-6 sm:px-10 lg:px-16">
         <div className="max-w-6xl mx-auto px-0 sm:px-8 lg:px-12">
@@ -260,9 +260,9 @@ export default function LandingPage() {
             {/* Phone Mockup */}
             <div className="w-full md:w-[50%] md:pr-4">
               <div className="relative mx-auto max-w-[450px]">
-                <Image 
-                  src="/Final-Mockups-Medium.png" 
-                  alt="Brilliant Plus app interface showing meditation and prayer content on smartphone" 
+                <Image
+                  src="/Final-Mockups-Medium.png"
+                  alt="Brilliant Plus app interface showing meditation and prayer content on smartphone"
                   width={700}
                   height={700}
                   className="w-full h-auto"
@@ -274,9 +274,9 @@ export default function LandingPage() {
             <div className="w-full md:w-[50%] mt-8 md:mt-0 md:pl-4 max-w-md">
               <span className="text-[#74A78E] font-semibold text-sm uppercase tracking-wide mb-2 inline-block">THE ESSENTIAL APP</span>
               <div className="w-full mb-4">
-                <Image 
-                  src="/BlackBPlus.png" 
-                  alt="Brilliant Plus logo - the essential app for Brilliant Movement members" 
+                <Image
+                  src="/BlackBPlus.png"
+                  alt="Brilliant Plus logo - the essential app for Brilliant Movement members"
                   width={500}
                   height={150}
                   className="w-full h-auto"
@@ -285,23 +285,23 @@ export default function LandingPage() {
               <p className="text-gray-700 mb-6">
                 Brilliant Plus is the essential companion to any member of the Brilliant Movement. With over 600 teachings, guided prayer sessions, meditations, soaking sessions and an ever growing library of sleep content, the app is dedicated to one thing - teaching you to experience the kingdom in every part of your world.
               </p>
-              
+
               {/* Testimonial Quote */}
               <div className="mb-8 italic text-gray-700">
                 "I became aware that i'm at rest and peace for where i am right now" - <span className="font-semibold">Dinka</span>
               </div>
-              
+
               {/* CTA Button */}
               <div className="mb-4">
-                <a 
-                  href="/checkout" 
+                <a
+                  href="/checkout"
                   className="block w-full sm:w-auto text-center py-3 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
                   onClick={() => handleCTAClick('app-showcase-cta', 'Start Your Journey Today', 'App Showcase Section')}
                 >
                   Start Your Journey Today
                 </a>
               </div>
-              
+
               {/* Reviews */}
               <div className="flex items-center space-x-2">
                 <div className="flex text-[#E9C46A]">★★★★★</div>
@@ -322,7 +322,7 @@ export default function LandingPage() {
                 <div className="relative h-52 sm:h-64">
                   <Image
                     src="/Nighttime Medium.jpeg"
-                    alt="Brilliant Plus sleep content feature with calming night landscape" 
+                    alt="Brilliant Plus sleep content feature with calming night landscape"
                     fill
                     className="object-cover"
                   />
@@ -342,7 +342,7 @@ export default function LandingPage() {
                 <div className="relative h-52 sm:h-64">
                   <Image
                     src="/Routines.png"
-                    alt="Brilliant Plus routines feature interface for daily spiritual practices" 
+                    alt="Brilliant Plus routines feature interface for daily spiritual practices"
                     fill
                     className="object-cover"
                   />
@@ -362,7 +362,7 @@ export default function LandingPage() {
                 <div className="relative h-52 sm:h-64">
                   <Image
                     src="/Teaching.png"
-                    alt="Brilliant Plus teaching library with Graham Cooke content and resources" 
+                    alt="Brilliant Plus teaching library with Graham Cooke content and resources"
                     fill
                     className="object-cover"
                   />
@@ -376,11 +376,11 @@ export default function LandingPage() {
               </div>
             </div>
           </div>
-          
+
           {/* CTA Button */}
           <div className="mt-12 text-center">
-            <a 
-              href="/checkout" 
+            <a
+              href="/checkout"
               className="inline-block py-4 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
               onClick={() => handleCTAClick('app-features-cta', 'Start your five day free trial today', 'App Features Section')}
             >
@@ -409,33 +409,33 @@ export default function LandingPage() {
               <p className="text-gray-700 mb-6">
                 As a member, you'll gain access to monthly online gatherings (held on the first Monday of each month) with Graham Cooke and the Brilliant community.
               </p>
-              
+
               <p className="text-gray-700 mb-6">
                 The gatherings and Brilliant Plus app work together seamlessly - dive deeper into the teachings from gatherings through the app, and apply what you learn from the app during our corporate times together. This creates a powerful cycle of learning, application, and community growth.
               </p>
-              
+
               {/* Testimonial Quote */}
               <div className="mb-8 italic text-gray-700">
                 "The gatherings have completely transformed how I see God working in my life" - <span className="font-semibold">Jessica</span>
               </div>
-              
+
               {/* CTA Button */}
               <div className="mb-4">
-                <a 
-                  href="/checkout" 
+                <a
+                  href="/checkout"
                   className="block w-full sm:w-auto text-center py-3 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
                 >
                   Join the next gathering
                 </a>
               </div>
             </div>
-            
+
             {/* Gatherings Image */}
             <div className="w-full md:w-[50%] md:pl-4">
               <div className="relative mx-auto rounded-xl overflow-hidden">
-                <Image 
-                  src="/SmallGroups.png" 
-                  alt="Brilliant Movement monthly gatherings with community members connecting online" 
+                <Image
+                  src="/SmallGroups.png"
+                  alt="Brilliant Movement monthly gatherings with community members connecting online"
                   width={700}
                   height={700}
                   className="w-full h-auto"
@@ -463,9 +463,9 @@ export default function LandingPage() {
                   Event Tickets
                 </h3>
                 <div className="relative rounded-xl overflow-hidden mb-4 aspect-[16/9]">
-                  <Image 
-                    src="/Events.jpg" 
-                    alt="Brilliant Movement live events and conferences with Graham Cooke" 
+                  <Image
+                    src="/Events.jpg"
+                    alt="Brilliant Movement live events and conferences with Graham Cooke"
                     fill
                     className="object-cover"
                   />
@@ -498,9 +498,9 @@ export default function LandingPage() {
                   Small Groups
                 </h3>
                 <div className="relative rounded-xl overflow-hidden mb-4 aspect-[16/9]">
-                  <Image 
-                    src="/SmallGroups.png" 
-                    alt="Brilliant Movement small groups connecting globally for spiritual growth and community" 
+                  <Image
+                    src="/SmallGroups.png"
+                    alt="Brilliant Movement small groups connecting globally for spiritual growth and community"
                     fill
                     className="object-cover"
                   />
@@ -513,7 +513,7 @@ export default function LandingPage() {
       </div>
         </div>
       </div>
-      
+
       {/* Testimonials Section */}
       <div className="bg-white py-16 sm:py-20 px-6 sm:px-10 lg:px-16">
         <div className="max-w-6xl mx-auto px-0 sm:px-8 lg:px-12">
@@ -576,11 +576,11 @@ export default function LandingPage() {
               <div className="font-semibold text-[#264653]">James B.</div>
             </div>
           </div>
-          
+
           {/* CTA Button */}
           <div className="mt-12 text-center">
-            <a 
-              href="/checkout" 
+            <a
+              href="/checkout"
               className="block w-full text-center py-4 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
               onClick={() => handleCTAClick('testimonials-cta', 'Start your five day free trial today', 'Testimonials Section')}
             >
@@ -595,7 +595,7 @@ export default function LandingPage() {
           </div>
         </div>
       </div>
-      
+
       {/* Who is Graham Cooke Section */}
       <div className="bg-white py-16 sm:py-20 px-6 sm:px-10 lg:px-16">
         <div className="max-w-6xl mx-auto px-0 sm:px-8 lg:px-12">
@@ -603,15 +603,15 @@ export default function LandingPage() {
             {/* Image */}
             <div className="w-full md:w-1/3 mb-8 md:mb-0">
               <div className="relative rounded-xl overflow-hidden aspect-[3/4] shadow-lg">
-                <Image 
-                  src="/Graham2.png" 
-                  alt="Graham Cooke, founder of Brilliant Movement and internationally renowned speaker and author" 
+                <Image
+                  src="/Graham2.png"
+                  alt="Graham Cooke, founder of Brilliant Movement and internationally renowned speaker and author"
                   fill
                   className="object-cover object-center"
                 />
               </div>
                   </div>
-            
+
             {/* Content */}
             <div className="w-full md:w-2/3">
               <span className="text-[#74A78E] font-semibold text-sm uppercase tracking-wide mb-2 inline-block">MEET YOUR MENTOR</span>
@@ -629,11 +629,11 @@ export default function LandingPage() {
                   Graham's passion is to mentor people in their journey of spiritual growth, empowering them to know God intimately and live victoriously. His teachings focus on experiencing the Father's affection, recognizing God's voice, and understanding your true identity in Christ.
                 </p>
                 </div>
-              
+
               {/* Call to Action */}
               <div className="mt-8">
-                <a 
-                  href="/checkout" 
+                <a
+                  href="/checkout"
                   className="inline-block py-4 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
                   onClick={() => handleCTAClick('graham-cta', 'Start your five day free trial today', 'Graham Cooke Section')}
                 >
@@ -650,7 +650,7 @@ export default function LandingPage() {
               </div>
             </div>
           </div>
-          
+
       {/* Pricing Section */}
       <div id="pricing" className="bg-[#F6F5F2] py-16 sm:py-20 px-6 sm:px-10 lg:px-16">
         <div className="max-w-6xl mx-auto px-0 sm:px-8 lg:px-12">
@@ -673,10 +673,10 @@ export default function LandingPage() {
               <p className="text-center text-gray-600 mb-8">
                 Full access to the Brilliant Movement with flexible billing.
               </p>
-              
+
               {/* Billing Toggle */}
               <div className="flex items-center justify-center gap-x-3 sm:gap-x-4 mb-8">
-                <button 
+                <button
                   type="button"
                   onClick={() => setSelectedFrequency('monthly')}
                   className={`text-sm font-medium ${selectedFrequency === 'monthly' ? 'text-[#264653]' : 'text-gray-500 hover:text-gray-700'} transition-colors cursor-pointer`}
@@ -705,7 +705,7 @@ export default function LandingPage() {
                   Annual
                 </button>
             </div>
-              
+
               {/* Feature List */}
               <div className="space-y-6 sm:space-y-8">
                 {/* The App */}
@@ -723,7 +723,7 @@ export default function LandingPage() {
                     <p className="text-gray-600">With over 500 teachings, prayers & prophetic words from Graham Cooke</p>
                   </div>
                 </div>
-                
+
                 {/* Gatherings */}
                 <div className="flex items-start">
                   <div className="flex-shrink-0 mt-1 mr-4">
@@ -739,7 +739,7 @@ export default function LandingPage() {
                     <p className="text-gray-600">Your global community engaging with powerful teaching and prophetic activation</p>
                   </div>
                 </div>
-                
+
                 {/* Events */}
                 <div className="flex items-start">
                   <div className="flex-shrink-0 mt-1 mr-4">
@@ -755,7 +755,7 @@ export default function LandingPage() {
                     <p className="text-gray-600">Exclusive tickets to our biggest events of the year, all included</p>
             </div>
           </div>
-          
+
                 {/* Small Groups */}
                 <div className="flex items-start">
                   <div className="flex-shrink-0 mt-1 mr-4">
@@ -772,7 +772,7 @@ export default function LandingPage() {
                   </div>
                 </div>
             </div>
-            
+
               {/* Price and CTA */}
               <div className="mt-10 text-center">
                 <div className="flex flex-col items-center">
@@ -783,7 +783,7 @@ export default function LandingPage() {
                     </span>
                     <span className="text-xl font-medium text-gray-600 ml-2">/{selectedFrequency === 'annual' ? 'year' : 'month'}</span>
             </div>
-                  
+
                   <a
                     href={`/checkout?plan=${selectedFrequency}`}
                     className="mt-4 w-full sm:w-auto px-8 py-4 bg-[#74A78E] hover:bg-[#74A78E]/90 text-white rounded-full font-medium inline-block"
@@ -802,7 +802,7 @@ export default function LandingPage() {
     </div>
         </div>
       </div>
-      
+
       {/* Footer */}
       <footer className="bg-[#222222] text-white py-8">
         <div className="w-full max-w-7xl mx-auto px-6 lg:px-8">
@@ -814,7 +814,7 @@ export default function LandingPage() {
                 © 2025 Brilliant Perspectives LLC. All rights reserved.
               </p>
             </div>
-            
+
             {/* Contact info */}
             <div className="mb-6 md:mb-0">
               <h3 className="text-lg font-semibold mb-2">Contact Us</h3>
@@ -830,18 +830,18 @@ export default function LandingPage() {
               </p>
             </div>
           </div>
-          
+
           {/* Bottom bar */}
           <div className="mt-8 pt-4 border-t border-gray-700 text-center">
             <div className="flex flex-col sm:flex-row sm:justify-center sm:space-x-8">
-              <a 
-                href="https://central.brilliantmovement.com/privacy-policy" 
+              <a
+                href="https://central.brilliantmovement.com/privacy-policy"
                 className="text-gray-400 hover:text-white transition-colors duration-200 text-sm"
               >
                 Privacy Policy
               </a>
-              <a 
-                href="https://central.brilliantmovement.com/tos" 
+              <a
+                href="https://central.brilliantmovement.com/tos"
                 className="text-gray-400 hover:text-white transition-colors duration-200 text-sm"
               >
                 Terms of Service
