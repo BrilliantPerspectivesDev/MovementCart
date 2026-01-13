@@ -170,13 +170,13 @@ export default function AffiliatePage() {
           <div className="mt-8 pt-4 border-t border-gray-500 text-center">
             <div className="flex flex-col sm:flex-row sm:justify-center sm:space-x-8">
               <a
-                href="https://brilliantperspectives.clickfunnels.com/optincxp26vyu"
+                href="https://central.brilliantmovement.com/privacy-policy"
                 className="text-gray-300 hover:text-white transition-colors duration-200 text-sm"
               >
                 Privacy Policy
               </a>
               <a
-                href="https://brilliantperspectives.clickfunnels.com/optinlhu0kk20"
+                href="https://central.brilliantmovement.com/tos"
                 className="text-gray-300 hover:text-white transition-colors duration-200 text-sm"
               >
                 Terms of Service

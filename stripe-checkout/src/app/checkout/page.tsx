@@ -1331,7 +1331,7 @@ export default function Home() {
           <div className="mt-8 pt-4 border-t border-gray-700 text-center text-gray-400 text-sm">
             <p>
               <a
-                href="https://brilliantperspectives.clickfunnels.com/terms-of-service7l3p11kd"
+                href="https://central.brilliantmovement.com/privacy-policy"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-white transition-colors"
@@ -1340,7 +1340,7 @@ export default function Home() {
               </a>
               <span className="mx-2">|</span>
               <a
-                href="https://brilliantperspectives.clickfunnels.com/terms-of-servicefskn0ipf"
+                href="https://central.brilliantmovement.com/tos"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-white transition-colors"
