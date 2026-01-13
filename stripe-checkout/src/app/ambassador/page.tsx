@@ -5,13 +5,13 @@ import Image from 'next/image';
 
 // Affiliate landing page - CTAs now redirect to BCP for multi-country support
 export default function AffiliatePage() {
-  const [affiliateCheckoutUrl, setAffiliateCheckoutUrl] = useState('https://central.brilliantmovement.com/checkout/affiliate');
+  const [affiliateCheckoutUrl, setAffiliateCheckoutUrl] = useState('https://central.brilliantmovement.com/r/movement/affiliate');
 
   // Check for referral code in localStorage and build URL
   useEffect(() => {
     const pathParam = localStorage.getItem('pathParam');
     if (pathParam) {
-      setAffiliateCheckoutUrl(`https://central.brilliantmovement.com/checkout/affiliate?ref=${encodeURIComponent(pathParam)}`);
+      setAffiliateCheckoutUrl(`https://central.brilliantmovement.com/r/${encodeURIComponent(pathParam)}/affiliate`);
     }
   }, []);
 

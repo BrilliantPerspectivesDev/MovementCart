@@ -295,19 +295,19 @@ interface FormData {
 const TERMS_OF_SERVICE = `
   <h2>Terms of Service</h2>
   <p>Last updated: February 24, 2024</p>
-  
+
   <h3>1. Agreement to Terms</h3>
   <p>By accessing or using Brilliant Movement's services, you agree to be bound by these Terms of Service.</p>
-  
+
   <h3>2. Membership</h3>
   <p>Your membership includes access to our digital content, community features, and other services as described in your selected plan.</p>
-  
+
   <h3>3. Payment and Billing</h3>
   <p>You agree to pay all fees associated with your selected membership plan. Fees are billed in advance on a monthly or annual basis.</p>
-  
+
   <h3>4. Cancellation</h3>
   <p>You may cancel your membership at any time. Cancellation will take effect at the end of your current billing period.</p>
-  
+
   <h3>5. Intellectual Property</h3>
   <p>All content provided through Brilliant Movement is protected by copyright and other intellectual property laws.</p>
 `;
@@ -315,27 +315,27 @@ const TERMS_OF_SERVICE = `
 const PRIVACY_POLICY = `
   <h2>Privacy Policy</h2>
   <p>Last updated: February 24, 2024</p>
-  
+
   <h3>1. Information We Collect</h3>
   <p>We collect information you provide directly to us, including name, email, and payment information.</p>
-  
+
   <h3>2. How We Use Your Information</h3>
   <p>We use your information to provide and improve our services, process payments, and communicate with you.</p>
-  
+
   <h3>3. Information Sharing</h3>
   <p>We do not sell your personal information. We may share it with service providers who assist in operating our services.</p>
-  
+
   <h3>4. Data Security</h3>
   <p>We implement appropriate security measures to protect your personal information.</p>
-  
+
   <h3>5. Your Rights</h3>
   <p>You have the right to access, correct, or delete your personal information.</p>
 `;
 
 // Inner form component that has access to Stripe hooks
-function CheckoutForm({ 
+function CheckoutForm({
   selectedFrequency
-}: { 
+}: {
   selectedFrequency: string
 }) {
   const { items } = useCart();
@@ -344,16 +344,16 @@ function CheckoutForm({
   const elements = useElements();
   const pathname = usePathname();
   const router = useRouter();
-  
+
   // Add loading and error states
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [cardElementReady, setCardElementReady] = useState(false);
-  
+
   // Get stored referral code from localStorage
   const [storedPathParam, setStoredPathParam] = useState<string>('');
   const [storedAffiliateCode, setStoredAffiliateCode] = useState<string>('');
-  
+
   // Add state for modal visibility
   const [showTermsModal, setShowTermsModal] = useState(false);
   const [showPrivacyModal, setShowPrivacyModal] = useState(false);
@@ -365,19 +365,19 @@ function CheckoutForm({
   const [step1Valid, setStep1Valid] = useState(false);
   const [currentFeatureIndex, setCurrentFeatureIndex] = useState(0);
   const [agreedToMarketing, setAgreedToMarketing] = useState(false);
-  
+
   useEffect(() => {
     // Get the stored path param from localStorage
     const pathParam = localStorage.getItem('pathParam');
     const affiliateCode = localStorage.getItem('affiliateCode');
-    
+
     if (pathParam) {
       console.log('Retrieved stored path param:', pathParam);
       setStoredPathParam(pathParam);
     } else {
       console.log('No path param found in localStorage');
     }
-    
+
     if (affiliateCode) {
       console.log('Retrieved stored affiliate code:', affiliateCode);
       setStoredAffiliateCode(affiliateCode);
@@ -412,7 +412,7 @@ function CheckoutForm({
       const monthlyCostForYear = 47 * 12;
       const savings = monthlyCostForYear - annualCost;
       const savingsPercent = Math.round((savings / monthlyCostForYear) * 100);
-      
+
       return {
         frequency: 'annual',
         price: monthlyCostForYear,
@@ -424,7 +424,7 @@ function CheckoutForm({
       };
     }
   };
-  
+
   // Form state
   const [priceInfo, setPriceInfo] = useState(() => getPriceInfo(selectedFrequency));
   const [checkoutStep, setCheckoutStep] = useState(1);
@@ -439,7 +439,7 @@ function CheckoutForm({
     country: 'US',
     agreedToPolicies: false
   });
-  
+
   // Features data for carousel
   const features = [
     {
@@ -459,15 +459,15 @@ function CheckoutForm({
       description: "Prayers and music to help you rest in God's presence"
     }
   ];
-  
+
   // Auto-rotate carousel
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setCurrentFeatureIndex((prevIndex) => 
+      setCurrentFeatureIndex((prevIndex) =>
         prevIndex === features.length - 1 ? 0 : prevIndex + 1
       );
     }, 4000); // Change slide every 4 seconds
-    
+
     return () => clearInterval(intervalId);
   }, [features.length]);
 
@@ -478,9 +478,9 @@ function CheckoutForm({
 
   // Update form validation when form data changes
   useEffect(() => {
-    const isAddressValid = 
-      formData.firstName.trim() !== '' && 
-      formData.lastName.trim() !== '' && 
+    const isAddressValid =
+      formData.firstName.trim() !== '' &&
+      formData.lastName.trim() !== '' &&
       formData.email.trim() !== '' &&
       formData.address.trim() !== '' &&
       formData.city.trim() !== '' &&
@@ -530,22 +530,22 @@ function CheckoutForm({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    
+
     // Input validation based on field type
     let sanitizedValue = value;
-    
+
     switch (name) {
       case 'firstName':
       case 'lastName':
         // Allow only letters, spaces, and hyphens
         sanitizedValue = value.replace(/[^a-zA-Z\s-]/g, '');
         break;
-        
+
       case 'email':
         // Email validation happens with the email type input, just lowercase it
         sanitizedValue = value.toLowerCase();
         break;
-        
+
       case 'zipCode':
         // For US, only allow 5 digits
         if (formData.country === 'US') {
@@ -555,11 +555,11 @@ function CheckoutForm({
           sanitizedValue = value.replace(/[^a-zA-Z0-9\s-]/g, '');
         }
         break;
-        
+
       default:
         sanitizedValue = value;
     }
-    
+
     setFormData(prevData => ({
       ...prevData,
       [name]: sanitizedValue
@@ -579,7 +579,7 @@ function CheckoutForm({
   // Handle form submission
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    
+
     if (isLoading) {
       console.log('Submission already in progress');
       return;
@@ -595,7 +595,7 @@ function CheckoutForm({
         setIsLoading(false);
         return;
       }
-      
+
       // Create payment method
       const { error: stripeError, paymentMethod } = await stripe!.createPaymentMethod({
         type: 'card',
@@ -612,7 +612,7 @@ function CheckoutForm({
           },
         },
       });
-      
+
       if (stripeError) {
         console.error('Error creating payment method:', stripeError);
         setError(stripeError.message || 'Failed to process payment method');
@@ -622,7 +622,7 @@ function CheckoutForm({
 
       // Get affiliate code from localStorage or path parameter
       const affiliateCode = localStorage.getItem('affiliateCode') || storedPathParam;
-      
+
       // Process checkout
       const response = await fetch('/api/direct-checkout', {
         method: 'POST',
@@ -661,19 +661,19 @@ function CheckoutForm({
 
   const handlePlaceSelected = (place: any) => {
     if (!place || !place.address_components) return;
-    
+
     const address = parseAddressComponents(place);
-    
+
     // Find country code for the selected country name
     let countryCode = 'US'; // Default to US
-    const countryOption = COUNTRY_OPTIONS.find(c => 
+    const countryOption = COUNTRY_OPTIONS.find(c =>
       c.name.toLowerCase() === address.country.toLowerCase()
     );
-    
+
     if (countryOption) {
       countryCode = countryOption.code;
     }
-    
+
     // Update form data with the parsed address
     setFormData(prevData => ({
       ...prevData,
@@ -684,7 +684,7 @@ function CheckoutForm({
       country: countryCode // Use the country code instead of name
     }));
   };
-  
+
   // Initialize the Google Places autocomplete
   useGooglePlacesAutocomplete({
     inputId: 'address',
@@ -696,7 +696,7 @@ function CheckoutForm({
     <form onSubmit={handleSubmit} className="space-y-4 md:space-y-5">
       {/* Checkout Steps Progress Indicator */}
       {/* Render progress steps */}
-      
+
         <div className="pr-1 pb-2">
         {/* Render step 1 form (customer information) */}
         <div className="space-y-3 md:space-y-4">
@@ -856,7 +856,7 @@ function CheckoutForm({
               Credit Card
             </label>
             <div className="mt-1 p-3 border border-gray-300 rounded-md shadow-sm">
-              <CardElement 
+              <CardElement
                 id="card-element"
                 options={{
                   style: {
@@ -998,7 +998,7 @@ function CheckoutForm({
 export default function Home() {
   const { items, totalPrice, clearCart, addToCart } = useCart();
   const pathname = usePathname();
-  
+
   // Define getPriceInfo function before using it in useState
   const getPriceInfo = (frequency: string) => {
     if (frequency === 'monthly') {
@@ -1017,7 +1017,7 @@ export default function Home() {
       const monthlyCostForYear = 47 * 12;
       const savings = monthlyCostForYear - annualCost;
       const savingsPercent = Math.round((savings / monthlyCostForYear) * 100);
-      
+
       return {
         frequency: 'annual',
         price: monthlyCostForYear,
@@ -1029,7 +1029,7 @@ export default function Home() {
       };
     }
   };
-  
+
   const [selectedFrequency, setSelectedFrequency] = useState('annual');
   const [priceInfo, setPriceInfo] = useState(() => getPriceInfo('annual'));
   const [referralCode, setReferralCode] = useState<string>('');
@@ -1046,7 +1046,7 @@ export default function Home() {
       setSelectedFrequency(frequencyParam);
     }
   }, []);
-  
+
   // Update priceInfo when selectedFrequency changes
   useEffect(() => {
     setPriceInfo(getPriceInfo(selectedFrequency));
@@ -1069,7 +1069,7 @@ export default function Home() {
       addToCart(sampleProduct);
     }
   }, [items.length, addToCart]);
-  
+
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-1 flex flex-col md:flex-row">
@@ -1078,8 +1078,8 @@ export default function Home() {
         <div className="max-w-lg mx-auto">
             {/* Back button */}
             <div className="mb-4">
-              <a 
-                href="/" 
+              <a
+                href="/"
                 className="inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors"
               >
                 <svg className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1088,14 +1088,14 @@ export default function Home() {
                 <span>Back to main page</span>
               </a>
             </div>
-            
+
           {/* Logo */}
           <div className="mb-6 md:mb-8">
             <Image
-                src="/Blacklogo.png" 
-              alt="Brilliant Logo" 
+                src="/Blacklogo.png"
+              alt="Brilliant Logo"
               width={180}
-              height={60} 
+              height={60}
               className="h-auto w-auto"
             />
           </div>
@@ -1109,7 +1109,7 @@ export default function Home() {
               Cancel anytime during your trial.
             </p>
           </div>
-          
+
           {/* Pricing Section */}
           <div className="mb-6 md:mb-8">
             <div className="grid grid-cols-2 gap-3 md:gap-4">
@@ -1139,7 +1139,7 @@ export default function Home() {
                   <p className="text-xs mt-2"><span className="text-amber-500">★★★★★</span> <span className="text-gray-600">|</span> <span className="text-gray-600">4000+ Reviews</span></p>
                 </div>
               </div>
-              
+
               {/* Annual Option */}
               <div
                 className={`border ${
@@ -1172,20 +1172,20 @@ export default function Home() {
               </div>
             </div>
           </div>
-          
+
           {/* Checkout Form */}
           <Elements stripe={stripePromise}>
-            <CheckoutForm 
+            <CheckoutForm
               selectedFrequency={selectedFrequency}
             />
           </Elements>
         </div>
       </div>
-      
+
       {/* Right Section (Image) */}
         <div className="hidden lg:block w-full xl:w-2/5 relative overflow-hidden">
         {/* Gradient Background with Animation */}
-        <div 
+        <div
           className="absolute inset-0 w-full h-full z-0"
           style={{
             position: 'relative',
@@ -1194,7 +1194,7 @@ export default function Home() {
             overflow: 'hidden'
           }}
         >
-          <div 
+          <div
             style={{
               position: 'absolute',
               top: 0,
@@ -1208,7 +1208,7 @@ export default function Home() {
               zIndex: 10,
             }}
           />
-          <div 
+          <div
             style={{
               position: 'absolute',
               top: 0,
@@ -1222,7 +1222,7 @@ export default function Home() {
               zIndex: 10,
             }}
           />
-          <div 
+          <div
             style={{
               position: 'absolute',
               top: 0,
@@ -1236,7 +1236,7 @@ export default function Home() {
               zIndex: 10,
             }}
           />
-          <div 
+          <div
             style={{
               position: 'absolute',
               top: 0,
@@ -1266,7 +1266,7 @@ export default function Home() {
         <div className="relative z-20 h-full w-full p-8 sm:p-12 text-white flex flex-col justify-between">
           <div className="bg-black/30 rounded-2xl p-6 backdrop-blur-md">
             <h2 className="text-2xl font-bold mb-4">The Christian Prayer App</h2>
-            
+
             <div className="mb-8">
               <div className="font-semibold text-lg mb-2">What you get:</div>
               <ul className="space-y-3">
@@ -1292,7 +1292,7 @@ export default function Home() {
                 </li>
               </ul>
             </div>
-            
+
             <div className="text-sm opacity-90 italic">
               "This app has transformed my prayer life. The daily structure and community features keep me accountable."
               <div className="mt-2 font-semibold not-italic">— Sarah M.</div>
@@ -1313,7 +1313,7 @@ export default function Home() {
                 © 2025 Brilliant Perspectives LLC. All rights reserved.
               </p>
             </div>
-            
+
             {/* Contact info */}
             <div>
               <h3 className="text-lg font-semibold mb-2">Contact Us</h3>
@@ -1326,12 +1326,12 @@ export default function Home() {
               <p className="text-gray-400">735 State St. #517<br />Santa Barbara, CA 93101</p>
             </div>
           </div>
-          
+
           {/* Bottom bar */}
           <div className="mt-8 pt-4 border-t border-gray-700 text-center text-gray-400 text-sm">
             <p>
-              <a 
-                href="https://brilliantperspectives.clickfunnels.com/terms-of-service7l3p11kd" 
+              <a
+                href="https://brilliantperspectives.clickfunnels.com/terms-of-service7l3p11kd"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-white transition-colors"
@@ -1339,8 +1339,8 @@ export default function Home() {
                 Privacy Policy
               </a>
               <span className="mx-2">|</span>
-              <a 
-                href="https://brilliantperspectives.clickfunnels.com/terms-of-servicefskn0ipf" 
+              <a
+                href="https://brilliantperspectives.clickfunnels.com/terms-of-servicefskn0ipf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-white transition-colors"

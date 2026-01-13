@@ -7,7 +7,7 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
-  
+
   <!-- Ambassador Page -->
   <url>
     <loc>https://brilliantmovement.com/ambassador</loc>
@@ -15,15 +15,15 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  
+
   <!-- Checkout Page (lower priority since it's a conversion page) -->
   <url>
-    <loc>https://brilliantmovement.com/checkout</loc>
+    <loc>https://central.brilliantmovement.com/checkout?ref=movement</loc>
     <lastmod>2023-11-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-  
+
   <!-- Success Page -->
   <url>
     <loc>https://brilliantmovement.com/success</loc>
@@ -31,7 +31,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
-  
+
   <!-- Privacy Policy -->
   <url>
     <loc>https://brilliantperspectives.clickfunnels.com/optincxp26vyu</loc>
@@ -39,7 +39,7 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
-  
+
   <!-- Terms of Service -->
   <url>
     <loc>https://brilliantperspectives.clickfunnels.com/optinlhu0kk20</loc>
@@ -47,4 +47,4 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
-</urlset> 
+</urlset>

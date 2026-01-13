@@ -90,7 +90,7 @@ export const homeMetadata: Metadata = {
         type: 'image/jpeg',
       },
       {
-        url: '/Final-Mockups-Medium.png', 
+        url: '/Final-Mockups-Medium.png',
         width: 700,
         height: 700,
         alt: 'Brilliant App Interface',
@@ -233,7 +233,7 @@ export const productSchema = {
   },
   description: 'Brilliant Plus is the essential companion to any member of the Brilliant Movement. With over 600 teachings, guided prayer sessions, meditations, soaking sessions and an ever growing library of sleep content.',
   image: 'https://brilliantmovement.com/Final-Mockups-Medium.png',
-  downloadUrl: 'https://brilliantmovement.com/checkout',
+  downloadUrl: 'https://central.brilliantmovement.com/checkout?ref=movement',
   author: {
     '@type': 'Person',
     name: 'Graham Cooke',
