@@ -104,7 +104,7 @@ export default function LandingPage() {
             {/* CTA Button */}
             <div className="w-full mt-2">
               <a
-                href="/checkout"
+                href="https://central.brilliantmovement.com/checkout?ref=movement"
                 className="block w-full text-center py-4 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
                 onClick={() => handleCTAClick('hero-cta', 'Start your five day free trial today', 'Hero Section')}
               >
@@ -237,7 +237,7 @@ export default function LandingPage() {
           {/* CTA Button under testimonials */}
           <div className="w-full max-w-md mx-auto mt-10">
             <a
-              href="/checkout"
+              href="https://central.brilliantmovement.com/checkout?ref=movement"
               className="block w-full text-center py-4 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
               onClick={() => handleCTAClick('testimonials-cta', 'Start your five day free trial today', 'Testimonials Section')}
             >
@@ -294,7 +294,7 @@ export default function LandingPage() {
               {/* CTA Button */}
               <div className="mb-4">
                 <a
-                  href="/checkout"
+                  href="https://central.brilliantmovement.com/checkout?ref=movement"
                   className="block w-full sm:w-auto text-center py-3 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
                   onClick={() => handleCTAClick('app-showcase-cta', 'Start Your Journey Today', 'App Showcase Section')}
                 >
@@ -380,7 +380,7 @@ export default function LandingPage() {
           {/* CTA Button */}
           <div className="mt-12 text-center">
             <a
-              href="/checkout"
+              href="https://central.brilliantmovement.com/checkout?ref=movement"
               className="inline-block py-4 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
               onClick={() => handleCTAClick('app-features-cta', 'Start your five day free trial today', 'App Features Section')}
             >
@@ -422,7 +422,7 @@ export default function LandingPage() {
               {/* CTA Button */}
               <div className="mb-4">
                 <a
-                  href="/checkout"
+                  href="https://central.brilliantmovement.com/checkout?ref=movement"
                   className="block w-full sm:w-auto text-center py-3 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
                 >
                   Join the next gathering
@@ -580,7 +580,7 @@ export default function LandingPage() {
           {/* CTA Button */}
           <div className="mt-12 text-center">
             <a
-              href="/checkout"
+              href="https://central.brilliantmovement.com/checkout?ref=movement"
               className="block w-full text-center py-4 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
               onClick={() => handleCTAClick('testimonials-cta', 'Start your five day free trial today', 'Testimonials Section')}
             >
@@ -633,7 +633,7 @@ export default function LandingPage() {
               {/* Call to Action */}
               <div className="mt-8">
                 <a
-                  href="/checkout"
+                  href="https://central.brilliantmovement.com/checkout?ref=movement"
                   className="inline-block py-4 px-8 bg-[#74A78E] hover:bg-[#74A78E]/90 transition-colors text-white rounded-full font-medium"
                   onClick={() => handleCTAClick('graham-cta', 'Start your five day free trial today', 'Graham Cooke Section')}
                 >
@@ -785,7 +785,7 @@ export default function LandingPage() {
             </div>
 
                   <a
-                    href={`/checkout?plan=${selectedFrequency}`}
+                    href={`https://central.brilliantmovement.com/checkout?ref=movement&plan=${selectedFrequency}`}
                     className="mt-4 w-full sm:w-auto px-8 py-4 bg-[#74A78E] hover:bg-[#74A78E]/90 text-white rounded-full font-medium inline-block"
                   >
                     <div className="flex flex-col items-center">

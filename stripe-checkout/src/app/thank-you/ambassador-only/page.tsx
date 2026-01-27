@@ -114,7 +114,7 @@ function ThankYouContent() {
                 As an ambassador, we recommend also becoming a Brilliant member to access all our content and resources.
               </p>
               <a 
-                href="/checkout" 
+                href="https://central.brilliantmovement.com/checkout?ref=movement" 
                 className="block w-full text-center py-3 px-4 bg-indigo-600 hover:bg-indigo-700 transition-colors text-white rounded-md font-medium"
               >
                 Purchase a Membership
